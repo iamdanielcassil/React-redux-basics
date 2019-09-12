@@ -1,9 +1,9 @@
-import base from "./baseActions";
 import { log } from "./debugAction";
+import user from "./user";
 import store from "../store";
 
 const _actions = {
-  ...base,
+  user,
   log
 };
 
@@ -12,6 +12,8 @@ const actions = (type, payload) => {
 
   if (typeof action === "function") {
     return action(payload);
+  } else if (typeof action === "object") {
+    return action;
   }
 
   return log(

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import Base from "./components/Base";
 import store from "./store";
+import "./actions/user";
 import "./styles.css";
 
 function App() {
