@@ -8,3 +8,13 @@
   flex-direction: column;
   justify-content: space-around;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.form .field {
+  margin: 5px;
+}

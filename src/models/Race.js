@@ -13,23 +13,40 @@ export default class Race {
     this.results = props.results;
   }
 
+  update = data => {
+    Object.keys(data).forEach(key => {
+      if (this.hasOwnProperty(key)) {
+        this[key] = data[key];
+      } else {
+        console.warn(`Tried to update non own property {${key}}`);
+      }
+    });
+  };
+
   save = () => {
     console.log("savin this: ", this);
-    if (!this.id || !this.name) return Promise.reject();
+    if (!this.startDate || !this.name || !this.seasonId)
+      return Promise.reject();
 
     let race = {
       id: this.id,
       name: this.name,
-      startDate: this.startDate || "",
+      startDate: this.startDate,
       endDate: this.endDate || "",
       seasonId: this.seasonId
     };
 
-    // if (this.id) season.id = this.id;
-    // if (this.name) season.name = this.name;
+    if (this.isNew) {
+      // save new race
+      race.id = new Date().getTime();
+    }
+    let collection = data.getCollectionQuery(`seasons/${this.seasonId}/races`);
+    let doc = collection.doc(race.id.toString());
 
-    data.userScopedQuery(`seasons/${this.seasonId}/races`, this.id).set(race);
-    // actions.races.set(race);
+    console.log("doc", doc);
+    console.log("collection", collection);
+    window.xcc = collection;
+    doc.set(race);
     return Promise.resolve(race);
   };
 

@@ -7,7 +7,7 @@ import "./styles.css";
 
 const store = createStore();
 
-window.DC = { store };
+window.DC = window.DC ? { ...window.DC, store } : { store };
 function App() {
   return (
     <div className="App">

@@ -1,5 +1,5 @@
-import Data from "../data";
-import store from "../store";
+// import Data from "../data";
+// import store from "../store";
 
 let data = null;
 
