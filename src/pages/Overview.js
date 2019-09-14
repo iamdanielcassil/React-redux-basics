@@ -7,7 +7,7 @@ export default connect(
   "selectCurrentRace",
   "selectRaces",
   ({ doNewRace, doSaveRace, currentRace, races = [] }) => {
-    console.log("in overview", races);
+    console.log("in overview", races, currentRace);
     return (
       <div className="overview">
         {races.map(race => (
@@ -34,12 +34,6 @@ export default connect(
                   currentRace.update({ startDate: e.target.value })
                 }
                 value={currentRace.startDate}
-              />
-              <input
-                className="field"
-                type="text"
-                onChange={e => currentRace.update({ name: e.target.value })}
-                value={currentRace.name}
               />
               <input type="button" onClick={() => doSaveRace()} value="save" />
             </div>

@@ -2,6 +2,11 @@ import { firestore } from "./foundations/firebase";
 
 const db = firestore();
 
+let initResolve;
+let initPromise = new Promise(resolve => {
+  initResolve = resolve;
+});
+
 class Data {
   init(user) {
     if (!user) {
@@ -10,38 +15,45 @@ class Data {
     console.log("data inited with user: ", user);
     this.user = user;
     this.inited = true;
+    initResolve();
   }
 
   getCollectionQuery(collection) {
     if (!this.inited) {
-      Promise.reject();
+      console.log("used before ready, waiting on init resolve");
+      return initPromise.then(() => {
+        console.log("init resovled");
+        return db.collection(collection);
+      });
     } else {
-      return db.collection(collection);
+      return Promise.resolve(db.collection(collection));
     }
   }
 
   listen(collectionKey, callback) {
-    let query = this.getCollectionQuery(collectionKey);
+    let queryPrmoise = this.getCollectionQuery(collectionKey);
 
-    if (query === undefined) {
-      return;
-    }
+    queryPrmoise.then(query => {
+      if (query === undefined) {
+        return;
+      }
 
-    console.log("setup snapshot");
-    query.onSnapshot(snapshot => {
-      let data = [];
+      console.log("setup snapshot");
+      query.onSnapshot(snapshot => {
+        let data = [];
 
-      console.log("listen", snapshot.docs);
-      snapshot.docs.forEach(doc => {
-        if (doc && typeof doc.data === "function") {
-          let result = doc.data();
+        console.log("listen", snapshot.docs);
+        snapshot.docs.forEach(doc => {
+          if (doc && typeof doc.data === "function") {
+            let result = doc.data();
 
-          result.id = doc.id;
-          data.push(result);
-        }
+            result.id = doc.id;
+            data.push(result);
+          }
+        });
+
+        callback(data);
       });
-
-      callback(data);
     });
   }
 

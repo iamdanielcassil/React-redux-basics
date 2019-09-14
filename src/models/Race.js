@@ -4,13 +4,23 @@ export default class Race {
   constructor(props) {
     this.isNew = props.id === undefined;
     this.id = props.id;
-    this.name = props.name;
+    this.name = props.name || "";
     this.seasonId = props.seasonId;
-    this.startDate = props.startDate;
+    this.startDate = props.startDate || new Date().toISOString().split("T")[0];
     this.endDate = props.endDate;
     this.conditions = props.conditions;
     this.courseMap = props.courseMap;
     this.results = props.results;
+  }
+
+  get() {
+    return {
+      id: this.id,
+      name: this.name,
+      startDate: this.startDate,
+      endDate: this.endDate || "",
+      seasonId: this.seasonId
+    };
   }
 
   update = data => {
@@ -21,6 +31,8 @@ export default class Race {
         console.warn(`Tried to update non own property {${key}}`);
       }
     });
+
+    return this;
   };
 
   save = () => {

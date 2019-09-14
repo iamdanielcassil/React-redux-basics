@@ -14,16 +14,20 @@ const init = store => {
     store.dispatch({ type: "RACES_FETCHED", races });
   });
 };
-const reducer = (state = { races: { all: [], current: null } }, action) => {
+const reducer = (state = { all: [], current: null }, action) => {
   if (action.type === "NEW_RACE_CREATED") {
-    return { current: action.current };
+    return { all: state.all, current: action.current };
+  }
+  if (action.type === "CURRENT_RACE_UPDATED") {
+    console.log("CURRENT_RACE_UPDATED", state);
+    return state;
   }
   if (action.type === "RACE_SAVE_FINISHED") {
     return { current: undefined };
   }
   if (action.type === "RACES_FETCHED") {
     console.log("races fetched", action.races);
-    return { all: action.races };
+    return { current: state.current, all: action.races };
   }
   return state;
 };
@@ -36,18 +40,28 @@ const doNewRace = seasonId => ({ dispatch }) => {
 const doSaveRace = () => ({ getState, dispatch }) => {
   let race = getState().races.current;
   dispatch({ type: "RACE_SAVE_STARTED" });
-  race.save().then(() => {
-    dispatch({ type: "RACE_SAVE_FINISHED" });
-  });
+  race
+    .save()
+    .then(() => {
+      dispatch({ type: "RACE_SAVE_FINISHED" });
+    })
+    .catch(() => {
+      dispatch({ type: "RACE_SAVE_FAILED" });
+      dispatch({ type: "RACE_SAVE_FINISHED" });
+    });
 };
 
 const doUpdateCurrent = raceData => ({ getState, dispatch }) => {
+  console.log("doupdatecurrent", getState());
   let race = getState().races.current;
-
-  dispatch({ type: "CURRENT_RACE_UPDATED", current: race.update(raceData) });
+  race.update(raceData);
+  dispatch({ type: "CURRENT_RACE_UPDATED" });
 };
 
-const selectCurrentRace = state => state.races.current;
+const selectCurrentRace = state => {
+  console.log("selectCurrentRace", state);
+  return state.races.current ? { ...state.races.current } : null;
+};
 const selectRaces = state => state.races.all;
 
 export default {
