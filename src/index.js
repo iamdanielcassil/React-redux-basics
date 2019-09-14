@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import Base from "./components/Base";
-import store from "./store";
-import "./actions/user";
+import { Provider } from "redux-bundler-react";
+import createStore from "./bundles/";
+import Base from "./Base";
 import "./styles.css";
 
+const store = createStore();
+
+window.DC = { store };
 function App() {
   return (
     <div className="App">

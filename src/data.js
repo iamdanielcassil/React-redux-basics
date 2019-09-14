@@ -9,8 +9,7 @@ export default class Data {
   }
 
   getUserQuery() {
-    if (this.user) {
-      console.log(this.user);
+    if (this.user && Object.keys(this.user).length > 0) {
       return db.collection(this.user.uid);
     } else {
       return {};

@@ -1,17 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect } from "redux-bundler-react";
+import "./loading.css";
 
-function Loading(props) {
-  if (props.working) {
-    return <div>working</div>;
+export default connect(
+  "selectWorking",
+  ({ working, children }) => {
+    if (working) {
+      return (
+        <React.Fragment>
+          {children}
+          <div className="loaderGrid">
+            <div className="load-container load3">
+              <div className="loader">Loading...</div>
+            </div>
+          </div>
+        </React.Fragment>
+      );
+    }
+    return children;
   }
-  return null;
-}
-
-function select(state) {
-  return {
-    working: state.working.payload
-  };
-}
-
-export default connect(select)(Loading);
+);
