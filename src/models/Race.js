@@ -24,6 +24,7 @@ export default class Race {
   }
 
   update = data => {
+    console.log(data);
     Object.keys(data).forEach(key => {
       if (this.hasOwnProperty(key)) {
         this[key] = data[key];
@@ -31,7 +32,7 @@ export default class Race {
         console.warn(`Tried to update non own property {${key}}`);
       }
     });
-
+    console.log("Race this is: ", this);
     return this;
   };
 
@@ -52,14 +53,17 @@ export default class Race {
       // save new race
       race.id = new Date().getTime();
     }
-    let collection = data.getCollectionQuery(`seasons/${this.seasonId}/races`);
-    let doc = collection.doc(race.id.toString());
+    return data
+      .getCollectionQuery(`seasons/${this.seasonId}/races`)
+      .then(collection => {
+        let doc = collection.doc(race.id.toString());
 
-    console.log("doc", doc);
-    console.log("collection", collection);
-    window.xcc = collection;
-    doc.set(race);
-    return Promise.resolve(race);
+        console.log("doc", doc);
+        console.log("collection", collection);
+        window.xcc = collection;
+        doc.set(race);
+        return race;
+      });
   };
 
   // addRacer(racer) {

@@ -29,6 +29,17 @@ const reducer = (state = { all: [], current: null }, action) => {
     console.log("races fetched", action.races);
     return { current: state.current, all: action.races };
   }
+  if (action.type === "RACE_SELECTED") {
+    console.log("race selected", action.current);
+    return {
+      current: new Race(action.current),
+      all: state.all,
+      isEditing: false
+    };
+  }
+  if (action.type === "RACE_EDITED") {
+    return { ...state, isEditing: true };
+  }
   return state;
 };
 
@@ -37,8 +48,14 @@ const doNewRace = seasonId => ({ dispatch }) => {
   dispatch({ type: "NEW_RACE_CREATED", current: new Race({ seasonId }) });
 };
 
-const doSaveRace = () => ({ getState, dispatch }) => {
-  let race = getState().races.current;
+const doSetCurrent = (race, edit) => ({ dispatch }) => {
+  dispatch({ type: "RACE_SELECTED", current: race });
+  if (edit) {
+    dispatch({ type: "RACE_EDITED" });
+  }
+};
+
+const doSaveRace = race => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
   race
     .save()
@@ -59,10 +76,12 @@ const doUpdateCurrent = raceData => ({ getState, dispatch }) => {
 };
 
 const selectCurrentRace = state => {
-  console.log("selectCurrentRace", state);
+  console.log("selectCurrentRace", state.races.current);
   return state.races.current ? { ...state.races.current } : null;
 };
+
 const selectRaces = state => state.races.all;
+const selectIsEditing = state => state.races.isEditing;
 
 export default {
   name: "races",
@@ -70,7 +89,9 @@ export default {
   reducer,
   doNewRace,
   doSaveRace,
+  doSetCurrent,
   doUpdateCurrent,
   selectCurrentRace,
+  selectIsEditing,
   selectRaces
 };
