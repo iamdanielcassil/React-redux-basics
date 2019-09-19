@@ -14,9 +14,11 @@ export default connect(
     if (user) {
       data.init(user);
     }
+    console.log("base hit,", route);
     return (
       <WithLoading>
         <div className="base">
+          <div id="MODAL_PORTAL" />
           <Bar />
           <route.Component />
         </div>

@@ -5,25 +5,16 @@ import { connect } from "redux-bundler-react";
 export default connect(
   "doNewRace",
   "doSaveRace",
-  "doSetCurrent",
   "selectCurrentRace",
   "selectIsEditing",
   "selectRaces",
-  ({
-    doNewRace,
-    doSaveRace,
-    doSetCurrent,
-    currentRace,
-    isEditing,
-    races = []
-  }) => {
+  ({ doNewRace, doSaveRace, currentRace, isEditing, races = [] }) => {
     const [race, setRace] = useState(currentRace || new Race({}));
 
     useEffect(() => {
       setRace(currentRace || {});
     }, [currentRace]);
 
-    console.log("race func called with state =", race, isEditing);
     return (
       <div className="overview">
         {races.map(race => (
@@ -31,12 +22,14 @@ export default connect(
             {race.name}
             <input
               type="button"
-              onClick={() => doSetCurrent(race)}
+              onClick={() => (window.location.pathname = `/races/${race.id}`)}
               value="view"
             />
             <input
               type="button"
-              onClick={() => doSetCurrent(race, true)}
+              onClick={() =>
+                (window.location.pathname = `/races/${race.id}/edit`)
+              }
               value="edit"
             />
           </div>

@@ -23,7 +23,7 @@ const reducer = (state = { all: [], current: null }, action) => {
     return state;
   }
   if (action.type === "RACE_SAVE_FINISHED") {
-    return { current: undefined };
+    return state;
   }
   if (action.type === "RACES_FETCHED") {
     console.log("races fetched", action.races);
@@ -48,10 +48,11 @@ const doNewRace = seasonId => ({ dispatch }) => {
   dispatch({ type: "NEW_RACE_CREATED", current: new Race({ seasonId }) });
 };
 
-const doSetCurrent = (race, edit) => ({ dispatch }) => {
-  dispatch({ type: "RACE_SELECTED", current: race });
-  if (edit) {
-    dispatch({ type: "RACE_EDITED" });
+const doSetCurrent = race => ({ store, dispatch }) => {
+  let state = store.getState();
+
+  if (!state.races.current || state.races.current.id !== race.id) {
+    dispatch({ type: "RACE_SELECTED", current: race });
   }
 };
 
@@ -61,6 +62,7 @@ const doSaveRace = race => ({ getState, dispatch }) => {
     .save()
     .then(() => {
       dispatch({ type: "RACE_SAVE_FINISHED" });
+      window.location.pathname = `/races/${race.id}`;
     })
     .catch(() => {
       dispatch({ type: "RACE_SAVE_FAILED" });
