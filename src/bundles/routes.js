@@ -10,7 +10,7 @@ let _onAllRoutesWrapper = (route, Component) => {
 };
 
 const routes = {
-  // "": { Component: Overview },
+  ..._onAllRoutesWrapper("", Overview),
   ..._onAllRoutesWrapper("/", Overview),
   ..._onAllRoutesWrapper("/seasons", Overview),
   ..._onAllRoutesWrapper("/seasons/new", Overview),
@@ -27,5 +27,5 @@ const routes = {
 };
 
 export default createRouteBundle(routes, {
-  routeInfoSelector: "selectPathname"
+  routeInfoSelector: "selectHash"
 });

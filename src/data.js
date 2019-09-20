@@ -7,15 +7,18 @@ let initPromise = new Promise(resolve => {
   initResolve = resolve;
 });
 
+let lastInitedUser = -1;
+
 class Data {
   init(user) {
-    if (!user) {
-      throw new Error("Must have valid user to init data layer");
+    if (lastInitedUser !== user) {
+      console.log("data inited with user: ", user);
+      this.user = user;
+      this.inited = true;
+      initResolve();
     }
-    console.log("data inited with user: ", user);
-    this.user = user;
-    this.inited = true;
-    initResolve();
+
+    lastInitedUser = user;
   }
 
   getCollectionQuery(collection) {

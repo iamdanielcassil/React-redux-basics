@@ -56,12 +56,12 @@ const reactUser = () => store => {
 
   let state = store.getState();
 
-  if (!state.user && !state.states.working) {
-    if (window.location.hash !== "#login") {
+  if (state.notAuthorized && !state.user && !state.states.working) {
+    if (window.location.hash !== "#/login") {
       pathBeforeLogin = window.location.hash;
-      window.location.hash = "login";
+      window.location.hash = "#/login";
     }
-  } else if (window.location.hash === "#afterLogin") {
+  } else if (window.location.hash === "#/afterLogin") {
     window.location.hash = pathBeforeLogin || "#/";
   }
 

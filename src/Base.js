@@ -2,7 +2,7 @@ import React from "react";
 import data from "./data";
 import WithLoading from "./components/Loading";
 import { connect } from "redux-bundler-react";
-import Bar from "./components/Bar";
+import Bar from "./components/topBar/Bar";
 import "./base.css";
 
 export default connect(
@@ -11,9 +11,7 @@ export default connect(
   "selectWorking",
   ({ user, route, working }) => {
     console.log("base comp", route, user, working, window.location.hash);
-    if (user) {
-      data.init(user);
-    }
+    data.init(user);
     console.log("base hit,", route);
     return (
       <WithLoading>

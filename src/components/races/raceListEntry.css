@@ -1,0 +1,33 @@
+.raceListEntry {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  height: 70px;
+  width: 100vw;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid white;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#5284af+0,5a87ad+100 */
+  background: #5284af; /* Old browsers */
+  background: -moz-linear-gradient(
+    top,
+    #5284af 0%,
+    #5a87ad 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    #5284af 0%,
+    #5a87ad 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #5284af 0%,
+    #5a87ad 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5284af', endColorstr='#5a87ad',GradientType=0 ); /* IE6-9 */
+}
+
+.raceListEntry-cell {
+  margin: 0 5px;
+  flex: 1 1 auto;
+}

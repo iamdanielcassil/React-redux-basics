@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Race from "../models/Race";
+import RaceList from "../components/races/RacesList";
 import { connect } from "redux-bundler-react";
 
 export default connect(
@@ -17,23 +18,7 @@ export default connect(
 
     return (
       <div className="overview">
-        {races.map(race => (
-          <div key={race.id}>
-            {race.name}
-            <input
-              type="button"
-              onClick={() => (window.location.pathname = `/races/${race.id}`)}
-              value="view"
-            />
-            <input
-              type="button"
-              onClick={() =>
-                (window.location.pathname = `/races/${race.id}/edit`)
-              }
-              value="edit"
-            />
-          </div>
-        ))}
+        <RaceList races={races} />
         <input
           type="button"
           onClick={() => doNewRace("123")}
