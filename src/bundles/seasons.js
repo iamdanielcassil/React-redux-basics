@@ -15,6 +15,9 @@ const init = store => {
     });
     console.log("seasons fetched", seasons, sortseasons);
     store.dispatch({ type: "SEASONS_FETCHED", seasons });
+
+    let currentId = store.selectQueryObject();
+    store.doSetCurrentSeason(currentId);
   });
 };
 const reducer = (state = { all: [], current: null }, action) => {
@@ -51,19 +54,30 @@ const doNewSeason = () => ({ dispatch }) => {
   // window.location.pathname = "/#/races/new";
 };
 
-const doSetCurrentSeason = season => ({ store, dispatch }) => {
+const doSetCurrentSeason = seasonId => ({ store, dispatch }) => {
   let state = store.getState();
 
-  if (!state.seasons.current || state.seasons.current.id !== season.id) {
-    dispatch({ type: "SEASON_SELECTED", current: season });
-    let state = store.getState();
-
-    if (state.seasons && state.seasons.current) {
-      data.listen(`seasons/${state.seasons.current.id}/races`, races =>
-        store.dispatch({ type: "RACES_FETCHED", races })
-      );
-    }
+  console.log("state in seasons", state);
+  if (state.seasons.all.length <= 0) {
+    return;
   }
+
+  if (state.seasons.current && state.seasons.current.id === seasonId) {
+    return;
+  }
+
+  let season = state.seasons.all.find(s => s.id === seasonId);
+
+  if (!season) {
+    season = state.seasons.all[0];
+  }
+
+  dispatch({ type: "SEASON_SELECTED", current: season });
+  store.doUpdateUrl({ query: { seasonId: season.id } });
+  store.dispatch({ type: "RACES_FETCH_STARTED" });
+  data.listen(`seasons/${season.id}/races`, races =>
+    store.dispatch({ type: "RACES_FETCH_FINISHED", races })
+  );
 };
 
 const doSaveSeason = season => ({ getState, dispatch }) => {

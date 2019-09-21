@@ -1,6 +1,12 @@
 .bar {
-  height: 35px;
+  height: 50px;
   width: 100%;
   background-color: rgb(25, 56, 85);
   border-bottom: 1px solid white;
+  flex: 0 0 auto;
+}
+
+.bar-info {
+  color: white;
+  font-size: 14pt;
 }

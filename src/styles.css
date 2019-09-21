@@ -50,11 +50,13 @@ a:hover {
 }
 
 .link {
-  margin: 7px;
-  padding: 3px;
+  margin: 15px;
+  padding: 2px;
   background-color: rgba(253, 253, 253, 0.2);
   border-radius: 2px;
   text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .link:hover {

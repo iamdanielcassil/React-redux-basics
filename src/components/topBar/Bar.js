@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
+import CountBadge from "../badges/CountBade";
 
 import "./bar.css";
 
 export default connect(
-  "doNewRace",
   "doNewSeason",
-  "doSetCurrentSeason",
   "selectSeasons",
+  "selectRaces",
   "selectCurrentSeason",
-  ({ doNewRace, doNewSeason, doSetCurrentSeason, seasons, currentSeason }) => (
+  "doUpdateUrl",
+  ({ doNewSeason, races, seasons, currentSeason, doUpdateUrl }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
         <div className="flex-column right-aligned link red">
@@ -21,8 +22,7 @@ export default connect(
         <div className="flex-column left-aligned">
           <select
             onChange={e => {
-              console.log("select season is ", e.target.value);
-              doSetCurrentSeason(seasons.find(s => s.id === e.target.value));
+              doUpdateUrl({ query: { seasonId: e.target.value } });
             }}
           >
             {seasons.map(season => (
@@ -33,7 +33,21 @@ export default connect(
           </select>
         </div>
       </div>
-      <div className="threeCol-center flex-row" />
+      <div className="threeCol-center flex-row">
+        {currentSeason ? (
+          <React.Fragment>
+            <div className="flex-column bar-info">{`${
+              currentSeason.startDate
+            } - ${currentSeason.endDate}`}</div>
+            <div className="flex-column bar-info font-bold">
+              {currentSeason.name}
+            </div>
+            <div className="flex-column bar-info">
+              <CountBadge count={races.length} label="Races" />
+            </div>
+          </React.Fragment>
+        ) : null}
+      </div>
       <div className="threeCol-right flex-row flex-end">
         <div className="flex-column link">
           <a href="/#/seasons/new" onClick={() => doNewSeason()}>

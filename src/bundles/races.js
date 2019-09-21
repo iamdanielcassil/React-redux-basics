@@ -19,7 +19,7 @@ const reducer = (state = { all: [], current: null }, action) => {
   if (action.type === "RACE_SAVE_FINISHED") {
     return state;
   }
-  if (action.type === "RACES_FETCHED") {
+  if (action.type === "RACES_FETCH_FINISHED") {
     console.log("races fetched", action.races);
     return { current: state.current, all: action.races };
   }

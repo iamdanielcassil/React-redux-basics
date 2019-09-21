@@ -9,10 +9,11 @@ export default connect(
   "selectUser",
   "selectRoute",
   "selectWorking",
-  ({ user, route, working }) => {
-    console.log("base comp", route, user, working, window.location.hash);
+  "doSetCurrentSeason",
+  "selectQueryObject",
+  ({ user, route, working, doSetCurrentSeason, queryObject }) => {
     data.init(user);
-    console.log("base hit,", route);
+    doSetCurrentSeason(queryObject.seasonId);
     return (
       <WithLoading>
         <div className="base">

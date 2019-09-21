@@ -1,6 +1,8 @@
 import React from "react";
 import WindBadge from "../badges/WindBadge";
 import TempBadge from "../badges/TempBadge";
+import CountBadge from "../badges/CountBade";
+
 import "./raceListEntry.css";
 
 export default ({
@@ -61,12 +63,7 @@ export default ({
             <TempBadge temp={temp} />
           </div>
           <div className="flex-column stretch center-aligned raceListEntry-cell ">
-            <span className="asBadge">
-              <span className="label">
-                <span>{entries || 36}</span>
-              </span>
-              <span>Entries</span>
-            </span>
+            <CountBadge count={entries} label="Entries" />
           </div>
         </div>
         <div className="threeCol-right flex-row">
