@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
 import CountBadge from "../badges/CountBade";
+import MoreMenu from "../menus/more";
 
 import "./bar.css";
 
@@ -50,9 +51,15 @@ export default connect(
       </div>
       <div className="threeCol-right flex-row flex-end">
         <div className="flex-column link">
-          <a href="/#/seasons/new" onClick={() => doNewSeason()}>
+          <MoreMenu>
+            <a href="/#/seasons/new" onClick={() => doNewSeason()}>
+              edit
+            </a>
+            <span>s</span>
+          </MoreMenu>
+          {/* <a href="/#/seasons/new" onClick={() => doNewSeason()}>
             edit
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
