@@ -10,15 +10,15 @@ export default connect(
   "selectSeasons",
   "selectCurrentSeason",
   ({ doNewRace, doNewSeason, doSetCurrentSeason, seasons, currentSeason }) => (
-    <div className="bar">
-      <div className="threeCol-left flex-row">
-        <div className="flex-column left-aligned raceListEntry-cell ">
+    <div className="bar flex-row">
+      <div className="threeCol-left flex-row flex-start">
+        <div className="flex-column right-aligned link red">
           <a href="/#/seasons/new" onClick={() => doNewSeason()}>
             new season
           </a>
         </div>
 
-        <div className="flex-column left-aligned raceListEntry-cell ">
+        <div className="flex-column left-aligned">
           <select
             onChange={e => {
               console.log("select season is ", e.target.value);
@@ -32,21 +32,15 @@ export default connect(
             ))}
           </select>
         </div>
-        <div className="flex-column raceListEntry-cell center-aligned">
-          <a
-            href="#/races/new"
-            onClick={() => doNewRace(currentSeason ? currentSeason.id : null)}
-          >
-            new race
-          </a>
-          {/* <input
-            type="button"
-            onClick={() => doNewRace("123")}
-            value="new race"
-          /> */}
-        </div>
       </div>
       <div className="threeCol-center flex-row" />
+      <div className="threeCol-right flex-row flex-end">
+        <div className="flex-column link">
+          <a href="/#/seasons/new" onClick={() => doNewSeason()}>
+            edit
+          </a>
+        </div>
+      </div>
     </div>
   )
 );

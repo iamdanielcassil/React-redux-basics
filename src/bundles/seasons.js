@@ -10,7 +10,10 @@ const init = store => {
   //   );
   // }
   data.listen(`seasons`, seasons => {
-    console.log("seasons fetched", seasons);
+    let sortseasons = seasons.sort((a, b) => {
+      return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+    });
+    console.log("seasons fetched", seasons, sortseasons);
     store.dispatch({ type: "SEASONS_FETCHED", seasons });
   });
 };
@@ -67,9 +70,9 @@ const doSaveSeason = season => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
   season
     .save()
-    .then(() => {
+    .then(savedSeason => {
       dispatch({ type: "SEASON_SAVE_FINISHED" });
-      window.location.hash = `seasons/${season.id}`;
+      window.location.hash = `/seasons/${savedSeason.id}`;
     })
     .catch(() => {
       dispatch({ type: "SEASON_SAVE_FAILED" });

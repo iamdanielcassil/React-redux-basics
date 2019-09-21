@@ -23,13 +23,22 @@ export default ({
   return (
     <div className="flex-row-reversed">
       {isLogedIn ? (
-        <a
-          title="edit"
-          href={`#/races/${id}/edit`}
-          className="flex-column right-aligned raceListEntry-cell font-10pt raceListEntry-editButton"
-        >
-          <span className="font-bold">edit</span>
-        </a>
+        <div className="flex-column right-aligned raceListEntry-buttons">
+          <a
+            title="edit"
+            href={`#/races/${id}/edit`}
+            className="font-10pt raceListEntry-editButton link"
+          >
+            <span className="font-bold">edit</span>
+          </a>
+          <a
+            title="delete"
+            href={`#/races/${id}/edit`}
+            className="font-10pt link red"
+          >
+            <span className="font-bold">DELETE</span>
+          </a>
+        </div>
       ) : null}
 
       <a title="view" href={`#/races/${id}`} className="raceListEntry">

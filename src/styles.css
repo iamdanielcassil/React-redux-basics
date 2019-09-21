@@ -42,10 +42,30 @@ body {
 
 a {
   text-decoration: none;
-  color: rgb(90, 90, 90);
+  color: rgb(255, 255, 255);
+  margin: 0 5px;
 }
 a:hover {
-  color: black;
+  color: rgb(182, 182, 182);
+}
+
+.link {
+  margin: 7px;
+  padding: 3px;
+  background-color: rgba(253, 253, 253, 0.2);
+  border-radius: 2px;
+  text-align: center;
+}
+
+.link:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.red {
+  background-color: red;
+}
+.red:hover {
+  background-color: rgb(177, 0, 0);
 }
 
 /* Generic styles for components */
@@ -73,6 +93,14 @@ a:hover {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-evenly;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.flex-end {
+  justify-content: flex-end;
 }
 
 .left-aligned {

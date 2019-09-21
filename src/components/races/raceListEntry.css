@@ -36,16 +36,32 @@ a.raceListEntry:hover {
   opacity: 0.8;
 }
 
+.racelist-new {
+  height: 35px;
+  font-size: 16pt;
+  font-weight: 100;
+  /* width: 200px; */
+  color: white;
+  padding: 0 50px;
+  border-radius: 5px;
+  /* border: 1px solid white; */
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.racelist-new:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .raceListEntry-cell {
   flex: 1 1 auto;
 }
-
-.raceListEntry-editButton {
+.raceListEntry-editButton,
+.raceListEntry-addButton {
   border: 1px solid white;
   opacity: 0.9;
   color: white;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 15px;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#5284af+0,5a87ad+100 */
   background: #5284af; /* Old browsers */
   background: -moz-linear-gradient(
@@ -73,7 +89,7 @@ a.raceListEntry:hover {
 a.raceListEntry-editButton:hover {
   color: white;
 }
-a.raceListEntry-editButton:hover ~ .raceListEntry {
+.raceListEntry-buttons:hover ~ .raceListEntry {
   color: white;
   opacity: 0.8;
   outline: 1px solid green;

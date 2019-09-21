@@ -5,11 +5,21 @@ import { connect } from "redux-bundler-react";
 
 export default connect(
   "doSaveRace",
+  "doNewRace",
   "selectCurrentRace",
+  "selectCurrentSeason",
   "selectIsEditing",
   "selectRaces",
   "selectUser",
-  ({ doSaveRace, currentRace, isEditing, races, user = [] }) => {
+  ({
+    doSaveRace,
+    currentRace,
+    currentSeason,
+    doNewRace,
+    isEditing,
+    races,
+    user = []
+  }) => {
     const [race, setRace] = useState(currentRace || new Race({}));
 
     useEffect(() => {
@@ -18,7 +28,12 @@ export default connect(
 
     return (
       <div className="overview">
-        <RaceList races={races} isLogedIn={user && user.uid} />
+        <RaceList
+          races={races}
+          isLogedIn={user && user.uid}
+          currentSeason={currentSeason}
+          doNewRace={doNewRace}
+        />
         <div>
           {currentRace && isEditing ? (
             <div className="form">
