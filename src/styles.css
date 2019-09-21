@@ -1,3 +1,24 @@
+body {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#5284af+0,5a87ad+100 */
+  background: #5284af; /* Old browsers */
+  background: -moz-linear-gradient(
+    top,
+    #5284af 0%,
+    #5a87ad 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    #5284af 0%,
+    #5a87ad 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #5284af 0%,
+    #5a87ad 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5284af', endColorstr='#5a87ad',GradientType=0 ); /* IE6-9 */
+}
+
 .App {
   position: absolute;
   display: flex;
@@ -40,11 +61,18 @@ a:hover {
 
 .flex-row {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
 }
 
 .flex-row.stretch {
   width: 100%;
+}
+
+.flex-row-reversed {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
 }
 
 .left-aligned {
@@ -62,6 +90,13 @@ a:hover {
 
 .font-bold {
   font-weight: bold;
+}
+
+.white {
+  color: white;
+}
+.white:hover {
+  color: rgb(117, 45, 45);
 }
 
 .asBadge .label {

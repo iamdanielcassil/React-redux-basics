@@ -4,12 +4,12 @@ import RaceList from "../components/races/RacesList";
 import { connect } from "redux-bundler-react";
 
 export default connect(
-  "doNewRace",
   "doSaveRace",
   "selectCurrentRace",
   "selectIsEditing",
   "selectRaces",
-  ({ doNewRace, doSaveRace, currentRace, isEditing, races = [] }) => {
+  "selectUser",
+  ({ doSaveRace, currentRace, isEditing, races, user = [] }) => {
     const [race, setRace] = useState(currentRace || new Race({}));
 
     useEffect(() => {
@@ -18,12 +18,7 @@ export default connect(
 
     return (
       <div className="overview">
-        <RaceList races={races} />
-        <input
-          type="button"
-          onClick={() => doNewRace("123")}
-          value="new race"
-        />
+        <RaceList races={races} isLogedIn={user && user.uid} />
         <div>
           {currentRace && isEditing ? (
             <div className="form">

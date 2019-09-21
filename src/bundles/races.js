@@ -2,17 +2,11 @@ import Race from "../models/Race";
 import data from "../data";
 
 const init = store => {
-  let state = store.getState();
-
-  // if (state.seasons && state.seasons.current) {
-  //   data.listen(`seasons/${state.seasons.current.id}/races`, races =>
-  //     store.dispatch({ type: "RACES_FETCHED", races })
-  //   );
-  // }
-  data.listen(`seasons/123/races`, races => {
-    console.log("races fetched", races);
-    store.dispatch({ type: "RACES_FETCHED", races });
-  });
+  // doGetSeasonRaces();
+  // data.listen(`seasons/123/races`, races => {
+  //   console.log("races fetched", races);
+  //   store.dispatch({ type: "RACES_FETCHED", races });
+  // });
 };
 const reducer = (state = { all: [], current: null }, action) => {
   if (action.type === "NEW_RACE_CREATED") {
@@ -43,9 +37,20 @@ const reducer = (state = { all: [], current: null }, action) => {
   return state;
 };
 
+// const doGetSeasonRaces = () => ({ store }) => {
+//   let state = store.getState();
+
+//   if (state.seasons && state.seasons.current) {
+//     data.listen(`seasons/${state.seasons.current.id}/races`, races =>
+//       store.dispatch({ type: "RACES_FETCHED", races })
+//     );
+//   }
+// };
+
 const doNewRace = seasonId => ({ dispatch }) => {
   console.log("season id ", seasonId);
   dispatch({ type: "NEW_RACE_CREATED", current: new Race({ seasonId }) });
+  // window.location.pathname = "/#/races/new";
 };
 
 const doSetCurrent = race => ({ store, dispatch }) => {
@@ -60,9 +65,10 @@ const doSaveRace = race => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
   race
     .save()
-    .then(() => {
+    .then(savedRace => {
+      console.log("save race then route", savedRace.id);
+      window.location.hash = `/races/${savedRace.id}`;
       dispatch({ type: "RACE_SAVE_FINISHED" });
-      window.location.pathname = `/races/${race.id}`;
     })
     .catch(() => {
       dispatch({ type: "RACE_SAVE_FAILED" });
@@ -92,6 +98,7 @@ export default {
   doNewRace,
   doSaveRace,
   doSetCurrent,
+  // doGetSeasonRaces,
   doUpdateCurrent,
   selectCurrentRace,
   selectIsEditing,

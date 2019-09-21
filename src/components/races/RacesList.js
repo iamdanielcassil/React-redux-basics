@@ -6,7 +6,7 @@ export default props => {
     <div className="racelist">
       {props.races.map(race => (
         <div key={race.id}>
-          <RacesListEntry {...race} />
+          <RacesListEntry {...race} isLogedIn={props.isLogedIn} />
         </div>
       ))}
     </div>
