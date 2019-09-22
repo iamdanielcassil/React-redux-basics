@@ -1,36 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./more.css";
 
 export default ({ children }) => {
   const [isShowing, setIsShowing] = useState(false);
-  // var el = document.querySelector(".more");
-  // var btn = el.querySelector(".more-btn");
-  // var menu = el.querySelector(".more-menu");
-  // var visible = false;
 
-  // function showMenu(e) {
-  //   e.preventDefault();
-  //   if (!visible) {
-  //     visible = true;
-  //     el.classList.add("show-more-menu");
-  //     menu.setAttribute("aria-hidden", false);
-  //     document.addEventListener("mousedown", hideMenu, false);
-  //   }
-  // }
-
-  // function hideMenu(e) {
-  //   if (btn.contains(e.target)) {
-  //     return;
-  //   }
-  //   if (visible) {
-  //     visible = false;
-  //     el.classList.remove("show-more-menu");
-  //     menu.setAttribute("aria-hidden", true);
-  //     document.removeEventListener("mousedown", hideMenu);
-  //   }
-  // }
-
-  // btn.addEventListener("click", showMenu, false);
+  useEffect(() => {
+    console.log("!!!! attached doc lister");
+    document.body.addEventListener("click", () => {
+      console.log("@@@@@@@@@@@@ triggered doc event");
+      setIsShowing(false);
+    });
+  }, [setIsShowing]);
   return (
     <div className="more show-more-menu">
       <button
@@ -48,7 +28,17 @@ export default ({ children }) => {
             <div className="more-menu-caret-outer" />
             <div className="more-menu-caret-inner" />
           </div>
-          <ul
+          <div>
+            {Object.values(children).map(child => (
+              <div className="more-menu-item" role="presentation">
+                <button type="button" className="more-menu-btn" role="menuitem">
+                  {child}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* <ul
             className="more-menu-items"
             tabindex="-1"
             role="menu"
@@ -62,32 +52,7 @@ export default ({ children }) => {
                 </button>
               </li>
             ))}
-            <li className="more-menu-item" role="presentation">
-              <button type="button" className="more-menu-btn" role="menuitem">
-                Share
-              </button>
-            </li>
-            <li className="more-menu-item" role="presentation">
-              <button type="button" className="more-menu-btn" role="menuitem">
-                Copy
-              </button>
-            </li>
-            <li className="more-menu-item" role="presentation">
-              <button type="button" className="more-menu-btn" role="menuitem">
-                Embed
-              </button>
-            </li>
-            <li className="more-menu-item" role="presentation">
-              <button type="button" className="more-menu-btn" role="menuitem">
-                Block
-              </button>
-            </li>
-            <li className="more-menu-item" role="presentation">
-              <button type="button" className="more-menu-btn" role="menuitem">
-                Report
-              </button>
-            </li>
-          </ul>
+          </ul> */}
         </div>
       ) : null}
     </div>

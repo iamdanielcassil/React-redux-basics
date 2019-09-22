@@ -1,7 +1,6 @@
 /* Page */
 
 .more-menu {
-  width: 100px;
 }
 
 /* More Button / Dropdown Menu */
@@ -15,14 +14,13 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  width: 100%;
   text-align: left;
   outline: none;
   cursor: pointer;
 }
 
-.more-dot {
-  background-color: #aab8c2;
+.more-btn span {
+  background-color: #ffffff;
   margin: 0 auto;
   display: inline-block;
   width: 7px;
@@ -32,10 +30,18 @@
   transition: background-color 0.3s;
 }
 
+.more-btn span:hover {
+  background-color: rgb(212, 212, 212);
+}
+
+.more-menu-btn a {
+  color: rgb(51, 51, 51);
+}
+
 .more-menu {
-  position: relative;
-  top: 100%;
+  position: absolute;
   z-index: 900;
+  right: 18px;
   float: left;
   padding: 10px 0;
   margin-top: 9px;
@@ -43,16 +49,16 @@
   border: 1px solid #ccd8e0;
   border-radius: 4px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  transform: translate(0, 15px) scale(0.95);
   transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-  pointer-events: none;
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  pointer-events: auto;
 }
 
 .more-menu-caret {
-  position: absolute;
-  top: -10px;
-  left: 12px;
+  position: relative;
+  top: -20px;
+  left: calc(100% - 25px);
   width: 18px;
   height: 10px;
   float: left;
@@ -93,7 +99,15 @@
 }
 
 .more-menu-item {
-  display: block;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  border-bottom: 1px solid #dbdada;
+  font-weight: bold;
+}
+
+.more-menu-item:last-of-type {
+  border-bottom: none;
 }
 
 .more-menu-btn {
@@ -103,22 +117,24 @@
   display: block;
   font-size: 13px;
   line-height: 18px;
-  padding: 5px 20px;
+  padding: 10px 25px;
+  min-width: 150px;
   position: relative;
   white-space: nowrap;
 }
-
+/* 
 .more-menu-item:hover {
   background-color: #489fe5;
+} */
+
+.more-menu-btn a:hover,
+.more-menu-btn span:hover {
+  color: rgb(68, 135, 221);
 }
 
-.more-menu-item:hover .more-menu-btn {
-  color: #fff;
-}
-
-.more-btn:hover .more-dot,
-.show-more-menu .more-dot {
-  background-color: #516471;
+.more-menu-btn a,
+.more-menu-btn span {
+  color: rgb(63, 62, 62);
 }
 
 .show-more-menu .more-menu {

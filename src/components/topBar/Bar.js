@@ -50,17 +50,38 @@ export default connect(
         ) : null}
       </div>
       <div className="threeCol-right flex-row flex-end">
-        <div className="flex-column link">
-          <MoreMenu>
-            <a href="/#/seasons/new" onClick={() => doNewSeason()}>
-              edit
-            </a>
-            <span>s</span>
-          </MoreMenu>
-          {/* <a href="/#/seasons/new" onClick={() => doNewSeason()}>
+        {currentSeason ? (
+          <div className="flex-column">
+            <MoreMenu>
+              <a
+                className="primary"
+                href="/#/seasons/new"
+                onClick={() => doNewSeason()}
+              >
+                edit
+              </a>
+              <span
+                href="/#/seasons/new"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      `Are you shure you want to delete season: ${
+                        currentSeason.name
+                      }`
+                    )
+                  ) {
+                    doNewSeason();
+                  }
+                }}
+              >
+                delete
+              </span>
+            </MoreMenu>
+            {/* <a href="/#/seasons/new" onClick={() => doNewSeason()}>
             edit
           </a> */}
-        </div>
+          </div>
+        ) : null}
       </div>
     </div>
   )
