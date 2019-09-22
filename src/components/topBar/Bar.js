@@ -15,16 +15,9 @@ export default connect(
   ({ doNewSeason, races, seasons, currentSeason, user, doUpdateUrl }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
-        {user && user.uid ? (
-          <div className="flex-column right-aligned link red">
-            <a href="/#/seasons/new" onClick={() => doNewSeason()}>
-              new season
-            </a>
-          </div>
-        ) : null}
-
         <div className="flex-column left-aligned">
           <select
+            className="bar-seasons-select"
             onChange={e => {
               doUpdateUrl({ query: { seasonId: e.target.value } });
             }}
@@ -36,35 +29,16 @@ export default connect(
             ))}
           </select>
         </div>
-      </div>
-      <div className="threeCol-center flex-row">
-        {currentSeason ? (
-          <React.Fragment>
-            <div className="flex-column bar-info">{`${
-              currentSeason.startDate
-            } - ${currentSeason.endDate}`}</div>
-            <div className="flex-column bar-info font-bold">
-              {currentSeason.name}
-            </div>
-            <div className="flex-column bar-info">
-              <CountBadge count={races.length} label="Races" />
-            </div>
-          </React.Fragment>
-        ) : null}
-      </div>
-      <div className="threeCol-right flex-row flex-end">
         {currentSeason && user && user.uid ? (
           <div className="flex-column">
             <MoreMenu>
-              <div>
-                <a
-                  className=""
-                  href="/#/seasons/new"
-                  onClick={() => doNewSeason()}
-                >
-                  edit season
-                </a>
-              </div>
+              <a
+                className=""
+                href="/#/seasons/new"
+                onClick={() => doNewSeason()}
+              >
+                edit season
+              </a>
               <span
                 className="red"
                 onClick={e => {
@@ -83,6 +57,9 @@ export default connect(
               >
                 <span className="font-bold">DELETE SEASON</span>
               </span>
+              <a href="/#/seasons/new" onClick={() => doNewSeason()}>
+                new season
+              </a>
             </MoreMenu>
             {/* <a href="/#/seasons/new" onClick={() => doNewSeason()}>
             edit
@@ -93,6 +70,24 @@ export default connect(
             <a href="/#/login">sign in</a>
           </div>
         )}
+      </div>
+      <div className="threeCol-center flex-row" />
+      <div className="threeCol-right flex-row flex-end">
+        {window.location.hash.trim() !== "" && window.location.hash !== "#/" ? (
+          <div className="flex-column bar-info">
+            <a href="#/">back to list</a>
+          </div>
+        ) : null}
+        {currentSeason ? (
+          <React.Fragment>
+            <div className="flex-column bar-info">
+              <CountBadge count={races.length} label="Races" />
+            </div>
+            <div className="flex-column bar-info font-10pt">{`${
+              currentSeason.startDate
+            } - ${currentSeason.endDate}`}</div>
+          </React.Fragment>
+        ) : null}
       </div>
     </div>
   )

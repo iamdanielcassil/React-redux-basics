@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import data from "./data";
 import WithLoading from "./components/Loading";
 import { connect } from "redux-bundler-react";
@@ -13,7 +13,10 @@ export default connect(
   "selectQueryObject",
   ({ user, route, working, doSetCurrentSeason, queryObject }) => {
     data.init(user);
-    doSetCurrentSeason(queryObject.seasonId);
+
+    useEffect(() => {
+      doSetCurrentSeason(queryObject.seasonId);
+    }, [queryObject, doSetCurrentSeason]);
     return (
       <WithLoading>
         <div className="base">

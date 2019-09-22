@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
 import Race from "../models/Race";
-import "./viewrace.css";
+import RaceEntries from "../components/entries/RaceEntries";
+import "./editRace.css";
 
 export default connect(
   "selectRouteParams",
@@ -10,12 +11,12 @@ export default connect(
   "doSaveRace",
   "selectRaces",
   ({ routeParams, currentRace, doSetCurrent, doSaveRace, races }) => {
-    const [race, setRace] = useState(currentRace || new Race({}));
+    console.log("current race is", currentRace);
+    const [race, setRace] = useState(currentRace || {});
 
     useEffect(() => {
       if (races && races.length > 0 && routeParams.id) {
         let race = races.find(r => r.id === routeParams.id);
-        console.log("in use effect, races and race are", races, race);
 
         if (race) {
           doSetCurrent(race);
@@ -27,30 +28,68 @@ export default connect(
       setRace(currentRace || {});
     }, [currentRace]);
 
-    console.log("current race is:", currentRace);
     return (
-      <div>
-        {currentRace ? (
-          <div className="form">
+      <div className="flex-row editRace-form">
+        <div className="flex-container">
+          <label htmlFor="name">
+            Title
             <input
+              id="name"
               className="field"
               type="text"
               onChange={e => setRace({ ...race, name: e.target.value })}
               value={race.name || ""}
             />
+          </label>
+          <label htmlFor="startDate">
+            Start Date + Time
             <input
               className="field"
-              type="date"
+              type="datetime-local"
               onChange={e => setRace({ ...race, startDate: e.target.value })}
               value={race.startDate}
             />
+          </label>
+          <label htmlFor="windSpeed">
+            Wind Speed
             <input
-              type="button"
-              onClick={() => doSaveRace(race.update(race))}
-              value="save"
+              id="windSpeed"
+              className="field"
+              type="number"
+              onChange={e => setRace({ ...race, windSpeed: e.target.value })}
+              value={race.windSpeed || ""}
             />
-          </div>
-        ) : null}
+          </label>
+          <label htmlFor="windDirection">
+            Wind Direction - should be select list
+            <input
+              id="windDirection"
+              className="field"
+              type="text"
+              onChange={e =>
+                setRace({ ...race, windDirection: e.target.value })
+              }
+              value={race.windDirection}
+            />
+          </label>
+          <label htmlFor="temperture">
+            Temperture
+            <input
+              className="field"
+              type="text"
+              onChange={e => setRace({ ...race, temperture: e.target.value })}
+              value={race.temperture}
+            />
+          </label>
+          <input
+            type="button"
+            onClick={() => doSaveRace(new Race(race))}
+            value="save"
+          />
+        </div>
+        <div className="flex-container flex-start">
+          <RaceEntries />
+        </div>
       </div>
     );
   }

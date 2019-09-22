@@ -14,18 +14,17 @@ export default ({
   second,
   thrid,
   id,
-  wind,
-  temp,
+  conditions,
   name,
   isLogedIn,
   ...race
 }) => {
+  conditions = conditions || {};
   // test data
-  wind = { direction: "NE", speed: 15 };
-  temp = 78;
   return (
     <div className="flex-row-reversed">
-      {/* {isLogedIn ? (
+      <div className="raceListEntry">
+        {/* {isLogedIn ? (
         <div className="flex-column right-aligned raceListEntry-buttons">
           <a
             title="edit"
@@ -44,13 +43,12 @@ export default ({
         </div>
       ) : null} */}
 
-      <a title="view" href={`#/races/${id}`} className="raceListEntry">
         <div className="threeCol-left flex-row">
           <div className="flex-column left-aligned raceListEntry-cell ">
-            <span>Race: {name}</span>
-            <span>Race Date: {startDate}</span>
+            <h3>{name}</h3>
+            <span>Race Date: {new Date(startDate).toLocaleString()}</span>
           </div>
-          <div className="flex-column left-aligned raceListEntry-cell">
+          <div className="flex-column right-aligned raceListEntry-cell">
             <span className="asBadge">
               <span className="label">
                 <span>{seasonName || " June 2019"}</span>
@@ -60,8 +58,8 @@ export default ({
         </div>
         <div className="threeCol-center flex-row">
           <div className="flex-column stretch center-aligned raceListEntry-cell ">
-            <WindBadge {...wind} />
-            <TempBadge temp={temp} />
+            <WindBadge {...conditions} />
+            <TempBadge temp={conditions.tempeture} />
           </div>
           <div className="flex-column stretch center-aligned raceListEntry-cell ">
             <CountBadge count={entries} label="Entries" />
@@ -72,6 +70,11 @@ export default ({
             <span>1st Place: {first || "Test boat"}</span>
             <span>2nd Place: {first || "Test boat"}</span>
             <span>3rd Place: {first || "Test boat"}</span>
+          </div>
+          <div className="flex-column right-aligned flex-11auto ">
+            <a title="view" href={`#/races/${id}`} className="">
+              preivew
+            </a>
           </div>
           <div className="flex-column right-aligned flex-11auto ">
             {isLogedIn ? (
@@ -94,7 +97,7 @@ export default ({
             ) : null}
           </div>
         </div>
-      </a>
+      </div>
     </div>
   );
 };

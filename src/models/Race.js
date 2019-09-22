@@ -8,7 +8,11 @@ export default class Race {
     this.seasonId = props.seasonId;
     this.startDate = props.startDate || new Date().toISOString().split("T")[0];
     this.endDate = props.endDate;
-    this.conditions = props.conditions;
+    this.conditions = {
+      windSpeed: props.windSpeed,
+      windDirection: props.windDirection,
+      tempeture: props.tempeture
+    };
     this.courseMap = props.courseMap;
     this.results = props.results;
   }
@@ -19,7 +23,8 @@ export default class Race {
       name: this.name,
       startDate: this.startDate,
       endDate: this.endDate || "",
-      seasonId: this.seasonId
+      seasonId: this.seasonId,
+      conditions: this.conditions
     };
   }
 
@@ -46,7 +51,8 @@ export default class Race {
       name: this.name,
       startDate: this.startDate,
       endDate: this.endDate || "",
-      seasonId: this.seasonId
+      seasonId: this.seasonId,
+      conditions: this.conditions || {}
     };
 
     if (this.isNew) {

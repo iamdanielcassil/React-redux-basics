@@ -28,6 +28,12 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5284af', endColorstr='#5a87ad',GradientType=0 ); /* IE6-9 */
 }
 
+.raceListEntry h3 {
+  margin: 0px;
+  padding: 0px;
+  text-transform: uppercase;
+}
+
 a.raceListEntry {
   color: white;
 }

@@ -1,9 +1,9 @@
 import React from "react";
 
-export default ({ speed, direction }) => {
+export default ({ windSpeed, windDirection }) => {
   return (
     <div>
-      Wind: {direction} at {speed}mph
+      Wind: {windDirection} at {windSpeed}mph
     </div>
   );
 };

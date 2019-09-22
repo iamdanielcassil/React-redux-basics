@@ -10,3 +10,15 @@
   color: white;
   font-size: 14pt;
 }
+
+.bar-seasons-select {
+  font-size: 14pt;
+  list-style: none;
+  border: none;
+  /* background: none; */
+  background-color: rgb(25, 56, 85);
+  color: white;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 3px;
+}
