@@ -10,15 +10,18 @@ export default connect(
   "selectSeasons",
   "selectRaces",
   "selectCurrentSeason",
+  "selectUser",
   "doUpdateUrl",
-  ({ doNewSeason, races, seasons, currentSeason, doUpdateUrl }) => (
+  ({ doNewSeason, races, seasons, currentSeason, user, doUpdateUrl }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
-        <div className="flex-column right-aligned link red">
-          <a href="/#/seasons/new" onClick={() => doNewSeason()}>
-            new season
-          </a>
-        </div>
+        {user && user.uid ? (
+          <div className="flex-column right-aligned link red">
+            <a href="/#/seasons/new" onClick={() => doNewSeason()}>
+              new season
+            </a>
+          </div>
+        ) : null}
 
         <div className="flex-column left-aligned">
           <select
@@ -50,19 +53,20 @@ export default connect(
         ) : null}
       </div>
       <div className="threeCol-right flex-row flex-end">
-        {currentSeason ? (
+        {currentSeason && user && user.uid ? (
           <div className="flex-column">
             <MoreMenu>
               <div>
                 <a
-                  className="primary"
+                  className=""
                   href="/#/seasons/new"
                   onClick={() => doNewSeason()}
                 >
-                  edit
+                  edit season
                 </a>
               </div>
               <span
+                className="red"
                 onClick={e => {
                   e.preventDefault();
                   console.log("ssdsadsadsadsdsa");
@@ -77,14 +81,18 @@ export default connect(
                   }
                 }}
               >
-                delete
+                <span className="font-bold">DELETE SEASON</span>
               </span>
             </MoreMenu>
             {/* <a href="/#/seasons/new" onClick={() => doNewSeason()}>
             edit
           </a> */}
           </div>
-        ) : null}
+        ) : (
+          <div className="flex-column">
+            <a href="/#/login">sign in</a>
+          </div>
+        )}
       </div>
     </div>
   )
