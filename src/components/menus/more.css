@@ -17,15 +17,16 @@
   text-align: left;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .more-btn span {
   background-color: #ffffff;
   margin: 0 auto;
   display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 1px;
+  width: 5px;
+  height: 5px;
+  margin-right: 2px;
   border-radius: 50%;
   transition: background-color 0.3s;
 }
@@ -41,7 +42,7 @@
 .more-menu {
   position: absolute;
   z-index: 900;
-  right: 18px;
+  right: 2px;
   float: left;
   padding: 10px 0;
   margin-top: 9px;
@@ -110,7 +111,7 @@
   border-bottom: none;
 }
 
-.more-menu-btn {
+.more-menu-btn > * {
   min-width: 100%;
   color: #66757f;
   cursor: pointer;
@@ -121,6 +122,10 @@
   min-width: 150px;
   position: relative;
   white-space: nowrap;
+}
+
+.more-menu-btn > *:hover {
+  background-color: black;
 }
 /* 
 .more-menu-item:hover {
@@ -141,4 +146,8 @@
   opacity: 1;
   transform: translate(0, 0) scale(1);
   pointer-events: auto;
+}
+
+.more {
+  position: relative;
 }

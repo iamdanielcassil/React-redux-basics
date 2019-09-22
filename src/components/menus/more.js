@@ -6,17 +6,21 @@ export default ({ children }) => {
 
   useEffect(() => {
     console.log("!!!! attached doc lister");
-    document.body.addEventListener("click", () => {
-      console.log("@@@@@@@@@@@@ triggered doc event");
-      setIsShowing(false);
-    });
+    // document.body.addEventListener("click", () => {
+    //   console.log("@@@@@@@@@@@@ triggered doc event");
+    //   setIsShowing(false);
+    // });direct
   }, [setIsShowing]);
   return (
     <div className="more show-more-menu">
       <button
         id="more-btn"
         className="more-btn"
-        onClick={() => setIsShowing(!isShowing)}
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsShowing(!isShowing);
+        }}
       >
         <span className="more-dot" />
         <span className="more-dot" />
@@ -29,11 +33,16 @@ export default ({ children }) => {
             <div className="more-menu-caret-inner" />
           </div>
           <div>
-            {Object.values(children).map(child => (
-              <div className="more-menu-item" role="presentation">
-                <button type="button" className="more-menu-btn" role="menuitem">
+            {Object.values(children).map((child, index) => (
+              <div
+                key={index}
+                className="more-menu-item more-menu-btn"
+                role="presentation"
+              >
+                {child}
+                {/* <button type="button" className="more-menu-btn" role="menuitem">
                   {child}
-                </button>
+                </button> */}
               </div>
             ))}
           </div>

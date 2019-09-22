@@ -105,6 +105,10 @@ a:hover {
   justify-content: flex-end;
 }
 
+.flex-11auto {
+  flex: 1 1 auto;
+}
+
 .left-aligned {
   text-align: left;
 }
@@ -159,4 +163,8 @@ a:hover {
 
 .threeCol-right {
   margin-right: 15px;
+}
+
+.padding15 {
+  padding: 15px;
 }

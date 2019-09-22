@@ -2,6 +2,7 @@ import React from "react";
 import WindBadge from "../badges/WindBadge";
 import TempBadge from "../badges/TempBadge";
 import CountBadge from "../badges/CountBade";
+import MoreMenu from "../menus/more";
 
 import "./raceListEntry.css";
 
@@ -24,7 +25,7 @@ export default ({
   temp = 78;
   return (
     <div className="flex-row-reversed">
-      {isLogedIn ? (
+      {/* {isLogedIn ? (
         <div className="flex-column right-aligned raceListEntry-buttons">
           <a
             title="edit"
@@ -41,7 +42,7 @@ export default ({
             <span className="font-bold">DELETE</span>
           </a>
         </div>
-      ) : null}
+      ) : null} */}
 
       <a title="view" href={`#/races/${id}`} className="raceListEntry">
         <div className="threeCol-left flex-row">
@@ -66,11 +67,31 @@ export default ({
             <CountBadge count={entries} label="Entries" />
           </div>
         </div>
-        <div className="threeCol-right flex-row">
-          <div className="flex-column stretch right-aligned raceListEntry-cell font-10pt ">
+        <div className="threeCol-right flex-row flex-end">
+          <div className="flex-column stretch right-aligned flex-11auto raceListEntry-cell font-10pt ">
             <span>1st Place: {first || "Test boat"}</span>
             <span>2nd Place: {first || "Test boat"}</span>
             <span>3rd Place: {first || "Test boat"}</span>
+          </div>
+          <div className="flex-column right-aligned flex-11auto ">
+            {isLogedIn ? (
+              <MoreMenu>
+                <a
+                  title="edit"
+                  href={`#/races/${id}/edit`}
+                  className="font-10pt raceListEntry-editButton link"
+                >
+                  <span className="font-bold">edit</span>
+                </a>
+                <a
+                  title="delete"
+                  href={`#/races/${id}/edit`}
+                  className="font-10pt link red"
+                >
+                  <span className="font-bold">DELETE</span>
+                </a>
+              </MoreMenu>
+            ) : null}
           </div>
         </div>
       </a>

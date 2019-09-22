@@ -53,16 +53,19 @@ export default connect(
         {currentSeason ? (
           <div className="flex-column">
             <MoreMenu>
-              <a
-                className="primary"
-                href="/#/seasons/new"
-                onClick={() => doNewSeason()}
-              >
-                edit
-              </a>
+              <div>
+                <a
+                  className="primary"
+                  href="/#/seasons/new"
+                  onClick={() => doNewSeason()}
+                >
+                  edit
+                </a>
+              </div>
               <span
-                href="/#/seasons/new"
-                onClick={() => {
+                onClick={e => {
+                  e.preventDefault();
+                  console.log("ssdsadsadsadsdsa");
                   if (
                     window.confirm(
                       `Are you shure you want to delete season: ${
