@@ -14,12 +14,13 @@ export default ({
   second,
   thrid,
   id,
-  conditions,
+  temperature,
+  windSpeed,
+  windDirection,
   name,
   isLogedIn,
   ...race
 }) => {
-  conditions = conditions || {};
   // test data
   return (
     <div className="flex-row-reversed">
@@ -58,8 +59,8 @@ export default ({
         </div>
         <div className="threeCol-center flex-row">
           <div className="flex-column stretch center-aligned raceListEntry-cell ">
-            <WindBadge {...conditions} />
-            <TempBadge temp={conditions.tempeture} />
+            <WindBadge {...{ windDirection, windSpeed }} />
+            <TempBadge temperature={temperature} />
           </div>
           <div className="flex-column stretch center-aligned raceListEntry-cell ">
             <CountBadge count={entries} label="Entries" />

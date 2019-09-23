@@ -7,12 +7,10 @@ export default class Race {
     this.name = props.name || "";
     this.seasonId = props.seasonId;
     this.startDate = props.startDate || new Date().toISOString().split("T")[0];
-    this.endDate = props.endDate;
-    this.conditions = {
-      windSpeed: props.windSpeed,
-      windDirection: props.windDirection,
-      tempeture: props.tempeture
-    };
+    this.endDate = props.endDate || "";
+    this.temperature = props.temperature || "";
+    this.windDirection = props.windDirection || "";
+    this.windSpeed = props.windSpeed || "";
     this.courseMap = props.courseMap;
     this.results = props.results;
   }
@@ -24,7 +22,9 @@ export default class Race {
       startDate: this.startDate,
       endDate: this.endDate || "",
       seasonId: this.seasonId,
-      conditions: this.conditions
+      temperature: this.temperature,
+      windSpeed: this.windSpeed,
+      windDirection: this.windDirection
     };
   }
 
@@ -46,14 +46,7 @@ export default class Race {
     if (!this.startDate || !this.name || !this.seasonId)
       return Promise.reject();
 
-    let race = {
-      id: this.id,
-      name: this.name,
-      startDate: this.startDate,
-      endDate: this.endDate || "",
-      seasonId: this.seasonId,
-      conditions: this.conditions || {}
-    };
+    let race = this.get();
 
     if (this.isNew) {
       // save new race
@@ -68,6 +61,7 @@ export default class Race {
         console.log("collection", collection);
         window.xcc = collection;
         doc.set(race);
+        // window.history.back();
         return race;
       });
   };

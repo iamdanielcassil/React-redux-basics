@@ -28,6 +28,7 @@ export default connect(
       setRace(currentRace || {});
     }, [currentRace]);
 
+    console.log("startdate", race.startDate);
     return (
       <div className="flex-row editRace-form">
         <div className="flex-container">
@@ -47,7 +48,7 @@ export default connect(
               className="field"
               type="datetime-local"
               onChange={e => setRace({ ...race, startDate: e.target.value })}
-              value={race.startDate}
+              value={getDateTime(race.startDate)}
             />
           </label>
           <label htmlFor="windSpeed">
@@ -72,13 +73,13 @@ export default connect(
               value={race.windDirection}
             />
           </label>
-          <label htmlFor="temperture">
-            Temperture
+          <label htmlFor="temperature">
+            temperature
             <input
               className="field"
               type="text"
-              onChange={e => setRace({ ...race, temperture: e.target.value })}
-              value={race.temperture}
+              onChange={e => setRace({ ...race, temperature: e.target.value })}
+              value={race.temperature}
             />
           </label>
           <input
@@ -94,3 +95,18 @@ export default connect(
     );
   }
 );
+
+function getDateTime(d) {
+  let date;
+
+  if (d) {
+    date = new Date(d);
+  } else {
+    date = new Date();
+  }
+
+  let dateString = date.toISOString();
+  let returnString = dateString.substring(0, 19);
+  console.log("formatted date string", returnString);
+  return returnString;
+}
