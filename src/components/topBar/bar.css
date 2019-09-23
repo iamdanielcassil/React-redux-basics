@@ -4,6 +4,8 @@
   background-color: rgb(25, 56, 85);
   border-bottom: 1px solid white;
   flex: 0 0 auto;
+  position: fixed;
+  z-index: 999;
 }
 
 .bar-info {

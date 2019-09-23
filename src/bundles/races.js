@@ -63,11 +63,19 @@ const doSetCurrent = race => ({ store, dispatch }) => {
 
 const doSaveRace = race => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
+  let wasNew = race.isNew;
+
   race
     .save()
     .then(savedRace => {
-      console.log("save race then route", savedRace.id);
-      window.location.hash = `/races/${savedRace.id}`;
+      if (wasNew) {
+        // do set last save so we can highlight in list savedRace.id
+      }
+
+      window.history.length
+        ? window.history.back()
+        : (window.location.hash = "/");
+
       dispatch({ type: "RACE_SAVE_FINISHED" });
     })
     .catch(() => {

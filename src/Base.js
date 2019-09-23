@@ -22,7 +22,9 @@ export default connect(
         <div className="base">
           <div id="MODAL_PORTAL" />
           <Bar />
-          <route.Component />
+          <div className="main">
+            <route.Component />
+          </div>
         </div>
       </WithLoading>
     );

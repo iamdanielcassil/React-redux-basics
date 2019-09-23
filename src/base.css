@@ -10,3 +10,11 @@
   bottom: 0;
   background-color: rgb(255, 255, 255);
 }
+
+.main {
+  top: 50px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}

@@ -10,25 +10,45 @@ export default connect(
   "doSetCurrent",
   "doSaveRace",
   "selectRaces",
-  ({ routeParams, currentRace, doSetCurrent, doSaveRace, races }) => {
-    console.log("current race is", currentRace);
-    const [race, setRace] = useState(currentRace || {});
+  "selectCurrentSeason",
+  ({
+    routeParams,
+    currentRace,
+    doSetCurrent,
+    doSaveRace,
+    races,
+    currentSeason
+  }) => {
+    const [race, setRace] = useState(() => {
+      return {
+        seasonId: currentSeason && currentSeason.id,
+        startDate: new Date().toDateString(),
+        ...currentRace
+      };
+    });
+
+    console.log("current race is", race);
 
     useEffect(() => {
-      if (races && races.length > 0 && routeParams.id) {
-        let race = races.find(r => r.id === routeParams.id);
+      if (!race.id && races && routeParams.id) {
+        let _race = races.find(r => r.id === routeParams.id);
 
-        if (race) {
-          doSetCurrent(race);
+        if (_race) {
+          setRace(_race);
         }
       }
-    }, [routeParams, doSetCurrent, races]);
+    }, [race, races, routeParams, setRace]);
 
     useEffect(() => {
-      setRace(currentRace || {});
-    }, [currentRace]);
+      let _race = {
+        seasonId: currentSeason && currentSeason.id,
+        startDate: new Date().toDateString(),
+        ...currentRace
+      };
 
-    console.log("startdate", race.startDate);
+      setRace(_race);
+    }, [currentRace, currentSeason]);
+
     return (
       <div className="flex-row editRace-form">
         <div className="flex-container">
@@ -63,23 +83,45 @@ export default connect(
           </label>
           <label htmlFor="windDirection">
             Wind Direction - should be select list
-            <input
+            <select
               id="windDirection"
               className="field"
               type="text"
               onChange={e =>
                 setRace({ ...race, windDirection: e.target.value })
               }
-              value={race.windDirection}
-            />
-          </label>
-          <label htmlFor="temperature">
-            temperature
-            <input
+              value={race.windDirection || ""}
+            >
+              <option value="">Please Select</option>
+              <option value="n">N</option>
+              <option value="ne">NE</option>
+              <option value="e">E</option>
+              <option value="se">SE</option>
+              <option value="s">S</option>
+              <option value="sw">SW</option>
+              <option value="w">W</option>
+              <option value="nw">NW</option>
+            </select>
+            {/* <input
+              id="windDirection"
               className="field"
               type="text"
+              onChange={e =>
+                setRace({ ...race, windDirection: e.target.value })
+              }
+              value={race.windDirection || ""}
+            /> */}
+          </label>
+          <label htmlFor="temperature">
+            Temperature (f)
+            <input
+              placeholder="f"
+              className="field"
+              min={0}
+              max={110}
+              type="number"
               onChange={e => setRace({ ...race, temperature: e.target.value })}
-              value={race.temperature}
+              value={race.temperature || ""}
             />
           </label>
           <input
@@ -107,6 +149,5 @@ function getDateTime(d) {
 
   let dateString = date.toISOString();
   let returnString = dateString.substring(0, 19);
-  console.log("formatted date string", returnString);
   return returnString;
 }
