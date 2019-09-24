@@ -11,6 +11,7 @@ window.DC = window.DC ? { ...window.DC, store } : { store };
 function App() {
   return (
     <div className="App">
+      <div id="MODAL_PORTAL" />
       <Base />
     </div>
   );

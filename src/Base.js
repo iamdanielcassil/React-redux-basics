@@ -20,7 +20,6 @@ export default connect(
     return (
       <WithLoading>
         <div className="base">
-          <div id="MODAL_PORTAL" />
           <Bar />
           <div className="main">
             <route.Component />

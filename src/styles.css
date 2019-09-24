@@ -17,6 +17,7 @@ body {
     #5a87ad 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5284af', endColorstr='#5a87ad',GradientType=0 ); /* IE6-9 */
+  font-family: sans-serif;
 }
 
 .App {

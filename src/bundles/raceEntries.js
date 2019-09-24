@@ -9,7 +9,7 @@ const init = store => {
   // });
 };
 const reducer = (state = { all: [], current: null }, action) => {
-  if (action.type === "NEW_RACE_CREATED") {
+  if (action.type === "NEW_RACE_ENTRY_CREATED") {
     return { all: state.all, current: action.current };
   }
 
@@ -26,8 +26,8 @@ const doNewRaceEntry = (raceId, boatId) => ({ dispatch }) => {
 const doSetCurrentRaceEntry = entry => ({ store, dispatch }) => {
   let state = store.getState();
 
-  if (!state.races.current || state.races.current.id !== race.id) {
-    dispatch({ type: "RACE_SELECTED", current: race });
+  if (!state.entries.current || state.enteries.current.id !== entry.id) {
+    dispatch({ type: "RACE_ENTRY_SELECTED", current: entry });
   }
 };
 
@@ -40,8 +40,8 @@ const doSaveRaceEntry = entry => ({ getState, dispatch }) => {
       dispatch({ type: "RACE_ENTRY_SAVE_FINISHED" });
     })
     .catch(() => {
-      dispatch({ type: "RACE_SAVE_FAILED" });
-      dispatch({ type: "RACE_SAVE_FINISHED" });
+      dispatch({ type: "RACE_ENTRY_SAVE_FAILED" });
+      dispatch({ type: "RACE_ENTRY_SAVE_FINISHED" });
     });
 };
 
@@ -60,7 +60,7 @@ const selectCurrentRaceEntry = state => {
 const selectRaceEntries = state => state.raceEntries.all;
 
 export default {
-  name: "races",
+  name: "raceEntries",
   init,
   reducer,
   doNewRaceEntry,
