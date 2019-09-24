@@ -85,14 +85,19 @@ const doSaveRace = race => ({ getState, dispatch }) => {
 };
 
 const doUpdateCurrent = raceData => ({ getState, dispatch }) => {
-  console.log("doupdatecurrent", getState());
   let race = getState().races.current;
   race.update(raceData);
   dispatch({ type: "CURRENT_RACE_UPDATED" });
 };
 
+const doAddRaceEntry = entry => ({ getState, dispatch }) => {
+  let race = getState().races.current;
+
+  race.addEntry(entry);
+  dispatch({ type: "CURRENT_RACE_UPDATED" });
+};
+
 const selectCurrentRace = state => {
-  console.log("selectCurrentRace", state.races.current);
   return state.races.current ? { ...state.races.current } : null;
 };
 
@@ -106,7 +111,7 @@ export default {
   doNewRace,
   doSaveRace,
   doSetCurrent,
-  // doGetSeasonRaces,
+  doAddRaceEntry,
   doUpdateCurrent,
   selectCurrentRace,
   selectIsEditing,
