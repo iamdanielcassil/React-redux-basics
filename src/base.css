@@ -9,6 +9,7 @@
   right: 0;
   bottom: 0;
   background-color: rgb(255, 255, 255);
+  transition: all 2s;
 }
 
 .main {

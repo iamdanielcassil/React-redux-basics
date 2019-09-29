@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "redux-bundler-react";
 import CountBadge from "../badges/CountBade";
 import MoreMenu from "../menus/more";
+import MainMenu from "./MainMenu";
 
 import "./bar.css";
 
@@ -15,6 +16,10 @@ export default connect(
   ({ doNewSeason, races, seasons, currentSeason, user, doUpdateUrl }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
+        <div className="flex-column left-aligned">
+          <MainMenu />
+        </div>
+
         <div className="flex-column left-aligned">
           <select
             className="bar-seasons-select"

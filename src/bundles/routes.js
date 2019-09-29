@@ -1,5 +1,6 @@
 import { createRouteBundle } from "redux-bundler";
 import Overview from "../pages/Overview";
+import ViewSeason from "../pages/ViewSeason";
 import EditRace from "../pages/EditRace";
 import EditBoat from "../pages/EditBoat";
 import EditSeason from "../pages/EditSeason";
@@ -16,7 +17,7 @@ const routes = {
   ..._onAllRoutesWrapper("/", Overview),
   ..._onAllRoutesWrapper("/seasons", Overview),
   ..._onAllRoutesWrapper("/seasons/new", EditSeason),
-  ..._onAllRoutesWrapper("/seasons/:id", Overview),
+  ..._onAllRoutesWrapper("/seasons/view", ViewSeason),
   ..._onAllRoutesWrapper("/seasons/:id/edit", EditSeason),
   ..._onAllRoutesWrapper("/races/new", EditRace),
   ..._onAllRoutesWrapper("/races/:id", ViewRace),

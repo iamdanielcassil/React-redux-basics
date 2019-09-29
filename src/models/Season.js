@@ -1,4 +1,4 @@
-import data from "../data";
+import core from "./core";
 
 export default class Season {
   constructor(props) {
@@ -8,6 +8,8 @@ export default class Season {
     this.startDate = props.startDate || new Date().toISOString().split("T")[0];
     this.endDate = props.endDate;
     this.results = props.results;
+
+    this.apiRoute = `seasons`;
   }
 
   get() {
@@ -19,42 +21,15 @@ export default class Season {
     };
   }
 
-  update = data => {
-    console.log(data);
-    Object.keys(data).forEach(key => {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      } else {
-        console.warn(`Tried to update non own property {${key}}`);
-      }
-    });
-    return this;
+  update = changes => {
+    return core.update(changes, this);
   };
 
   save = () => {
     console.log("savin this: ", this);
     if (!this.startDate || !this.name) return Promise.reject();
 
-    let season = {
-      id: this.id,
-      name: this.name,
-      startDate: this.startDate,
-      endDate: this.endDate || ""
-    };
-
-    if (this.isNew) {
-      // save new race
-      season.id = new Date().getTime();
-    }
-    return data.getCollectionQuery(`seasons`).then(collection => {
-      let doc = collection.doc(season.id.toString());
-
-      console.log("doc", doc);
-      console.log("collection", collection);
-      window.xcc = collection;
-      doc.set(season);
-      return season;
-    });
+    return core.save(this);
   };
 
   // addRacer(racer) {

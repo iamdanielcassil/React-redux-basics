@@ -2,3 +2,30 @@
   flex: 1 1 auto;
   min-height: 100%;
 }
+
+.stats-topRow {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.stats-container {
+  height: 400px;
+  border: 1px solid white;
+  margin: 50px;
+  flex: 1 1 auto;
+}
+
+.stats-container.stats-season {
+  min-width: 500px;
+  flex: 2 2 auto;
+}
+
+.stats-container.stats-lastRace {
+  min-width: 300px;
+}
+
+.stats-container.stats-allTime {
+  height: 100vh;
+  min-height: 400px;
+}

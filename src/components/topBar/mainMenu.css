@@ -1,0 +1,30 @@
+.mainMenu {
+  height: 100vh;
+  background-color: #00000070;
+  transition: width 0.2s;
+}
+
+.mainMenu-enter {
+  opacity: 0;
+  width: 0px;
+}
+.mainMenu-enter-active {
+  opacity: 1;
+  width: 500px;
+  transition: width 300ms, opacity 300ms ease-out;
+}
+.mainMenu-enter-done {
+  width: 500px;
+}
+.mainMenu-exit {
+  opacity: 1;
+  width: 500px;
+}
+.mainMenu-exit-active {
+  opacity: 0;
+  width: 0;
+  transition: opacity 300ms ease-in, width 300ms;
+}
+.mainMenu-exit-done {
+  width: 0px;
+}

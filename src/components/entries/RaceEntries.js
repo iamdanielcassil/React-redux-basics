@@ -3,8 +3,11 @@ import { connect } from "redux-bundler-react";
 import "./raceEntries.css";
 
 // test code
-const boats = [{ name: "test boat 1" }, { name: "test boat 2" }];
-const testEntries = [{ name: "the boat" }, { name: "the other boat" }];
+const boats = [{ id: 1, name: "test boat 1" }, { id: 2, name: "test boat 2" }];
+const testEntries = [
+  { id: 101, name: "the boat" },
+  { id: 102, name: "the other boat" }
+];
 
 function updateEntrySearch(boats, currentEntries, value) {
   let matches = boats
@@ -27,10 +30,14 @@ export default connect(
       <div className="raceEntries">
         <ul>
           {raceEntries.map(entry => (
-            <li className="raceEntry">{entry.name}</li>
+            <li key={`${entry.id}-${entry.name}`} className="raceEntry">
+              {entry.name}
+            </li>
           ))}
           {testEntries.map(entry => (
-            <li className="raceEntry">{entry.name}</li>
+            <li key={`${entry.id}-${entry.name}`} className="raceEntry">
+              {entry.name}
+            </li>
           ))}
           {adding ? (
             <li className="raceEntry raceEntries-searchable-text">
@@ -62,6 +69,7 @@ export default connect(
               <ul>
                 {entryBoat.map(match => (
                   <li
+                    key={`${match.id}-${match.name}`}
                     onClick={e => {
                       setEntryBoat([]);
 

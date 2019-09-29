@@ -21,7 +21,8 @@ export default connect(
       <WithLoading>
         <div className="base">
           <Bar />
-          <div className="main">
+          <div className="main flex-row">
+            <div id="MAIN_MENU_PORTAL" />
             <route.Component />
           </div>
         </div>

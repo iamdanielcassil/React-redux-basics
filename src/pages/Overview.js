@@ -1,65 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Race from "../models/Race";
-import RaceList from "../components/races/RacesList";
+import React from "react";
 import { connect } from "redux-bundler-react";
 
-export default connect(
-  "doSaveRace",
-  "doNewRace",
-  "selectCurrentRace",
-  "selectCurrentSeason",
-  "selectIsEditing",
-  "selectRaces",
-  "selectUser",
-  ({
-    doSaveRace,
-    currentRace,
-    currentSeason,
-    doNewRace,
-    isEditing,
-    races,
-    user = []
-  }) => {
-    const [race, setRace] = useState(currentRace || new Race({}));
+import "./overview.css";
 
-    useEffect(() => {
-      setRace(currentRace || {});
-    }, [currentRace]);
-
-    return (
-      <div className="overview">
-        <RaceList
-          races={races}
-          isLogedIn={user && user.uid}
-          currentSeason={currentSeason}
-          doNewRace={doNewRace}
-        />
-        <div>
-          {currentRace && isEditing ? (
-            <div className="form">
-              <input
-                className="field"
-                type="text"
-                onChange={e => setRace({ ...race, name: e.target.value })}
-                value={race.name}
-              />
-              <input
-                className="field"
-                type="date"
-                onChange={e => setRace({ ...race, startDate: e.target.value })}
-                value={race.startDate}
-              />
-              <input
-                type="button"
-                onClick={() => doSaveRace(race.update(race))}
-                value="save"
-              />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+export default connect(({}) => {
+  return (
+    <div className="overview">
+      <div className="stats-topRow">
+        <div className="stats-container stats-season" />
+        <div className="stats-container stats-lastRace" />
       </div>
-    );
-  }
-);
+      <div className="stats-bottomRow">
+        <div className="stats-container stats-allTime" />
+      </div>
+    </div>
+  );
+});
