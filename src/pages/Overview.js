@@ -1,17 +1,21 @@
 import React from "react";
+import StatsAllTime from "../components/stats/StatsAllTime";
+import StatsSeason from "../components/stats/StatsSeason";
+import StatsLastRace from "../components/stats/StatsLastRace";
 import { connect } from "redux-bundler-react";
 
 import "./overview.css";
+import "../components/stats/stats.css";
 
 export default connect(({}) => {
   return (
     <div className="overview">
       <div className="stats-topRow">
-        <div className="stats-container stats-season" />
-        <div className="stats-container stats-lastRace" />
+        <StatsSeason />
+        <StatsLastRace />
       </div>
       <div className="stats-bottomRow">
-        <div className="stats-container stats-allTime" />
+        <StatsAllTime />
       </div>
     </div>
   );
