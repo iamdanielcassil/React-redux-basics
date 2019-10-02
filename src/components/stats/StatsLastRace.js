@@ -101,13 +101,14 @@ const testData = [
 
 export default props => (
   <div className="stats-container stats-lastRace">
+    <h3>Last Race</h3>
     <ul className="stats-list">
       <li className="stats-list-item">
-        <span>boat</span>
-        <span>owner</span>
-        <span>finish time</span>
-        <span>phrf</span>
-        <span>rank</span>
+        <span>Boat</span>
+        <span>Owner</span>
+        <span>Finish Time</span>
+        <span>PHRF</span>
+        <span>Rank</span>
       </li>
     </ul>
     <ul className="stats-list">

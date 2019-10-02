@@ -5,6 +5,29 @@
   margin: 50px;
   flex: 1 1 auto;
   background-color: #00000005;
+  color: white;
+}
+
+.stats-list::-webkit-scrollbar {
+  width: 3px !important;
+  border: none;
+  background-color: #0000002b;
+}
+
+.stats-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.575);
+}
+
+.stats-list {
+  overflow: -moz-scrollbars-none;
+}
+
+.stats-list {
+  -ms-overflow-style: none;
+}
+
+.stats-container h3 {
+  margin-bottom: 0;
 }
 
 .stats-list {
@@ -20,7 +43,7 @@
   font-size: 10pt;
 }
 
-.stats-list:nth-child(1) {
+.stats-list:nth-child(2) {
   height: 45px;
   font-weight: bold;
   font-size: 12pt;
