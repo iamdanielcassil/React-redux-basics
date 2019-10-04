@@ -120,7 +120,7 @@ export default connect(
       </ul>
       <ul className="stats-list">
         {testData.map(t => (
-          <li key={t.boat} className="stats-list-item">
+          <li key={t.boat+new Date().getTime()} className="stats-list-item">
             <span>{t.boat}</span>
             <span>{t.owner}</span>
 

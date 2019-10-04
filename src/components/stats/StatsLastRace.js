@@ -114,7 +114,7 @@ export default connect(
           }}
         >
           {races.map((season, index) => (
-            <option key={season.id} value={season.id}>
+            <option key={season.id+new Date().getTime()} value={season.id}>
               {season.name + (index === 0 ? ' - current race' : '')}
             </option>
           ))}
@@ -133,7 +133,7 @@ export default connect(
     </ul>
     <ul className="stats-list">
       {testData.map(t => (
-        <li key={t.boat} className="stats-list-item">
+        <li key={t.boat+new Date().getTime()} className="stats-list-item">
           <span className="clickable" onClick={() => doGoToSelectBoat(t.boat)}>{t.boat}</span>
           <span>{t.owner}</span>
           <span>{t.finishTime}</span>

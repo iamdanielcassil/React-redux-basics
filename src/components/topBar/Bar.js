@@ -6,8 +6,8 @@ import MainMenu from "./MainMenu";
 import "./bar.css";
 
 export default connect(
-  "selectUser", 'doSetCurrentSeason', 'selectSeasons',
-  ({ user, doSetCurrentSeason, seasons }) => (
+  "selectUser", 'doUpdateUrl', 'selectSeasons', 'selectQueryObject',
+  ({ user, doUpdateUrl, seasons, queryObject }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
         <div className="flex-column left-aligned">
@@ -24,11 +24,11 @@ export default connect(
       <div className="threeCol-center flex-row"><select
           className="select bar-seasons-select"
           onChange={e => {
-            doSetCurrentSeason({ query: { seasonId: e.target.value } });
+            doUpdateUrl({ query: { ...queryObject, seasonId: e.target.value } });
           }}
         >
           {seasons.map((season, index) => (
-            <option key={season.id} value={season.id}>
+            <option key={season.id+new Date().getTime()} value={season.id}>
               {season.name + (index === 0 ? ' - current season' : '')}
             </option>
           ))}
