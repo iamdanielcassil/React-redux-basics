@@ -14,13 +14,19 @@
 }
 
 .bar-seasons-select {
-  font-size: 14pt;
-  list-style: none;
-  border: none;
-  /* background: none; */
-  background-color: rgb(25, 56, 85);
-  color: white;
-  border: 1px solid white;
-  border-radius: 2px;
-  padding: 3px;
+  font-size: 9pt;
+    list-style: none;
+    border: none;
+    background: none;
+    border-bottom: 1px solid white;
+    background-color: rgb(24, 55, 85);
+    color: white;
+    border-radius: 2px;
+    padding: 3px;
+    /* box-shadow: none; */
+    border-radius: 0px;
+    border-style: none;
+    outline-style: none;
+    border: 1px solid white;
+    margin: 9px;
 }

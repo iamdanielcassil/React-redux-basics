@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "redux-bundler-react";
 
 const testData = [
   {
@@ -99,9 +100,28 @@ const testData = [
   }
 ];
 
-export default props => (
+export default connect(
+  "selectRaces",
+  "doUpdateUrl",
+  'doGoToSelectBoat',
+  ({ races, doUpdateUrl, doGoToSelectBoat }) => (
   <div className="stats-container stats-lastRace">
-    <h3>Last Race</h3>
+    <div className="stats-header">
+    <select
+          className="stats-race-select"
+          onChange={e => {
+            doUpdateUrl({ query: { raceId: e.target.value } });
+          }}
+        >
+          {races.map((season, index) => (
+            <option key={season.id} value={season.id}>
+              {season.name + (index === 0 ? ' - current race' : '')}
+            </option>
+          ))}
+        </select>
+      <span>Race Stats</span>
+    </div>
+
     <ul className="stats-list">
       <li className="stats-list-item">
         <span>Boat</span>
@@ -114,7 +134,7 @@ export default props => (
     <ul className="stats-list">
       {testData.map(t => (
         <li key={t.boat} className="stats-list-item">
-          <span>{t.boat}</span>
+          <span className="clickable" onClick={() => doGoToSelectBoat(t.boat)}>{t.boat}</span>
           <span>{t.owner}</span>
           <span>{t.finishTime}</span>
           <span>{t.phrf}</span>
@@ -123,4 +143,4 @@ export default props => (
       ))}
     </ul>
   </div>
-);
+));

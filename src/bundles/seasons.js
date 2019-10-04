@@ -73,7 +73,7 @@ const doSetCurrentSeason = seasonId => ({ store, dispatch }) => {
   }
 
   dispatch({ type: "SEASON_SELECTED", current: season });
-  store.doUpdateUrl({ query: { seasonId: season.id } });
+  store.doUpdateUrl({ query: { ...store.selectQueryObject(), seasonId: season.id } });
   store.dispatch({ type: "RACES_FETCH_STARTED" });
   data.listen(`seasons/${season.id}/races`, races =>
     store.dispatch({ type: "RACES_FETCH_FINISHED", races })

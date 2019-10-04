@@ -22,7 +22,7 @@ export default connect(
         <div className="base">
           <Bar />
           <div className="main flex-row">
-            <div id="MAIN_MENU_PORTAL" />
+            <div id="MAIN_MENU_PORTAL" className="main-menu-portal" />
             <route.Component />
           </div>
         </div>

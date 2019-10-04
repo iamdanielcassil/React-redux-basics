@@ -8,20 +8,22 @@ export default props => {
 
   return (
     <React.Fragment>
-      <MainMenu isShowing={isShowing} />
-      <button
-        id="more-btn"
-        className="more-btn"
-        onClick={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          setIsShowing(!isShowing);
-        }}
-      >
-        <span className="more-dot" />
-        <span className="more-dot" />
-        <span className="more-dot" />
-      </button>
+      <MainMenu isShowing={isShowing}>{props.children}</MainMenu>
+      <nav role="navigation">
+        <div className="menuToggle">
+          <input
+            type="checkbox"
+            onChange={e => {
+              // e.preventDefault();
+              // e.stopPropagation();
+              setIsShowing(!isShowing);
+            }}
+          />
+          <span />
+          <span />
+          <span />
+        </div>
+      </nav>
     </React.Fragment>
   );
 };
