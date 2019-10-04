@@ -8,20 +8,21 @@ export default props => {
 
   return (
     <React.Fragment>
-      <MainMenu isShowing={isShowing}>{props.children}</MainMenu>
+      <MainMenu isShowing={isShowing} setIsShowing={setIsShowing}>{props.children}</MainMenu>
       <nav role="navigation">
         <div className="menuToggle">
           <input
             type="checkbox"
+            value={isShowing}
             onChange={e => {
               // e.preventDefault();
               // e.stopPropagation();
               setIsShowing(!isShowing);
             }}
           />
-          <span />
-          <span />
-          <span />
+          <span className={isShowing ? 'active' : ''}/>
+          <span className={isShowing ? 'active' : ''}/>
+          <span className={isShowing ? 'active' : ''}/>
         </div>
       </nav>
     </React.Fragment>
@@ -48,7 +49,7 @@ class MainMenu extends React.Component {
         timeout={300}
         classNames="mainMenu"
       >
-        <div className="mainMenu">{this.props.children}</div>
+        <div className="mainMenu" onClick={() => this.props.setIsShowing(false)}>{this.props.children}</div>
       </CSSTransition>,
       this.child
     );

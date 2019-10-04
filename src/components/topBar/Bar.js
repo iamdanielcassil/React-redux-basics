@@ -12,7 +12,10 @@ export default connect(
       <div className="threeCol-left flex-row flex-start">
         <div className="flex-column left-aligned">
           <MainMenu>
-            <div className="mainMenu-item"><a href="#/">Some Option</a></div>
+            <div className="mainMenu-item"><a href="#/seasons/new">New Season</a></div>
+            <div className="mainMenu-item"><a href="#/seasons/view">View Season</a></div>
+            <div className="mainMenu-item"><a href="#/races/new">New Race</a></div>
+            <div className="mainMenu-item"><a href="#/boats/new">New Boat</a></div>
           </MainMenu>
         </div>
         {user && user.uid ? null : (
