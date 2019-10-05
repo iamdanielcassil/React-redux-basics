@@ -6,8 +6,8 @@ import MainMenu from "./MainMenu";
 import "./bar.css";
 
 export default connect(
-  "selectUser", 'doUpdateUrl', 'selectSeasons', 'selectQueryObject', 'doSignOut',
-  ({ user, doUpdateUrl, seasons, queryObject, doSignOut }) => (
+  "selectUser", 'doGoToSelectSeason', 'selectSeasons', 'selectQueryObject', 'doSignOut',
+  ({ user, doGoToSelectSeason, seasons, queryObject, doSignOut }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
         <div className="flex-column left-aligned">
@@ -27,7 +27,7 @@ export default connect(
 <div className="threeCol-center flex-row"><select
           className="select bar-seasons-select"
           onChange={e => {
-            doUpdateUrl({ query: { ...queryObject, seasonId: e.target.value } });
+            doGoToSelectSeason(e.target.value);
           }}
         >
           {seasons.map((season, index) => (

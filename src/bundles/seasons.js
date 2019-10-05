@@ -54,6 +54,11 @@ const doNewSeason = () => ({ dispatch }) => {
   // window.location.pathname = "/#/races/new";
 };
 
+const doGoToSelectSeason = id => ({ dispatch, store }) => {
+  store.doUpdateUrl({ pathname: '/', hash: '/seasons/' + id, query: { ...store.queryObject, seasonId: id } });
+  store.selectCurrentSeason(id);
+}
+
 const doSetCurrentSeason = seasonId => ({ store, dispatch }) => {
   let state = store.getState();
 
@@ -116,6 +121,7 @@ export default {
   doSaveSeason,
   doSetCurrentSeason,
   doUpdateCurrent,
+  doGoToSelectSeason,
   selectCurrentSeason,
   selectSeasons
 };

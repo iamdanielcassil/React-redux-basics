@@ -3,7 +3,7 @@ import { connect } from "redux-bundler-react";
 import "./raceEntries.css";
 
 // test code
-const boats = [{ id: 1, name: "test boat 1" }, { id: 2, name: "test boat 2" }];
+// const boats = [{ id: 1, name: "test boat 1" }, { id: 2, name: "test boat 2" }];
 const testEntries = [
   { id: 101, name: "the boat" },
   { id: 102, name: "the other boat" }
@@ -19,9 +19,10 @@ function updateEntrySearch(boats, currentEntries, value) {
 }
 
 export default connect(
-  "selectRaceEntries",
+  "selectRaceEntriesRace",
+  "selectBoats",
   "doAddRaceEntry",
-  ({ raceEntries, doAddRaceEntry }) => {
+  ({ raceEntriesRace, boats, doAddRaceEntry }) => {
     const [adding, setAdding] = useState(false);
     const [entryValue, setEntryValue] = useState({ name: "" });
     const [entryBoat, setEntryBoat] = useState([]);
@@ -29,7 +30,7 @@ export default connect(
     return (
       <div className="raceEntries">
         <ul>
-          {raceEntries.map(entry => (
+          {raceEntriesRace.map(entry => (
             <li key={`${entry.id}-${entry.name}`} className="raceEntry">
               {entry.name}
             </li>
@@ -56,8 +57,8 @@ export default connect(
                 />
                 <button
                   onClick={() => {
-                    // doAddRaceEntry(entryValue);
-                    testEntries.push(entryValue);
+                    doAddRaceEntry(entryValue);
+                    // testEntries.push(entryValue);
                     setEntryValue({ name: "" });
                     setEntryBoat([]);
                     setAdding(false);
