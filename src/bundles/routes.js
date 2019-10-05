@@ -2,7 +2,7 @@ import { createRouteBundle } from "redux-bundler";
 import Overview from "../pages/Overview";
 import ViewSeason from "../pages/ViewSeason";
 import EditRace from "../pages/EditRace";
-import EditBoat from "../pages/EditBoat";
+import ManageBoats from "../pages/ManageBoats";
 import EditSeason from "../pages/EditSeason";
 import ViewRace from "../pages/ViewRace";
 import Login from "../pages/Login";
@@ -22,9 +22,9 @@ const routes = {
   ..._onAllRoutesWrapper("/races/new", EditRace),
   ..._onAllRoutesWrapper("/races/:id", ViewRace),
   ..._onAllRoutesWrapper("/races/:id/edit", EditRace),
-  ..._onAllRoutesWrapper("/boats/new", EditBoat),
+  ..._onAllRoutesWrapper("/boats", ManageBoats),
   ..._onAllRoutesWrapper("/boats/:id", Overview),
-  ..._onAllRoutesWrapper("/boats/:id/edit", EditBoat),
+  ..._onAllRoutesWrapper("/boats/:id/edit", ManageBoats),
   ..._onAllRoutesWrapper("/login", Login),
   ..._onAllRoutesWrapper("/afterLogin", Overview)
 };
