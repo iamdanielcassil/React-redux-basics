@@ -23,10 +23,10 @@
     color: white;
     border-radius: 2px;
     padding: 3px;
-    /* box-shadow: none; */
+    -webkit-appearance: none;
     border-radius: 0px;
     border-style: none;
     outline-style: none;
-    border: 1px solid white;
+    border-bottom: 1px solid white;
     margin: 9px;
 }
