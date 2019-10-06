@@ -70,6 +70,8 @@ a.raceListEntry:hover {
   color: white;
   padding: 10px;
   border-radius: 15px;
+  text-align: left;
+  margin-bottom: 25px;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#5284af+0,5a87ad+100 */
 }
 .raceListEntry-editButton {
@@ -92,7 +94,7 @@ a.raceListEntry:hover {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5284af', endColorstr='#5a87ad',GradientType=0 ); /* IE6-9 */
 }
 .raceListEntry-addButton {
-  background-color: white;
+  border: none;
 }
 .raceListEntry-editButton:hover {
   opacity: 1;

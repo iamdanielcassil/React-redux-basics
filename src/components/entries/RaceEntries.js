@@ -55,17 +55,22 @@ export default connect(
                   }}
                   value={entryValue.name}
                 />
-                <button
-                  onClick={() => {
-                    doAddRaceEntry(entryValue);
-                    // testEntries.push(entryValue);
-                    setEntryValue({ name: "" });
-                    setEntryBoat([]);
-                    setAdding(false);
-                  }}
-                >
-                  ok
-                </button>
+                <div className="raceEntries-searchable-listControls">
+                  <button
+                    onClick={() => {
+                      doAddRaceEntry(entryValue);
+                      // testEntries.push(entryValue);
+                      setEntryValue({ name: "" });
+                      setEntryBoat([]);
+                      setAdding(false);
+                    }}
+                  >
+                    ok
+                  </button>
+                  {entryBoat.length === 0 ? (
+                    <a href="#/boats/new">Add New Boat</a>
+                  ) : null}
+                </div>
               </span>
               <ul>
                 {entryBoat.map(match => (
