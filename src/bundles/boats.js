@@ -35,24 +35,32 @@ const doGoToSelectBoat = boatId => ({ dispatch, store }) => {
 };
 
 const doDeleteBoat = boat => ({ dispatch, store }) => {
-  console.log("need to delete boat");
+  if (window.confirm(`Are you sure you want to delete boat: ${boat.name}`)) {
+    console.log("need to delete boat");
+  }
 };
 
 const doSaveBoat = boat => ({ dispatch, store }) => {
-  store.dispatch({ type: "BOATS_SAVE_STARTED" });
-  new Boat(boat)
-    .save()
-    .then(savedBoat => {
-      console.log("save boat", savedBoat);
-      store.dispatch({ type: "BOATS_CURRENT_SELECTED", boat: savedBoat });
-      store.dispatch({ type: "BOATS_SAVE_FINISHED" });
-      store.doUpdateUrl({ pathname: "/", hash: "/boats" });
-    })
-    .catch(error => {
-      console.log("save boat failed", error);
-      store.dispatch({ type: "BOATS_SAVE_FINISHED", boat: {} });
-      store.dispatch({ type: "BOATS_SAVE_FAILED" });
-    });
+  if (
+    window.confirm(
+      `Are you sure you want to save changes to boat: ${boat.name}`
+    )
+  ) {
+    store.dispatch({ type: "BOATS_SAVE_STARTED" });
+    new Boat(boat)
+      .save()
+      .then(savedBoat => {
+        console.log("save boat", savedBoat);
+        store.dispatch({ type: "BOATS_CURRENT_SELECTED", boat: savedBoat });
+        store.dispatch({ type: "BOATS_SAVE_FINISHED" });
+        store.doUpdateUrl({ pathname: "/", hash: "/boats" });
+      })
+      .catch(error => {
+        console.log("save boat failed", error);
+        store.dispatch({ type: "BOATS_SAVE_FINISHED", boat: {} });
+        store.dispatch({ type: "BOATS_SAVE_FAILED" });
+      });
+  }
 };
 
 const selectCurrentBoat = state => state.boats.current;
