@@ -5,8 +5,10 @@ export default class Boat {
     this.isNew = props.id === undefined;
     this.id = props.id;
     this.name = props.name;
-    this.type = props.type;
+    this.model = props.model;
+    this.maker = props.maker;
     this.length = props.length;
+    this.type = props.type;
     this.year = props.year;
     this.captain = props.captain;
     this.crew = props.crew || [];
@@ -23,6 +25,8 @@ export default class Boat {
       id: this.id,
       name: this.name,
       captain: this.captain,
+      maker: this.maker || "",
+      model: this.model || "",
       type: this.type || "",
       length: this.length || "",
       year: this.year || "",

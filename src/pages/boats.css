@@ -1,11 +1,11 @@
 .boats {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 50px;
 }
 
 .boats .list {
-    border: 1px solid white;
-    border-radius: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
 }

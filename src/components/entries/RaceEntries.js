@@ -11,8 +11,11 @@ const testEntries = [
 
 function updateEntrySearch(boats, currentEntries, value) {
   let matches = boats
-    .filter(b => !currentEntries.some(e => e.name === b.name))
-    .filter(b => b.name.includes(value));
+    .filter(
+      b =>
+        !currentEntries.some(e => e.name.toLowerCase() === b.name.toLowerCase())
+    )
+    .filter(b => b.name.toLowerCase().includes(value.toLowerCase()));
 
   console.log("matches =", matches);
   return matches;

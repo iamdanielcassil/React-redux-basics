@@ -42,6 +42,7 @@ const doSaveBoat = boat => ({ dispatch, store }) => {
       console.log("save boat", savedBoat);
       store.dispatch({ type: "BOATS_CURRENT_SELECTED", boat: savedBoat });
       store.dispatch({ type: "BOATS_SAVE_FINISHED" });
+      store.doUpdateUrl({ pathname: "/", hash: "/boats" });
     })
     .catch(error => {
       console.log("save boat failed", error);

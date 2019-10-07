@@ -72,10 +72,10 @@
 }
 
 .double-column input {
-  margin: 50px;
-  width: 200px;
-  padding: 15px;
-  align-self: center;
+  margin: 25px;
+  width: 100px;
+  padding: 10px;
+  align-self: flex-end;
 }
 
 @media screen and (min-width: 800px) {

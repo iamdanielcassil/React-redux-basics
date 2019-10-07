@@ -16,6 +16,7 @@ export default connect(
               <input
                 id="name"
                 className="field"
+                placeholder="Boats name"
                 type="text"
                 onChange={e => setBoat({ ...boat, name: e.target.value })}
                 value={boat.name || ""}
@@ -25,6 +26,7 @@ export default connect(
               Captain
               <input
                 id="captain"
+                placeholder="Captain Jack"
                 className="field"
                 type="text"
                 onChange={e => setBoat({ ...boat, captain: e.target.value })}
@@ -35,10 +37,22 @@ export default connect(
               Boat Maker
               <input
                 id="maker"
+                placeholder="Catalina"
                 className="field"
                 type="text"
                 onChange={e => setBoat({ ...boat, maker: e.target.value })}
-                value={boat.captain || ""}
+                value={boat.maker || ""}
+              />
+            </label>
+            <label htmlFor="type">
+              Boat Type
+              <input
+                id="type"
+                placeholder="fin keel, center board, cat"
+                className="field"
+                type="text"
+                onChange={e => setBoat({ ...boat, type: e.target.value })}
+                value={boat.type || ""}
               />
             </label>
           </div>
@@ -47,20 +61,22 @@ export default connect(
               Model
               <input
                 id="model"
+                placeholder="25"
                 className="field"
                 type="text"
                 onChange={e => setBoat({ ...boat, model: e.target.value })}
-                value={boat.captain || ""}
+                value={boat.model || ""}
               />
             </label>
             <label htmlFor="length">
               Length
               <input
                 id="length"
+                placeholder="25"
                 className="field"
                 type="text"
                 onChange={e => setBoat({ ...boat, length: e.target.value })}
-                value={boat.captain || ""}
+                value={boat.length || ""}
               />
             </label>
             <label htmlFor="phrf">
@@ -68,9 +84,21 @@ export default connect(
               <input
                 id="phrf"
                 className="field"
+                placeholder="perscribed handicap number"
                 type="text"
                 onChange={e => setBoat({ ...boat, phrf: e.target.value })}
-                value={boat.captain || ""}
+                value={boat.phrf || ""}
+              />
+            </label>
+            <label htmlFor="crew">
+              Crew
+              <input
+                id="crew"
+                className="field"
+                placeholder="comma seporated list of names"
+                type="text"
+                onChange={e => setBoat({ ...boat, crew: e.target.value })}
+                value={boat.crew || ""}
               />
             </label>
           </div>
