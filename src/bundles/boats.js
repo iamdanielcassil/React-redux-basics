@@ -34,6 +34,10 @@ const doGoToSelectBoat = boatId => ({ dispatch, store }) => {
   store.doUpdateUrl({ pathname: "/", hash: "/boats/" + boatId });
 };
 
+const doDeleteBoat = boat => ({ dispatch, store }) => {
+  console.log("need to delete boat");
+};
+
 const doSaveBoat = boat => ({ dispatch, store }) => {
   store.dispatch({ type: "BOATS_SAVE_STARTED" });
   new Boat(boat)
@@ -63,5 +67,6 @@ export default {
   doGotToAddNewBoat,
   doGoToEditBoat,
   doGoToSelectBoat,
-  doSaveBoat
+  doSaveBoat,
+  doDeleteBoat
 };

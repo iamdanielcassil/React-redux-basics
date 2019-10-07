@@ -3,17 +3,38 @@ import { connect } from "redux-bundler-react";
 
 export default connect(
   "doSaveBoat",
+  "doDeleteBoat",
   "selectCurrentBoat",
-  ({ doSaveBoat, currentBoat }) => {
+  ({ doSaveBoat, doDeleteBoat, currentBoat }) => {
     const [boat, setBoat] = useState(currentBoat || {});
+    const [isEditing, setIsEditing] = useState(false);
 
     return (
       <div className="form">
+        <div className="row">
+          {!isEditing ? (
+            <input
+              className="button-secondary"
+              type="button"
+              onClick={() => setIsEditing(true)}
+              value="edit"
+            />
+          ) : null}
+          {isEditing && boat.id ? (
+            <input
+              className="button-secondary button-delete"
+              type="button"
+              onClick={() => doDeleteBoat(boat)}
+              value="DELETE"
+            />
+          ) : null}
+        </div>
         <div className="row">
           <div className="column">
             <label htmlFor="name">
               Name
               <input
+                disabled={!isEditing}
                 id="name"
                 className="field"
                 placeholder="Boats name"
@@ -25,6 +46,7 @@ export default connect(
             <label htmlFor="captain">
               Captain
               <input
+                disabled={!isEditing}
                 id="captain"
                 placeholder="Captain Jack"
                 className="field"
@@ -36,6 +58,7 @@ export default connect(
             <label htmlFor="maker">
               Boat Maker
               <input
+                disabled={!isEditing}
                 id="maker"
                 placeholder="Catalina"
                 className="field"
@@ -47,6 +70,7 @@ export default connect(
             <label htmlFor="type">
               Boat Type
               <input
+                disabled={!isEditing}
                 id="type"
                 placeholder="fin keel, center board, cat"
                 className="field"
@@ -60,6 +84,7 @@ export default connect(
             <label htmlFor="model">
               Model
               <input
+                disabled={!isEditing}
                 id="model"
                 placeholder="25"
                 className="field"
@@ -71,6 +96,7 @@ export default connect(
             <label htmlFor="length">
               Length
               <input
+                disabled={!isEditing}
                 id="length"
                 placeholder="25"
                 className="field"
@@ -82,6 +108,7 @@ export default connect(
             <label htmlFor="phrf">
               PHRF
               <input
+                disabled={!isEditing}
                 id="phrf"
                 className="field"
                 placeholder="perscribed handicap number"
@@ -93,6 +120,7 @@ export default connect(
             <label htmlFor="crew">
               Crew
               <input
+                disabled={!isEditing}
                 id="crew"
                 className="field"
                 placeholder="comma seporated list of names"
@@ -105,11 +133,14 @@ export default connect(
         </div>
         <div className="row">
           <div className="double-column">
-            <input
-              type="button"
-              onClick={() => doSaveBoat(boat)}
-              value="save"
-            />
+            {isEditing ? (
+              <input
+                className="button-save"
+                type="button"
+                onClick={() => doSaveBoat(boat)}
+                value="save"
+              />
+            ) : null}
           </div>
         </div>
       </div>

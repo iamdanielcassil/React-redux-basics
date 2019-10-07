@@ -8,7 +8,13 @@ export default connect(
   ({ boats, doGoToSelectBoat }) => {
     return (
       <div className="boats">
-        <span />
+        <div className="row">
+          <div className="double-column">
+            <a className="button-secondary" href="#/boats/new">
+              New Boat
+            </a>
+          </div>
+        </div>
         <ul className="list">
           <li className="list-item">
             <span>Boat</span>
