@@ -4,18 +4,19 @@ import data from "../data";
 const init = store => {
   let state = store.getState();
 
-  // if (state.seasons && state.seasons.current) {
-  //   data.listen(`seasons/${state.seasons.current.id}/races`, races =>
-  //     store.dispatch({ type: "RACES_FETCHED", races })
-  //   );
-  // }
   data.listen(`seasons`, seasons => {
     let sortseasons = seasons.sort((a, b) => {
       return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
     });
     console.log("seasons fetched", seasons, sortseasons);
     store.dispatch({ type: "SEASONS_FETCHED", seasons });
-    store.doGoToSelectSeason(sortseasons[0].id);
+    if (!state.seasons.current) {
+      if (store.selectQueryObject().seasonId) {
+        store.doGoToSelectSeason(store.selectQueryObject().seasonId);
+      } else {
+        store.doGoToSelectSeason(sortseasons[0].id);
+      }
+    }
   });
 };
 const reducer = (state = { all: [], current: null }, action) => {
@@ -36,7 +37,7 @@ const reducer = (state = { all: [], current: null }, action) => {
   if (action.type === "SEASON_SELECTED") {
     console.log("SEASON selected", action.current);
     return {
-      current: new Season(action.current),
+      current: new Season(action.payload),
       all: state.all,
       isEditing: false
     };
@@ -53,11 +54,16 @@ const doNewSeason = () => ({ dispatch }) => {
 };
 
 const doGoToSelectSeason = id => ({ dispatch, store }) => {
-  store.doUpdateUrl({ query: { ...store.queryObject, seasonId: id } });
+  let seasons = store.selectSeasons();
+  let selectedSeason = seasons.find(s => s.id === id);
+
+  dispatch({ type: "SEASON_SELECTED", payload: selectedSeason });
   dispatch({ type: "RACES_FETCH_STARTED" });
   data.listen(`seasons/${id}/races`, races =>
     dispatch({ type: "RACES_FETCH_FINISHED", races })
   );
+
+  store.doUpdateUrl({ query: { ...store.queryObject, seasonId: id } });
 };
 
 const doSaveSeason = season => ({ getState, dispatch }) => {
@@ -93,6 +99,7 @@ const doSelectCurrentSeason = () => ({ store }) => {
     .find(s => s.id === store.selectQueryObject().seasonId);
 };
 
+const selectCurrentSeason = state => state.seasons.current;
 const selectSeasons = state => state.seasons.all;
 
 export default {
@@ -104,5 +111,6 @@ export default {
   doUpdateCurrent,
   doGoToSelectSeason,
   doSelectCurrentSeason,
+  selectCurrentSeason,
   selectSeasons
 };

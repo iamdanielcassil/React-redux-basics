@@ -8,10 +8,10 @@ import "./bar.css";
 export default connect(
   "selectUser",
   "doGoToSelectSeason",
+  "selectCurrentSeason",
   "selectSeasons",
-  "selectQueryObject",
   "doSignOut",
-  ({ user, doGoToSelectSeason, seasons, queryObject, doSignOut }) => (
+  ({ user, doGoToSelectSeason, seasons, currentSeason, doSignOut }) => (
     <div className="bar flex-row">
       <div className="threeCol-left flex-row flex-start">
         <div className="flex-column left-aligned">
@@ -47,6 +47,7 @@ export default connect(
       {!window.location.hash.includes("boats") ? (
         <div className="threeCol-center flex-row">
           <select
+            value={currentSeason ? currentSeason.id : undefined}
             className="select bar-seasons-select"
             onChange={e => {
               doGoToSelectSeason(e.target.value);
