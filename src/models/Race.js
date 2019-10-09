@@ -13,8 +13,13 @@ export default class Race {
     this.windSpeed = props.windSpeed || "";
     this.courseMap = props.courseMap;
     this.results = props.results;
+    this.entries = props.entries || [];
 
     this.apiRoute = `seasons/${this.seasonId}/races`;
+  }
+
+  addEntries(entries) {
+    this.entries = [...this.entries, ...entries];
   }
 
   get() {
@@ -26,7 +31,8 @@ export default class Race {
       seasonId: this.seasonId,
       temperature: this.temperature,
       windSpeed: this.windSpeed,
-      windDirection: this.windDirection
+      windDirection: this.windDirection,
+      entries: this.entries
     };
   }
 

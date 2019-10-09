@@ -62,9 +62,11 @@ const doSetCurrent = race => ({ store, dispatch }) => {
 };
 
 const doSaveRace = race => ({ getState, dispatch }) => {
+  let state = getState();
   dispatch({ type: "RACE_SAVE_STARTED" });
   let wasNew = race.isNew;
 
+  race.addEntries(state.raceEntries.adding);
   race
     .save()
     .then(savedRace => {
@@ -95,6 +97,10 @@ const doAddRaceEntry = entry => ({ getState, dispatch }) => {
 
   race.addEntry(entry);
   dispatch({ type: "CURRENT_RACE_UPDATED" });
+};
+
+const doGoToManageRace = race => ({ store, dispatch }) => {
+  store.doUpdateUrl({ pathname: "/", hash: `/races/manage/${race.id}` });
 };
 
 const selectCurrentRace = state => {

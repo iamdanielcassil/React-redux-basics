@@ -6,6 +6,8 @@ import ManageBoats from "../pages/ManageBoats";
 import EditBoat from "../pages/EditBoat";
 import EditSeason from "../pages/EditSeason";
 import ViewRace from "../pages/ViewRace";
+import ManageRaces from "../pages/ManageRaces";
+import ManageRace from "../pages/ManageRace";
 import Login from "../pages/Login";
 
 let _onAllRoutesWrapper = (route, Component) => {
@@ -20,6 +22,8 @@ const routes = {
   ..._onAllRoutesWrapper("/seasons/new", EditSeason),
   ..._onAllRoutesWrapper("/seasons/:id", ViewSeason),
   ..._onAllRoutesWrapper("/seasons/:id/edit", EditSeason),
+  ..._onAllRoutesWrapper("/races/manage", ManageRaces),
+  ..._onAllRoutesWrapper("/races/manage/:id", ManageRace),
   ..._onAllRoutesWrapper("/races/new", EditRace),
   ..._onAllRoutesWrapper("/races/:id", ViewRace),
   ..._onAllRoutesWrapper("/races/:id/edit", EditRace),

@@ -63,7 +63,7 @@ export default ({
             <TempBadge temperature={temperature} />
           </div>
           <div className="flex-column stretch center-aligned raceListEntry-cell ">
-            <CountBadge count={entries} label="Entries" />
+            {/* <CountBadge count={entries} label="Entries" /> */}
           </div>
         </div>
         <div className="threeCol-right flex-row flex-end">

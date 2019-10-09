@@ -16,6 +16,7 @@ export default ({ isLogedIn, races, doNewRace, currentSeason }) => {
           </a>
         </div>
       ) : null}
+
       {races.map(race => (
         <div key={race.id}>
           <RacesListEntry {...race} isLogedIn={isLogedIn} />
