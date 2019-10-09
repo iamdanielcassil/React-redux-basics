@@ -7,14 +7,14 @@ export default connect(
   "doSaveRace",
   "doNewRace",
   "selectCurrentRace",
-  "selectCurrentSeason",
+  "doSelectCurrentSeason",
   "selectIsEditing",
   "selectRaces",
   "selectUser",
   ({
     doSaveRace,
     currentRace,
-    currentSeason,
+    doSelectCurrentSeason,
     doNewRace,
     isEditing,
     races,
@@ -31,7 +31,7 @@ export default connect(
         <RaceList
           races={races}
           isLogedIn={user && user.uid}
-          currentSeason={currentSeason}
+          currentSeason={doSelectCurrentSeason()}
           doNewRace={doNewRace}
         />
         <div>

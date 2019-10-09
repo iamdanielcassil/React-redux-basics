@@ -10,21 +10,24 @@ export default connect(
   "doSetCurrent",
   "doSaveRace",
   "selectRaces",
-  "selectCurrentSeason",
+  "doSelectCurrentSeason",
   ({
     routeParams,
     currentRace,
     doSetCurrent,
     doSaveRace,
     races,
-    currentSeason
+    doSelectCurrentSeason
   }) => {
+    const [currentSeason] = useState(doSelectCurrentSeason());
     const [race, setRace] = useState(() => {
-      return {
-        seasonId: currentSeason && currentSeason.id,
-        startDate: new Date().toDateString(),
-        ...currentRace
-      };
+      if (!currentSeason) {
+        throw new Error("must have valid season before creating new race");
+      }
+
+      return currentRace
+        ? new Race(currentRace)
+        : new Race({ seasonId: currentSeason.id });
     });
 
     console.log("current race is", race);

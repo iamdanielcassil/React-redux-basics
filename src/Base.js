@@ -8,15 +8,9 @@ import "./base.css";
 export default connect(
   "selectUser",
   "selectRoute",
-  "selectWorking",
-  "doSetCurrentSeason",
-  "selectQueryObject",
-  ({ user, route, working, doSetCurrentSeason, queryObject }) => {
+  ({ user, route }) => {
     data.init(user);
 
-    useEffect(() => {
-      doSetCurrentSeason(queryObject.seasonId);
-    }, [queryObject, doSetCurrentSeason]);
     return (
       <WithLoading>
         <div className="base">

@@ -15,9 +15,7 @@ const init = store => {
     });
     console.log("seasons fetched", seasons, sortseasons);
     store.dispatch({ type: "SEASONS_FETCHED", seasons });
-
-    let currentId = store.selectQueryObject();
-    store.doSetCurrentSeason(currentId);
+    store.doGoToSelectSeason(sortseasons[0].id);
   });
 };
 const reducer = (state = { all: [], current: null }, action) => {
@@ -55,33 +53,10 @@ const doNewSeason = () => ({ dispatch }) => {
 };
 
 const doGoToSelectSeason = id => ({ dispatch, store }) => {
-  store.doUpdateUrl({ pathname: '/', hash: '/seasons/' + id, query: { ...store.queryObject, seasonId: id } });
-  store.selectCurrentSeason(id);
-}
-
-const doSetCurrentSeason = seasonId => ({ store, dispatch }) => {
-  let state = store.getState();
-
-  console.log("state in seasons", state);
-  if (state.seasons.all.length <= 0) {
-    return;
-  }
-
-  if (state.seasons.current && state.seasons.current.id === seasonId) {
-    return;
-  }
-
-  let season = state.seasons.all.find(s => s.id === seasonId);
-
-  if (!season) {
-    season = state.seasons.all[0];
-  }
-
-  // dispatch({ type: "SEASON_SELECTED", current: season });
-
-  store.dispatch({ type: "RACES_FETCH_STARTED" });
-  data.listen(`seasons/${season.id}/races`, races =>
-    store.dispatch({ type: "RACES_FETCH_FINISHED", races })
+  store.doUpdateUrl({ query: { ...store.queryObject, seasonId: id } });
+  dispatch({ type: "RACES_FETCH_STARTED" });
+  data.listen(`seasons/${id}/races`, races =>
+    dispatch({ type: "RACES_FETCH_FINISHED", races })
   );
 };
 
@@ -106,9 +81,16 @@ const doUpdateCurrent = seasonData => ({ getState, dispatch }) => {
   dispatch({ type: "CURRENT_SEASON_UPDATED" });
 };
 
-const selectCurrentSeason = state => {
-  console.log("selectCurrentSeason", state.seasons.current);
-  return state.seasons.current ? { ...state.seasons.current } : null;
+const doSelectCurrentSeason = () => ({ store }) => {
+  let seasonId = store.selectQueryObject().seasonId;
+
+  if (!seasonId) {
+    return;
+  }
+
+  return store
+    .selectSeasons()
+    .find(s => s.id === store.selectQueryObject().seasonId);
 };
 
 const selectSeasons = state => state.seasons.all;
@@ -119,9 +101,8 @@ export default {
   reducer,
   doNewSeason,
   doSaveSeason,
-  doSetCurrentSeason,
   doUpdateCurrent,
   doGoToSelectSeason,
-  selectCurrentSeason,
+  doSelectCurrentSeason,
   selectSeasons
 };
