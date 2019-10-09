@@ -8,9 +8,9 @@ const init = store => {
   //   store.dispatch({ type: "RACES_FETCHED", races });
   // });
 };
-const reducer = (state = { all: [], current: null }, action) => {
+const reducer = (state = { all: [], current: null, event: {} }, action) => {
   if (action.type === "NEW_RACE_CREATED") {
-    return { all: state.all, current: action.current };
+    return { ...state, current: action.current };
   }
   if (action.type === "CURRENT_RACE_UPDATED") {
     console.log("CURRENT_RACE_UPDATED", state);
@@ -21,19 +21,29 @@ const reducer = (state = { all: [], current: null }, action) => {
   }
   if (action.type === "RACES_FETCH_FINISHED") {
     console.log("races fetched", action.races);
-    return { current: state.current, all: action.races };
+    return { ...state, current: state.current, all: action.races };
   }
   if (action.type === "RACE_SELECTED") {
     console.log("race selected", action.current);
     return {
+      ...state,
       current: new Race(action.current),
-      all: state.all,
       isEditing: false
     };
   }
   if (action.type === "RACE_EDITED") {
     return { ...state, isEditing: true };
   }
+  if (action.type === "RACE_START") {
+    return { ...state, event: { started: true, ...action.payload } };
+  }
+  if (action.type === "RACE_END") {
+    return {
+      ...state,
+      event: { ...state.event, started: false, ended: true, ...action.payload }
+    };
+  }
+
   return state;
 };
 
@@ -74,10 +84,6 @@ const doSaveRace = race => ({ getState, dispatch }) => {
         // do set last save so we can highlight in list savedRace.id
       }
 
-      window.history.length
-        ? window.history.back()
-        : (window.location.hash = "/");
-
       dispatch({ type: "RACE_SAVE_FINISHED" });
     })
     .catch(() => {
@@ -92,11 +98,30 @@ const doUpdateCurrent = raceData => ({ getState, dispatch }) => {
   dispatch({ type: "CURRENT_RACE_UPDATED" });
 };
 
-const doAddRaceEntry = entry => ({ getState, dispatch }) => {
-  let race = getState().races.current;
+const doAddRaceEntry = (race, entry) => ({ getState, store }) => {
+  // let race = new Race(_race);
 
   race.addEntry(entry);
-  dispatch({ type: "CURRENT_RACE_UPDATED" });
+  store.doUpdateCurrent(race.get());
+};
+
+const doStartRace = (raceId, startTime) => ({ store, dispatch }) => {
+  dispatch({
+    type: "RACE_START",
+    payload: { raceId, startTime: startTime.getTime() }
+  });
+};
+
+const doEndRace = (race, entry, endTime) => ({ store, dispatch }) => {
+  let event = store.selectRaceEvent();
+
+  race.results = race.results || [];
+  race.results.push({
+    ...entry,
+    endTime: endTime.getTime(),
+    startTime: event.startTime
+  });
+  store.doSaveRace(new Race(race));
 };
 
 const doGoToManageRace = race => ({ store, dispatch }) => {
@@ -109,6 +134,7 @@ const selectCurrentRace = state => {
 
 const selectRaces = state => state.races.all;
 const selectIsEditing = state => state.races.isEditing;
+const selectRaceEvent = state => state.races.event;
 
 export default {
   name: "races",
@@ -119,7 +145,10 @@ export default {
   doSetCurrent,
   doAddRaceEntry,
   doUpdateCurrent,
+  doStartRace,
+  doEndRace,
   selectCurrentRace,
   selectIsEditing,
-  selectRaces
+  selectRaces,
+  selectRaceEvent
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "redux-bundler-react";
 import "./raceEntries.css";
+import Race from "../../models/Race";
 
 // test code
 // const boats = [{ id: 1, name: "test boat 1" }, { id: 2, name: "test boat 2" }];
@@ -23,9 +24,10 @@ function updateEntrySearch(boats, currentEntries, value) {
 
 export default connect(
   "selectRaceEntriesRace",
+  "selectCurrentRace",
   "selectBoats",
   "doAddRaceEntry",
-  ({ raceEntriesRace, boats, doAddRaceEntry }) => {
+  ({ raceEntriesRace, currentRace, boats, doAddRaceEntry }) => {
     const [adding, setAdding] = useState(false);
     const [entryValue, setEntryValue] = useState({ name: "" });
     const [entryBoat, setEntryBoat] = useState([]);
@@ -61,7 +63,7 @@ export default connect(
                 <div className="raceEntries-searchable-listControls">
                   <button
                     onClick={() => {
-                      doAddRaceEntry(entryValue);
+                      doAddRaceEntry(new Race(currentRace), entryValue);
                       // testEntries.push(entryValue);
                       setEntryValue({ name: "" });
                       setEntryBoat([]);

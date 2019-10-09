@@ -15,9 +15,6 @@ const reducer = (
   return state;
 };
 
-const doAddRaceEntry = entry => ({ dispatch, store }) => {
-  store.dispatch({ type: "ENTRIES_ADD", entry });
-};
 const selectRaceEntriesAdding = state => state.raceEntries.adding;
 const selectRaceEntriesSeason = state => state.raceEntries.currentSeason;
 const selectRaceEntriesRace = state => state.raceEntries.currentRace;
@@ -25,7 +22,7 @@ const selectRaceEntriesRace = state => state.raceEntries.currentRace;
 export default {
   name: "raceEntries",
   reducer,
-  doAddRaceEntry,
+
   selectRaceEntriesAdding,
   selectRaceEntriesSeason,
   selectRaceEntriesRace

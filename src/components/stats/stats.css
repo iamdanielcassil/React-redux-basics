@@ -1,14 +1,14 @@
 .stats-container {
-    display: flex;
-    flex-direction: column;
-    height: 400px;
-    margin: 10px;
-    flex: 1 1 auto;
-    background-color: #5284af;
-    color: white;
-    border: 1px solid white;
-    padding: 15px;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  margin: 10px;
+  flex: 1 1 auto;
+  background-color: #5284af;
+  color: white;
+  border: 1px solid white;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 .stats-header {
@@ -23,29 +23,17 @@
   text-align: right;
 }
 
-.stats-list::-webkit-scrollbar {
-  width: 3px !important;
-  border: none;
-  background-color: #0000002b;
-}
-
-.stats-list::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.575);
-}
-
-.stats-list {
-  overflow: -moz-scrollbars-none;
-}
-
-.stats-list {
-  -ms-overflow-style: none;
-}
-
 .stats-container h3 {
   margin-bottom: 0;
 }
 
+li.stats-list-empty {
+  text-align: center;
+}
+
 .stats-list {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
   list-style: none;
   text-align: left;
   color: white;
@@ -56,6 +44,16 @@
   height: 100%;
   font-weight: 100;
   font-size: 10pt;
+}
+
+.stats-list::-webkit-scrollbar {
+  width: 3px !important;
+  border: none;
+  background-color: #0000002b;
+}
+
+.stats-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.575);
 }
 
 .stats-list:nth-child(2) {
@@ -89,7 +87,7 @@
 }
 
 .stats-list-item:nth-child(1) span {
-    font-size: 10pt;
+  font-size: 10pt;
 }
 
 .stats-list-item span:nth-child(2) {
@@ -111,20 +109,20 @@
 }
 
 .stats-race-select {
-    font-size: 9pt;
-    list-style: none;
-    border: none;
-    background: none;
-    border-bottom: 1px solid white;
-    background-color: rgb(82, 132, 174);
-    color: white;
-    border-radius: 2px;
-    padding: 3px;
-    border-radius: 0px;
-    border-style: none;
-    outline-style: none;
-    border: 1px solid white;
-    margin: 9px;
+  font-size: 9pt;
+  list-style: none;
+  border: none;
+  background: none;
+  border-bottom: 1px solid white;
+  background-color: rgb(82, 132, 174);
+  color: white;
+  border-radius: 2px;
+  padding: 3px;
+  border-radius: 0px;
+  border-style: none;
+  outline-style: none;
+  border: 1px solid white;
+  margin: 9px;
 }
 
 .stats {

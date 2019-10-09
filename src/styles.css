@@ -270,10 +270,25 @@ a:hover {
 .list-item.editable {
   cursor: pointer;
   position: relative;
+  padding: 0;
 }
 
 .list-item.editable:hover {
   background: #00000045;
+}
+
+.list-item.editable a {
+  padding: 7px 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.list-item.editable a:nth-child(1) {
+  text-align: left;
+}
+
+.list-item.editable a:hover {
+  background-color: #00000029;
 }
 
 .list-item:nth-child(even) {

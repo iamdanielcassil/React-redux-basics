@@ -32,7 +32,8 @@ export default class Race {
       temperature: this.temperature,
       windSpeed: this.windSpeed,
       windDirection: this.windDirection,
-      entries: this.entries
+      entries: this.entries,
+      results: this.results
     };
   }
 

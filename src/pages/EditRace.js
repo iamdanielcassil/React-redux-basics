@@ -7,18 +7,10 @@ import "./editRace.css";
 export default connect(
   "selectRouteParams",
   "selectCurrentRace",
-  "doSetCurrent",
   "doSaveRace",
   "selectRaces",
   "doSelectCurrentSeason",
-  ({
-    routeParams,
-    currentRace,
-    doSetCurrent,
-    doSaveRace,
-    races,
-    doSelectCurrentSeason
-  }) => {
+  ({ routeParams, currentRace, doSaveRace, races, doSelectCurrentSeason }) => {
     const [currentSeason] = useState(doSelectCurrentSeason());
     const [race, setRace] = useState(() => {
       if (!currentSeason) {
