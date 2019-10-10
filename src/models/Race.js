@@ -18,11 +18,21 @@ export default class Race {
     this.apiRoute = `seasons/${this.seasonId}/races`;
   }
 
-  addEntries(entries) {
-    this.entries = [...this.entries, ...entries];
-  }
+  addEntry = entry => {
+    if (this.entries.some(e => e.id === entry.id)) {
+      return;
+    }
 
-  get() {
+    this.entries.push(entry);
+  };
+
+  removeEntry = id => {
+    let index = this.entries.findIndex(e => e.id === id);
+
+    this.entries.splice(index, 1);
+  };
+
+  get = () => {
     return {
       id: this.id,
       name: this.name,
@@ -35,7 +45,7 @@ export default class Race {
       entries: this.entries,
       results: this.results
     };
-  }
+  };
 
   update = changes => {
     return core.update(changes, this);

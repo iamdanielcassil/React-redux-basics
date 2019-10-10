@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
-import Race from "../models/Race";
 import RaceEntries from "../components/entries/RaceEntries";
 import "./editRace.css";
 
@@ -8,41 +7,33 @@ export default connect(
   "selectRouteParams",
   "selectCurrentRace",
   "doSaveRace",
+  "doSetCurrent",
   "selectRaces",
   "doSelectCurrentSeason",
-  ({ routeParams, currentRace, doSaveRace, races, doSelectCurrentSeason }) => {
+  "doGoToManageRaces",
+  ({
+    routeParams,
+    currentRace,
+    doSaveRace,
+    doSetCurrent,
+    races,
+    doSelectCurrentSeason,
+    doGoToManageRaces
+  }) => {
     const [currentSeason] = useState(doSelectCurrentSeason());
-    const [race, setRace] = useState(() => {
-      if (!currentSeason) {
-        throw new Error("must have valid season before creating new race");
-      }
-
-      return currentRace
-        ? new Race(currentRace)
-        : new Race({ seasonId: currentSeason.id });
-    });
-
-    console.log("current race is", race);
+    const [race, setRace] = useState();
 
     useEffect(() => {
-      if (!race.id && races && routeParams.id) {
-        let _race = races.find(r => r.id === routeParams.id);
-
-        if (_race) {
-          setRace(_race);
-        }
-      }
-    }, [race, races, routeParams, setRace]);
+      doSetCurrent(routeParams.id);
+    }, [routeParams.id, doSetCurrent, races]);
 
     useEffect(() => {
-      let _race = {
-        seasonId: currentSeason && currentSeason.id,
-        startDate: new Date().toDateString(),
-        ...currentRace
-      };
+      setRace(currentRace);
+    }, [currentRace]);
 
-      setRace(_race);
-    }, [currentRace, currentSeason]);
+    if (!race) {
+      return null;
+    }
 
     return (
       <div className="flex-row editRace-form">
@@ -121,12 +112,12 @@ export default connect(
           </label>
           <input
             type="button"
-            onClick={() => doSaveRace(new Race(race))}
+            onClick={() => doSaveRace(race).then(() => doGoToManageRaces())}
             value="save"
           />
         </div>
         <div className="flex-container flex-start">
-          <RaceEntries />
+          <RaceEntries race={race} test="test" />
         </div>
       </div>
     );

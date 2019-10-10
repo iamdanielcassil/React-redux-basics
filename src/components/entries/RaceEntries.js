@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "redux-bundler-react";
 import "./raceEntries.css";
-import Race from "../../models/Race";
 
 // test code
 // const boats = [{ id: 1, name: "test boat 1" }, { id: 2, name: "test boat 2" }];
@@ -27,22 +26,29 @@ export default connect(
   "selectCurrentRace",
   "selectBoats",
   "doAddRaceEntry",
-  ({ raceEntriesRace, currentRace, boats, doAddRaceEntry }) => {
+  "doRemoveRaceEntry",
+  ({
+    raceEntriesRace,
+    currentRace,
+    boats,
+    doAddRaceEntry,
+    doRemoveRaceEntry,
+    ...props
+  }) => {
     const [adding, setAdding] = useState(false);
     const [entryValue, setEntryValue] = useState({ name: "" });
     const [entryBoat, setEntryBoat] = useState([]);
 
+    console.log("props", props);
     return (
       <div className="raceEntries">
         <ul>
-          {raceEntriesRace.map(entry => (
+          {props.race.entries.map(entry => (
             <li key={`${entry.id}-${entry.name}`} className="raceEntry">
-              {entry.name}
-            </li>
-          ))}
-          {testEntries.map(entry => (
-            <li key={`${entry.id}-${entry.name}`} className="raceEntry">
-              {entry.name}
+              <span>{entry.name}</span>
+              <span onClick={() => doRemoveRaceEntry(props.race, entry)}>
+                x
+              </span>
             </li>
           ))}
           {adding ? (
@@ -55,7 +61,11 @@ export default connect(
                   onChange={e => {
                     setEntryValue({ name: e.target.value });
                     setEntryBoat(
-                      updateEntrySearch(boats, testEntries, e.target.value)
+                      updateEntrySearch(
+                        boats,
+                        props.race.entries,
+                        e.target.value
+                      )
                     );
                   }}
                   value={entryValue.name}
@@ -63,7 +73,7 @@ export default connect(
                 <div className="raceEntries-searchable-listControls">
                   <button
                     onClick={() => {
-                      doAddRaceEntry(new Race(currentRace), entryValue);
+                      doAddRaceEntry(props.race, entryValue);
                       // testEntries.push(entryValue);
                       setEntryValue({ name: "" });
                       setEntryBoat([]);

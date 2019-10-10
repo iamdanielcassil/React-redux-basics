@@ -63,21 +63,26 @@ const doNewRace = seasonId => ({ dispatch }) => {
   // window.location.pathname = "/#/races/new";
 };
 
-const doSetCurrent = race => ({ store, dispatch }) => {
+const doSetCurrent = raceId => ({ store, dispatch }) => {
   let state = store.getState();
 
-  if (!state.races.current || state.races.current.id !== race.id) {
-    dispatch({ type: "RACE_SELECTED", current: race });
+  if (!state.races.current || state.races.current.id !== raceId) {
+    let race = state.races.all.find(r => r.id === raceId);
+
+    if (race) {
+      dispatch({
+        type: "RACE_SELECTED",
+        current: race
+      });
+    }
   }
 };
 
 const doSaveRace = race => ({ getState, dispatch }) => {
-  let state = getState();
   dispatch({ type: "RACE_SAVE_STARTED" });
   let wasNew = race.isNew;
 
-  race.addEntries(state.raceEntries.adding);
-  race
+  return race
     .save()
     .then(savedRace => {
       if (wasNew) {
@@ -85,6 +90,7 @@ const doSaveRace = race => ({ getState, dispatch }) => {
       }
 
       dispatch({ type: "RACE_SAVE_FINISHED" });
+      return savedRace;
     })
     .catch(() => {
       dispatch({ type: "RACE_SAVE_FAILED" });
@@ -102,6 +108,13 @@ const doAddRaceEntry = (race, entry) => ({ getState, store }) => {
   // let race = new Race(_race);
 
   race.addEntry(entry);
+  store.doUpdateCurrent(race.get());
+};
+
+const doRemoveRaceEntry = (race, entry) => ({ getState, store }) => {
+  // let race = new Race(_race);
+
+  race.removeEntry(entry.id);
   store.doUpdateCurrent(race.get());
 };
 
@@ -128,6 +141,10 @@ const doGoToManageRace = race => ({ store, dispatch }) => {
   store.doUpdateUrl({ pathname: "/", hash: `/races/manage/${race.id}` });
 };
 
+const doGoToManageRaces = () => ({ store, dispatch }) => {
+  store.doUpdateUrl({ pathname: "/", hash: `/races/manage` });
+};
+
 const selectCurrentRace = state => {
   return state.races.current ? { ...state.races.current } : null;
 };
@@ -144,9 +161,12 @@ export default {
   doSaveRace,
   doSetCurrent,
   doAddRaceEntry,
+  doRemoveRaceEntry,
   doUpdateCurrent,
   doStartRace,
   doEndRace,
+  doGoToManageRace,
+  doGoToManageRaces,
   selectCurrentRace,
   selectIsEditing,
   selectRaces,

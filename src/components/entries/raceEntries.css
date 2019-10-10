@@ -5,6 +5,16 @@
   margin-bottom: 36px;
 }
 
+.raceEntry {
+  display: flex;
+  justify-content: space-between;
+}
+
+.raceEntry span:nth-child(2) {
+  text-align: right;
+  color: red;
+}
+
 .raceEntries ul {
   color: white;
   text-align: initial;
