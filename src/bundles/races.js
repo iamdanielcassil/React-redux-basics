@@ -82,6 +82,7 @@ const doSaveRace = race => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
   let wasNew = race.isNew;
 
+  console.log("saveing race", race);
   return race
     .save()
     .then(savedRace => {

@@ -5,13 +5,35 @@ import "./manageRace.css";
 export default connect(
   "selectRaces",
   "selectRouteParams",
+  "selectCurrentRace",
   "doStartRace",
   "doEndRace",
+  "doSetCurrent",
   "selectRaceEvent",
-  ({ races, routeParams, doStartRace, doEndRace, raceEvent }) => {
-    const [race, setRace] = useState(races.find(r => r.id === routeParams.id));
+  ({
+    races,
+    routeParams,
+    doStartRace,
+    doEndRace,
+    doSetCurrent,
+    raceEvent,
+    currentRace
+  }) => {
+    const [race, setRace] = useState();
     const [time, setTime] = useState(new Date());
     const [restarting, setRestarting] = useState(false);
+
+    useEffect(() => {
+      doSetCurrent(routeParams.id);
+    }, [routeParams.id, doSetCurrent, races]);
+
+    useEffect(() => {
+      setRace(currentRace);
+    }, [currentRace]);
+
+    if (!race) {
+      return null;
+    }
 
     window.setInterval(() => {
       let timeNow = new Date();
@@ -50,7 +72,9 @@ export default connect(
         <div className="manageRace-body">
           {race &&
             race.entries.map(entry => {
-              let result = race.results.find(r => r.id === entry.id);
+              let result = race.results
+                ? race.results.find(r => r.id === entry.id)
+                : [];
 
               if (!result) {
                 return raceCell(entry, raceEvent, time, doEndRace, race);
