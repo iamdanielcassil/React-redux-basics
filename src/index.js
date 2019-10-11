@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { debug } from "./foundations/notifications";
 import { Provider } from "redux-bundler-react";
 import createStore from "./bundles/";
 import Base from "./Base";
-import {debug} from './foundations/notifications'
 import "./styles.css";
 
 const store = createStore();
 
-window.DC = window.DC ? { ...window.DC, store } : { store };
+window.DC = window.DC ? { ...window.DC, store, debug } : { store, debug };
 function App() {
   return (
     <div className="App">
