@@ -1,4 +1,4 @@
-/* .stats-container {
+.stats-container {
   display: flex;
   flex-direction: column;
   height: 400px;
@@ -9,7 +9,7 @@
   border: 1px solid white;
   padding: 15px;
   border-radius: 5px;
-} */
+}
 
 .stats-container {
   display: flex;
