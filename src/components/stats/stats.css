@@ -11,7 +11,7 @@
   border-radius: 5px;
 } */
 
-.stats-container {
+/* .stats-container {
   display: flex;
   flex-direction: column;
   min-height: 150px;
@@ -20,7 +20,7 @@
   background-color: #5284af;
   color: white;
   border-radius: 5px;
-}
+} */
 
 .stats-header {
   display: flex;
