@@ -1,16 +1,23 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
+import Race from "../models/Race";
 import "./boats.css";
 
 export default connect(
   "selectRaces",
   "doGoToManageRace",
-  ({ races, doGoToManageRace }) => {
+  "doNewRace",
+  "selectQueryObject",
+  ({ races, doGoToManageRace, doNewRace, queryObject }) => {
     return (
       <div className="boats">
         <div className="row">
           <div className="double-column">
-            <a className="button-secondary" href="#/races/new">
+            <a
+              className="button-secondary"
+              href="#/races/new"
+              onClick={() => doNewRace(queryObject.seasonId)}
+            >
               New Race
             </a>
           </div>
@@ -30,6 +37,9 @@ export default connect(
               </a>
               <a href={`#/races/manage/${race.id}`}>Start Race</a>
               <a href={`#/races/${race.id}/edit`}>Edit</a>
+              <a href={"#/races/manage"} onClick={new Race(race).delete}>
+                delete
+              </a>
             </li>
           ))}
         </ul>

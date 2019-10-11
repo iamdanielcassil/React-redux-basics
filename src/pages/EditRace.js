@@ -112,12 +112,16 @@ export default connect(
           </label>
           <input
             type="button"
-            onClick={() => doSaveRace(race).then(() => doGoToManageRaces())}
+            onClick={() =>
+              doSaveRace(currentRace.update(race)).then(() =>
+                doGoToManageRaces()
+              )
+            }
             value="save"
           />
         </div>
         <div className="flex-container flex-start">
-          <RaceEntries race={race} test="test" />
+          <RaceEntries race={currentRace} test="test" />
         </div>
       </div>
     );

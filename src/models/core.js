@@ -36,5 +36,20 @@ export default {
       doc.set(modelData);
       return modelData;
     });
+  },
+
+  delete: model => {
+    let modelData = model.get();
+
+    if (model.isNew) {
+      // do something
+      return;
+    }
+
+    return data.getCollectionQuery(model.apiRoute).then(collection => {
+      let doc = collection.doc(modelData.id.toString());
+
+      return doc.delete();
+    });
   }
 };

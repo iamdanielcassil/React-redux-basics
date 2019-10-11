@@ -46,9 +46,7 @@ export default connect(
           {props.race.entries.map(entry => (
             <li key={`${entry.id}-${entry.name}`} className="raceEntry">
               <span>{entry.name}</span>
-              <span onClick={() => doRemoveRaceEntry(props.race, entry)}>
-                x
-              </span>
+              <span onClick={() => props.race.removeEntry(entry)}>x</span>
             </li>
           ))}
           {adding ? (
@@ -73,7 +71,8 @@ export default connect(
                 <div className="raceEntries-searchable-listControls">
                   <button
                     onClick={() => {
-                      doAddRaceEntry(props.race, entryValue);
+                      // doAddRaceEntry(props.race, entryValue);
+                      props.race.addEntry(entryValue);
                       // testEntries.push(entryValue);
                       setEntryValue({ name: "" });
                       setEntryBoat([]);

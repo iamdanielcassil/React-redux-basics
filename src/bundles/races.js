@@ -58,9 +58,7 @@ const reducer = (state = { all: [], current: null, event: {} }, action) => {
 // };
 
 const doNewRace = seasonId => ({ dispatch }) => {
-  console.log("season id ", seasonId);
   dispatch({ type: "NEW_RACE_CREATED", current: new Race({ seasonId }) });
-  // window.location.pathname = "/#/races/new";
 };
 
 const doSetCurrent = raceId => ({ store, dispatch }) => {

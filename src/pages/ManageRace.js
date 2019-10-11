@@ -9,20 +9,21 @@ export default connect(
   "doStartRace",
   "doEndRace",
   "doSetCurrent",
-  "selectRaceEvent",
   ({
     races,
     routeParams,
     doStartRace,
     doEndRace,
     doSetCurrent,
-    raceEvent,
     currentRace
   }) => {
+    let timer = <Timer />;
     const [race, setRace] = useState();
-    const [time, setTime] = useState(new Date());
     const [restarting, setRestarting] = useState(false);
 
+    useEffect(() => {
+      console.log("in use effect", race);
+    }, [race]);
     useEffect(() => {
       doSetCurrent(routeParams.id);
     }, [routeParams.id, doSetCurrent, races]);
@@ -35,25 +36,24 @@ export default connect(
       return null;
     }
 
-    window.setInterval(() => {
-      let timeNow = new Date();
-      setTime(timeNow);
-    }, 100);
-
     return (
       <div className="manageRace">
         <div className="manageRace-header">
-          {raceEvent.startTime && !restarting ? (
+          {race.startTime && !restarting ? (
             <input
               type="button"
               value="Prepare To Restart Race"
               onClick={() => {
                 if (
                   window.confirm(
-                    "Are you sure you want to clear the start time?"
+                    "Are you sure you want to clear the start time and all race results?"
                   )
                 ) {
-                  doStartRace(race.id, undefined);
+                  race.reset();
+                  race.startTime = undefined;
+                  console.log("after reset", race);
+                  setRace(race);
+                  // doStartRace(race.id, undefined);
                   setRestarting(true);
                 }
               }}
@@ -63,7 +63,12 @@ export default connect(
               type="button"
               value="Start Race"
               onClick={() => {
-                doStartRace(race.id, time);
+                let startTime = new Date();
+
+                race.start(startTime);
+                race.startTime = startTime;
+                setRace(race);
+                // doStartRace(race.id, time);
                 setRestarting(false);
               }}
             />
@@ -77,9 +82,13 @@ export default connect(
                 : [];
 
               if (!result) {
-                return raceCell(entry, raceEvent, time, doEndRace, race);
+                return (
+                  <RaceCell key={entry.id} entry={entry} race={race}>
+                    {timer}
+                  </RaceCell>
+                );
               } else if (result) {
-                return raceFinishedCell(result);
+                return <RaceFinishedCell key={entry.id} result={result} />;
               }
             })}
         </div>
@@ -87,35 +96,50 @@ export default connect(
     );
   }
 );
-function raceCell(entry, raceEvent, _time, doEndRace, race) {
-  let time = new Date(_time);
-  let startTime = raceEvent.startTime && new Date(raceEvent.startTime);
+function Timer() {
+  const [time, setTime] = useState(new Date());
+
+  window.setInterval(() => {
+    let timeNow = new Date();
+    setTime(timeNow);
+  }, 100);
+
+  if (time) {
+    return (
+      <div>{`${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}:${time.getMilliseconds()}`}</div>
+    );
+  } else {
+    return null;
+  }
+}
+function RaceCell({ entry, race, children }) {
+  let startTime = race.startTime && new Date(race.startTime);
 
   return (
-    <div className="manageRace-race">
+    <div key={entry.id} className="manageRace-race">
       <div className="manageRace-race-header">
         <div>{entry.name}</div>
-        {startTime ? (
-          <div>
-            Start Time:{" "}
-            {`${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}:${startTime.getMilliseconds()}`}
-          </div>
-        ) : null}
-        {time ? (
-          <div>{`${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}:${time.getMilliseconds()}`}</div>
-        ) : null}
+        <span>
+          {startTime
+            ? `Start Time: ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}:${startTime.getMilliseconds()}`
+            : null}
+        </span>
+        {children}
       </div>
-      <input
-        type="button"
-        value="End Race"
-        onClick={() => {
-          doEndRace(race, entry, time);
-        }}
-      />
+      {startTime ? (
+        <input
+          type="button"
+          value="End Race"
+          onClick={() => {
+            race.finishEntry(entry.id, new Date());
+            // doEndRace(race, entry, time);
+          }}
+        />
+      ) : null}
     </div>
   );
 }
-function raceFinishedCell(result) {
+function RaceFinishedCell({ result }) {
   let endTime = result.endTime && new Date(result.endTime);
   let startTime = result.startTime && new Date(result.startTime);
 
@@ -127,8 +151,10 @@ function raceFinishedCell(result) {
     <div className="manageRace-race">
       <div className="manageRace-race-header">
         <div>{result.name}</div>
-        {`Start Time: ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}:${startTime.getMilliseconds()}`}
-        {`End Time: ${endTime.getHours()}:${endTime.getMinutes()}:${endTime.getSeconds()}:${endTime.getMilliseconds()}`}
+      </div>
+      <div className="manageRace-race-times">
+        <span>{`Start Time: ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}:${startTime.getMilliseconds()}`}</span>
+        <span>{`End Time: ${endTime.getHours()}:${endTime.getMinutes()}:${endTime.getSeconds()}:${endTime.getMilliseconds()}`}</span>
       </div>
     </div>
   );

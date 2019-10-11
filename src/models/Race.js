@@ -7,12 +7,13 @@ export default class Race {
     this.name = props.name || "";
     this.seasonId = props.seasonId;
     this.startDate = props.startDate || new Date().toISOString().split("T")[0];
+    this.startTime = props.startTime ? new Date(props.startTime) : null;
     this.endDate = props.endDate || "";
     this.temperature = props.temperature || "";
     this.windDirection = props.windDirection || "";
     this.windSpeed = props.windSpeed || "";
     this.courseMap = props.courseMap;
-    this.results = props.results;
+    this.results = props.results || [];
     this.entries = props.entries || [];
 
     this.apiRoute = `seasons/${this.seasonId}/races`;
@@ -32,11 +33,39 @@ export default class Race {
     this.entries.splice(index, 1);
   };
 
+  start = time => {
+    this.startTime = time;
+    this.save();
+  };
+
+  reset = () => {
+    this.startTime = undefined;
+    this.results = [];
+    this.save();
+  };
+
+  finishEntry = (entryId, time) => {
+    let entry = this.entries.find(e => e.id === entryId);
+
+    if (!entry) {
+      console.warn("Unable to finish entry - no entry found for: ", entryId);
+    }
+
+    this.results.push({
+      ...entry,
+      startTime: this.get().startTime,
+      endTime: time
+    });
+
+    this.save();
+  };
+
   get = () => {
     return {
       id: this.id,
       name: this.name,
       startDate: this.startDate,
+      startTime: this.startTime ? this.startTime.getTime() : null,
       endDate: this.endDate || "",
       seasonId: this.seasonId,
       temperature: this.temperature,
@@ -60,17 +89,9 @@ export default class Race {
     return core.save(this);
   };
 
-  // addRacer(racer) {
-
-  // }
-
-  // editRacer(racer) {
-
-  // }
-
-  // removeRacer(racer) {
-
-  // }
+  delete = () => {
+    return core.delete(this);
+  };
 
   // raceEntries() {
   //   return actions.entries.getRace(this.id);

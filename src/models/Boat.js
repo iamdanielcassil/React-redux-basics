@@ -42,4 +42,8 @@ export default class Boat {
 
     return core.save(this);
   };
+
+  delete = () => {
+    return core.delete(this);
+  };
 }
