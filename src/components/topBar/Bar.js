@@ -13,7 +13,7 @@ export default connect(
   "doSignOut",
   ({ user, doGoToSelectSeason, seasons, currentSeason, doSignOut }) => (
     <div className="bar">
-      <div className="threeCol-left flex-row flex-start">
+      <div className="mainMenu-button">
         <div className="flex-column left-aligned">
           <MainMenu>
             <div className="mainMenu-item">
