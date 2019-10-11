@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
+import More from "../components/menus/more";
 import "./boats.css";
 
 export default connect(
@@ -16,26 +17,26 @@ export default connect(
           </div>
         </div>
         <ul className="list">
-          <li className="list-item">
-            <span>Boat</span>
-            <span>Captain</span>
-            <span>Maker</span>
-            <span>Type</span>
-            <span>PHRF</span>
-          </li>
-        </ul>
-        <ul className="list">
           {boats.map(boat => (
             <li
               key={boat.id}
               className="list-item editable"
               onClick={() => doGoToSelectBoat(boat.id)}
             >
-              <span>{boat.name}</span>
-              <span>{boat.captain}</span>
-              <span>{boat.maker}</span>
-              <span>{boat.type}</span>
-              <span>{boat.phrf}</span>
+              <span className="list-column">
+                <span>Boat: {boat.name}</span>
+                <span className="secondary">Captain: {boat.captain}</span>
+              </span>
+              <span className="list-column">
+                <span>{boat.maker}</span>
+                <span className="secondary">{boat.type}</span>
+              </span>
+              <span className="list-column">
+                <More>
+                  <span>a</span>
+                  <span>a</span>
+                </More>
+              </span>
             </li>
           ))}
         </ul>

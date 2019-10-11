@@ -1,18 +1,24 @@
+/* Maximum width */
+@media (max-width: 500px) {
+  .boats {
+    padding: 0px;
+  }
+}
+
+/* Min width */
+@media (min-width: 501px) {
+  .boats {
+    padding: 25px 50px;
+  }
+}
+
 .boats {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 25px 50px;
-}
-
-/* Maximum width */
-@media (max-width: 500px) {
-  .boats {
-    padding: 5px;
-  }
+  box-sizing: border-box;
 }
 
 .boats .list {
-  border: 1px solid white;
-  border-radius: 5px;
+  border-top: 1px solid white;
 }

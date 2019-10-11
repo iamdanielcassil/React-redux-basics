@@ -15,6 +15,7 @@
 
 .mainMenu {
   width: 0;
+  display: none;
 }
 
 .mainMenu-enter {

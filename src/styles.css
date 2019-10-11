@@ -1,3 +1,14 @@
+/* Maximum width */
+@media (max-width: 500px) {
+  .list-item span {
+    margin: 5px 5px !important;
+  }
+}
+
+/* Min width */
+@media (min-width: 501px) {
+}
+
 body {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#5284af+0,5a87ad+100 */
   background: #5284af; /* Old browsers */
@@ -219,7 +230,7 @@ a:hover {
 }
 
 .list::-webkit-scrollbar {
-  width: 3px !important;
+  width: 0px !important;
   border: none;
   background-color: #0000002b;
 }
@@ -249,16 +260,21 @@ a:hover {
   padding: 10px 2px 0px 2px;
   overflow-y: scroll;
   height: 100%;
-  font-weight: 100;
+  font-weight: normal;
   font-size: 10pt;
 }
 
-.list:nth-child(2) {
-  height: 45px;
-  font-weight: bold;
-  font-size: 12pt;
-  border-bottom: 1px solid white;
-  overflow: hidden;
+.list-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-column span {
+  width: 100%;
+}
+
+.list-column span.secondary {
+  font-weight: 100;
 }
 
 .list-item {
@@ -304,10 +320,10 @@ a:hover {
   flex: 1 1 auto;
   text-overflow: ellipsis;
   overflow: hidden;
+  width: 100%;
 }
 
 .list-item span:nth-child(1) {
-  width: 150px;
 }
 
 .list-item:nth-child(1) span {
@@ -315,19 +331,14 @@ a:hover {
 }
 
 .list-item span:nth-child(2) {
-  width: 125px;
 }
 .list-item span:nth-child(3) {
-  width: 125px;
 }
 .season .list-item span:nth-child(3) {
-  width: 50px;
 }
 .list-item span:nth-child(4) {
-  width: 25px;
   text-align: right;
 }
 .list-item span:nth-child(5) {
-  width: 25px;
   text-align: right;
 }

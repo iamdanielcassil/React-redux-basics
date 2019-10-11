@@ -100,18 +100,19 @@
 }
 
 .button-secondary {
-  margin: 15px 25px;
+  margin: 25px;
   width: 100px;
   padding: 5px;
   align-self: flex-start;
   background: none;
   border: none;
-  color: white;
-  border: 1px solid white;
-  border-radius: 10px;
+  color: #004d90;
+  border: 1px solid #004d90;
+  border-radius: 4px;
   /* background-color: #00000047; */
   font-size: 13pt;
   cursor: pointer;
+  text-align: center;
 }
 
 .button-delete {
