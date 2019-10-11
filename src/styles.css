@@ -285,6 +285,9 @@ a:hover {
 
 .list-item.editable a:nth-child(1) {
   text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .list-item.editable a:hover {

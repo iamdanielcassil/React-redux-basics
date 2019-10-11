@@ -35,7 +35,7 @@ export default connect(
                 <span>{race.startDate}</span>
                 <span>{race.name}</span>
               </a>
-              <a href={`#/races/manage/${race.id}`}>Start Race</a>
+              <a href={`#/races/manage/${race.id}`}>Start</a>
               <a href={`#/races/${race.id}/edit`}>Edit</a>
               <a href={"#/races/manage"} onClick={new Race(race).delete}>
                 delete

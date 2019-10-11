@@ -5,6 +5,13 @@
   padding: 25px 50px;
 }
 
+/* Maximum width */
+@media (max-width: 500px) {
+  .boats {
+    padding: 5px;
+  }
+}
+
 .boats .list {
   border: 1px solid white;
   border-radius: 5px;
