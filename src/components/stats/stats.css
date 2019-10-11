@@ -1,4 +1,4 @@
-.stats-container {
+/* .stats-container {
   display: flex;
   flex-direction: column;
   height: 400px;
@@ -8,6 +8,17 @@
   color: white;
   border: 1px solid white;
   padding: 15px;
+  border-radius: 5px;
+} */
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  margin: 3px;
+  flex: 1 1 auto;
+  background-color: #5284af;
+  color: white;
   border-radius: 5px;
 }
 
@@ -93,16 +104,20 @@ li.stats-list-empty {
 .stats-list-item span:nth-child(2) {
   width: 125px;
 }
+
 .stats-list-item span:nth-child(3) {
   width: 125px;
 }
+
 .stats-season .stats-list-item span:nth-child(3) {
   width: 50px;
 }
+
 .stats-list-item span:nth-child(4) {
   width: 25px;
   text-align: right;
 }
+
 .stats-list-item span:nth-child(5) {
   width: 25px;
   text-align: right;
@@ -126,20 +141,14 @@ li.stats-list-empty {
 }
 
 .stats {
-  background: -moz-linear-gradient(
-    left,
-    rgba(30, 87, 153, 1) 0%,
-    rgba(125, 185, 232, 0) 100%
-  );
-  background: -webkit-linear-gradient(
-    left,
-    rgba(30, 87, 153, 1) 0%,
-    rgba(125, 185, 232, 0) 100%
-  );
-  background: linear-gradient(
-    to right,
-    rgba(30, 87, 153, 1) 0%,
-    rgba(125, 185, 232, 0) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=1 );
+  background: -moz-linear-gradient(left,
+      rgba(30, 87, 153, 1) 0%,
+      rgba(125, 185, 232, 0) 100%);
+  background: -webkit-linear-gradient(left,
+      rgba(30, 87, 153, 1) 0%,
+      rgba(125, 185, 232, 0) 100%);
+  background: linear-gradient(to right,
+      rgba(30, 87, 153, 1) 0%,
+      rgba(125, 185, 232, 0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e5799', endColorstr='#007db9e8', GradientType=1);
 }
