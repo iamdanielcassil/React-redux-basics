@@ -1,4 +1,4 @@
-.bar {
+/* .bar {
   height: 50px;
   width: 100%;
   background-color: rgb(25, 56, 85);
@@ -6,6 +6,27 @@
   flex: 0 0 auto;
   position: fixed;
   z-index: 999;
+} */
+
+.bar {
+  width: 100vw;
+  height: 50px;
+  background-color: #00000061;
+  display: flex;
+}
+
+.bar-seasonsList {
+  height: 50px;
+  display: flex;
+  margin-left: 25px;
+}
+
+.bar-seasonsList select {
+  background: none;
+  border: none;
+  color: white;
+  outline: none;
+  background-color: #35536c;
 }
 
 .bar-info {
@@ -15,18 +36,18 @@
 
 .bar-seasons-select {
   font-size: 9pt;
-    list-style: none;
-    border: none;
-    background: none;
-    border-bottom: 1px solid white;
-    background-color: rgb(24, 55, 85);
-    color: white;
-    border-radius: 2px;
-    padding: 3px;
-    -webkit-appearance: none;
-    border-radius: 0px;
-    border-style: none;
-    outline-style: none;
-    border-bottom: 1px solid white;
-    margin: 9px;
+  list-style: none;
+  border: none;
+  background: none;
+  border-bottom: 1px solid white;
+  background-color: rgb(24, 55, 85);
+  color: white;
+  border-radius: 2px;
+  padding: 3px;
+  -webkit-appearance: none;
+  border-radius: 0px;
+  border-style: none;
+  outline-style: none;
+  border-bottom: 1px solid white;
+  margin: 9px;
 }

@@ -1,10 +1,16 @@
-.mainMenu {
+/* .mainMenu {
   height: 100vh;
   background-color: #00000099;
   transition: width 0.2s;
   display: none;
   overflow: hidden;
   padding-top: 15px;
+} */
+
+.mainMenu {
+  width: 50px;
+  height: 50px;
+  display: flex;
 }
 
 .mainMenu-enter {
@@ -12,6 +18,7 @@
   width: 0px;
   display: block;
 }
+
 .mainMenu-enter-active {
   opacity: 1;
   width: 350px;
@@ -19,15 +26,18 @@
 
   display: block;
 }
+
 .mainMenu-enter-done {
   width: 350px;
   display: block;
 }
+
 .mainMenu-exit {
   opacity: 1;
   width: 350px;
   display: block;
 }
+
 .mainMenu-exit-active {
   opacity: 0;
   width: 0;
@@ -35,6 +45,7 @@
 
   display: block;
 }
+
 .mainMenu-exit-done {
   width: 0px;
   display: none;
@@ -44,8 +55,9 @@
   padding: 15px;
   text-align: left;
   white-space: nowrap;
-    
+
 }
+
 /*
  * Made by Erik Terwan
  * 24th of November 2015
@@ -79,8 +91,10 @@
 
   cursor: pointer;
 
-  opacity: 0; /* hide this */
-  z-index: 2; /* and place it over the hamburger */
+  opacity: 0;
+  /* hide this */
+  z-index: 2;
+  /* and place it over the hamburger */
 
   -webkit-touch-callout: none;
 }
@@ -169,6 +183,6 @@
 /*
   * And let's slide it in from the left
   */
-.menuToggle input:checked ~ ul {
+.menuToggle input:checked~ul {
   transform: none;
 }

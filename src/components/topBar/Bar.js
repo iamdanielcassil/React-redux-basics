@@ -12,7 +12,7 @@ export default connect(
   "selectSeasons",
   "doSignOut",
   ({ user, doGoToSelectSeason, seasons, currentSeason, doSignOut }) => (
-    <div className="bar flex-row">
+    <div className="bar">
       <div className="threeCol-left flex-row flex-start">
         <div className="flex-column left-aligned">
           <MainMenu>
@@ -45,10 +45,10 @@ export default connect(
         </div>
       </div>
       {!window.location.hash.includes("boats") ? (
-        <div className="threeCol-center flex-row">
+        <div className="bar-seasonsList">
           <select
             value={currentSeason ? currentSeason.id : undefined}
-            className="select bar-seasons-select"
+            className=""
             onChange={e => {
               doGoToSelectSeason(e.target.value);
             }}
