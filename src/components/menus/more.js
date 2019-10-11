@@ -5,9 +5,9 @@ export default ({ children }) => {
   const [isShowing, setIsShowing] = useState(false);
 
   useEffect(() => {
-    console.log("!!!! attached doc lister");
+    window.DC.debug.log("!!!! attached doc lister");
     // document.body.addEventListener("click", () => {
-    //   console.log("@@@@@@@@@@@@ triggered doc event");
+    //   window.DC.debug.log("@@@@@@@@@@@@ triggered doc event");
     //   setIsShowing(false);
     // });direct
   }, [setIsShowing]);

@@ -9,6 +9,5 @@ function Loading(props) {
 }
 
 export default connect(state => {
-  console.log(state);
   return { ...state.box };
 })(Loading);

@@ -17,7 +17,7 @@ function updateEntrySearch(boats, currentEntries, value) {
     )
     .filter(b => b.name.toLowerCase().includes(value.toLowerCase()));
 
-  console.log("matches =", matches);
+  window.DC.debug.log("matches =", matches);
   return matches;
 }
 
@@ -39,7 +39,7 @@ export default connect(
     const [entryValue, setEntryValue] = useState({ name: "" });
     const [entryBoat, setEntryBoat] = useState([]);
 
-    console.log("props", props);
+    window.DC.debug.log("props", props);
     return (
       <div className="raceEntries">
         <ul>

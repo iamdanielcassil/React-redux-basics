@@ -22,7 +22,7 @@ export default connect(
     const [restarting, setRestarting] = useState(false);
 
     useEffect(() => {
-      console.log("in use effect", race);
+      window.DC.debug.log("in use effect", race);
     }, [race]);
     useEffect(() => {
       doSetCurrent(routeParams.id);
@@ -51,7 +51,7 @@ export default connect(
                 ) {
                   race.reset();
                   race.startTime = undefined;
-                  console.log("after reset", race);
+                  window.DC.debug.log("after reset", race);
                   setRace(race);
                   // doStartRace(race.id, undefined);
                   setRestarting(true);

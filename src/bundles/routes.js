@@ -11,7 +11,7 @@ import ManageRace from "../pages/ManageRace";
 import Login from "../pages/Login";
 
 let _onAllRoutesWrapper = (route, Component) => {
-  console.log({ [route]: Component });
+  window.DC.debug.log({ [route]: Component });
   return { [route]: { Component } };
 };
 

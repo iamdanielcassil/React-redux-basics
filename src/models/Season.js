@@ -26,7 +26,7 @@ export default class Season {
   };
 
   save = () => {
-    console.log("savin this: ", this);
+    window.DC.debug.log("savin this: ", this);
     if (!this.startDate || !this.name) return Promise.reject();
 
     return core.save(this);

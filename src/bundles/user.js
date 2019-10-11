@@ -23,7 +23,7 @@ const doSignIn = () => ({ dispatch }) => {
   });
 
   myFirebase.auth().onAuthStateChanged(function(_user) {
-    // console.log("auth hit", user);
+    // window.DC.debug.log("auth hit", user);
     user = _user;
     dispatch({
       type: "USER_AUTH_FINISHED",

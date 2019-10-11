@@ -11,7 +11,7 @@ export default connect(
       doSelectCurrentSeason() || new Season({})
     );
 
-    console.log("current season is:", season);
+    window.DC.debug.log("current season is:", season);
     return (
       <div>
         {season ? (

@@ -4,7 +4,7 @@ import data from "../data";
 const init = store => {
   // doGetSeasonRaces();
   // data.listen(`seasons/123/races`, races => {
-  //   console.log("races fetched", races);
+  //   window.DC.debug.log("races fetched", races);
   //   store.dispatch({ type: "RACES_FETCHED", races });
   // });
 };
@@ -13,18 +13,18 @@ const reducer = (state = { all: [], current: null, event: {} }, action) => {
     return { ...state, current: action.current };
   }
   if (action.type === "CURRENT_RACE_UPDATED") {
-    console.log("CURRENT_RACE_UPDATED", state);
+    window.DC.debug.log("CURRENT_RACE_UPDATED", state);
     return state;
   }
   if (action.type === "RACE_SAVE_FINISHED") {
     return state;
   }
   if (action.type === "RACES_FETCH_FINISHED") {
-    console.log("races fetched", action.races);
+    window.DC.debug.log("races fetched", action.races);
     return { ...state, current: state.current, all: action.races };
   }
   if (action.type === "RACE_SELECTED") {
-    console.log("race selected", action.current);
+    window.DC.debug.log("race selected", action.current);
     return {
       ...state,
       current: new Race(action.current),
@@ -80,7 +80,7 @@ const doSaveRace = race => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
   let wasNew = race.isNew;
 
-  console.log("saveing race", race);
+  window.DC.debug.log("saveing race", race);
   return race
     .save()
     .then(savedRace => {

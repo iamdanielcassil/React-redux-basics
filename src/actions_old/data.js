@@ -6,7 +6,6 @@ let data = null;
 store.subscribe(() => {
   let user = store.getState().user;
 
-  console.log("data init", user);
   if (user && !data) {
     data = new Data(user);
   } else if (!user || !user) {

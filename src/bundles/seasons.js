@@ -8,7 +8,7 @@ const init = store => {
     let sortseasons = seasons.sort((a, b) => {
       return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
     });
-    console.log("seasons fetched", seasons, sortseasons);
+    window.DC.debug.log("seasons fetched", seasons, sortseasons);
     store.dispatch({ type: "SEASONS_FETCHED", seasons });
     if (!state.seasons.current) {
       if (store.selectQueryObject().seasonId) {
@@ -24,18 +24,18 @@ const reducer = (state = { all: [], current: null }, action) => {
     return { all: state.all, current: action.current };
   }
   if (action.type === "CURRENT_SEASON_UPDATED") {
-    console.log("CURRENT_SEASON_UPDATED", state);
+    window.DC.debug.log("CURRENT_SEASON_UPDATED", state);
     return state;
   }
   if (action.type === "SEASON_SAVE_FINISHED") {
     return state;
   }
   if (action.type === "SEASONS_FETCHED") {
-    console.log("SEASONs fetched", action.seasons);
+    window.DC.debug.log("SEASONs fetched", action.seasons);
     return { current: state.current, all: action.seasons };
   }
   if (action.type === "SEASON_SELECTED") {
-    console.log("SEASON selected", action.current);
+    window.DC.debug.log("SEASON selected", action.current);
     return {
       current: new Season(action.payload),
       all: state.all,
@@ -81,7 +81,7 @@ const doSaveSeason = season => ({ getState, dispatch }) => {
 };
 
 const doUpdateCurrent = seasonData => ({ getState, dispatch }) => {
-  console.log("doupdatecurrent", getState());
+  window.DC.debug.log("doupdatecurrent", getState());
   let season = getState().seasons.current;
   season.update(seasonData);
   dispatch({ type: "CURRENT_SEASON_UPDATED" });

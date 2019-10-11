@@ -12,7 +12,7 @@ let lastInitedUser = -1;
 class Data {
   init(user) {
     if (lastInitedUser !== user) {
-      console.log("data inited with user: ", user);
+      window.DC.debug.log("data inited with user: ", user);
       this.user = user;
       this.inited = true;
       initResolve();
@@ -23,9 +23,9 @@ class Data {
 
   getCollectionQuery(collection) {
     if (!this.inited) {
-      console.log("used before ready, waiting on init resolve");
+      window.DC.debug.log("used before ready, waiting on init resolve");
       return initPromise.then(() => {
-        console.log("init resovled");
+        window.DC.debug.log("init resovled");
         return db.collection(collection);
       });
     } else {
@@ -41,11 +41,11 @@ class Data {
         return;
       }
 
-      console.log("setup snapshot");
+      window.DC.debug.log("setup snapshot");
       query.onSnapshot(snapshot => {
         let data = [];
 
-        console.log("listen", snapshot.docs);
+        window.DC.debug.log("listen", snapshot.docs);
         snapshot.docs.forEach(doc => {
           if (doc && typeof doc.data === "function") {
             let result = doc.data();

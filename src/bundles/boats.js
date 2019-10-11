@@ -4,7 +4,7 @@ import data from "../data";
 const init = store => {
   store.dispatch({ type: "BOATS_FETCH_STARTED", boats: [] });
   data.listen(`boats`, boats => {
-    console.log("boats fetch finished");
+    window.DC.debug.log("boats fetch finished");
     store.dispatch({ type: "BOATS_FETCH_FINISHED", boats: boats.sort() });
   });
 };
@@ -36,7 +36,7 @@ const doGoToSelectBoat = boatId => ({ dispatch, store }) => {
 
 const doDeleteBoat = boat => ({ dispatch, store }) => {
   if (window.confirm(`Are you sure you want to delete boat: ${boat.name}`)) {
-    console.log("need to delete boat");
+    window.DC.debug.log("need to delete boat");
   }
 };
 
@@ -50,13 +50,13 @@ const doSaveBoat = boat => ({ dispatch, store }) => {
     new Boat(boat)
       .save()
       .then(savedBoat => {
-        console.log("save boat", savedBoat);
+        window.DC.debug.log("save boat", savedBoat);
         store.dispatch({ type: "BOATS_CURRENT_SELECTED", boat: savedBoat });
         store.dispatch({ type: "BOATS_SAVE_FINISHED" });
         store.doUpdateUrl({ pathname: "/", hash: "/boats" });
       })
       .catch(error => {
-        console.log("save boat failed", error);
+        window.DC.debug.log("save boat failed", error);
         store.dispatch({ type: "BOATS_SAVE_FINISHED", boat: {} });
         store.dispatch({ type: "BOATS_SAVE_FAILED" });
       });

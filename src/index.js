@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "redux-bundler-react";
 import createStore from "./bundles/";
 import Base from "./Base";
+import {debug} from './foundations/notifications'
 import "./styles.css";
 
 const store = createStore();

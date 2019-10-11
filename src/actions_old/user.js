@@ -9,7 +9,6 @@ store.dispatch({
 
 window.setTimeout(() => {
   myFirebase.auth().onAuthStateChanged(function(user) {
-    // console.log("auth hit", user);
     if (user) {
       store.dispatch({
         type: "USER_AUTHED",

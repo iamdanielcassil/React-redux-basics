@@ -21,7 +21,7 @@ export default connect(
   "doSignOut",
   "doSignIn",
   ({ user, doSignOut, doSignIn }) => {
-    console.log("user", user);
+    window.DC.debug.log("user", user);
     if (user && user.uid) {
       let shouldLogout = window.confirm(
         `You are already signed in as user: ${

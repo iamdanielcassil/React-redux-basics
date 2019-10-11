@@ -81,7 +81,7 @@ export default class Race {
   };
 
   save = () => {
-    console.log("savin this: ", this);
+    window.DC.debug.log("savin this: ", this);
     if (!this.startDate || !this.name || !this.seasonId) {
       return Promise.reject();
     }
