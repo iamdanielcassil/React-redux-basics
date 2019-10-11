@@ -42,6 +42,9 @@ const reducer = (state = { all: [], current: null }, action) => {
       isEditing: false
     };
   }
+  if (action.type === "SEASON_SELECTED_NOT_FOUND") {
+    console.log(`Season id: ${action.payload} not found`);
+  }
   if (action.type === "SEASON_EDITED") {
     return { ...state, isEditing: true };
   }
@@ -56,6 +59,11 @@ const doNewSeason = () => ({ dispatch }) => {
 const doGoToSelectSeason = id => ({ dispatch, store }) => {
   let seasons = store.selectSeasons();
   let selectedSeason = seasons.find(s => s.id === id);
+
+  if (!selectedSeason) {
+    dispatch({ type: "SEASON_SELECTED_NOT_FOUND", payload: id });
+    return;
+  }
 
   dispatch({ type: "SEASON_SELECTED", payload: selectedSeason });
   dispatch({ type: "RACES_FETCH_STARTED" });
