@@ -18,6 +18,20 @@ let _onAllRoutesWrapper = (route, Component) => {
 const routes = {
   ..._onAllRoutesWrapper("", Stats),
   ..._onAllRoutesWrapper("/", Stats),
+
+  ..._onAllRoutesWrapper("/boats", Stats),
+  ..._onAllRoutesWrapper("/boats/manage", ManageBoats),
+  ..._onAllRoutesWrapper("/boats/stats", Stats),
+
+  ..._onAllRoutesWrapper("/races", Stats),
+  ..._onAllRoutesWrapper("/races/manage", ManageRaces),
+  ..._onAllRoutesWrapper("/races/stats", Stats),
+  ..._onAllRoutesWrapper("/races/events", ManageRaces),
+
+  ..._onAllRoutesWrapper("/seasons", Stats),
+  ..._onAllRoutesWrapper("/seasons/manage", ViewSeason),
+  ..._onAllRoutesWrapper("/seasons/stats", Stats),
+
   ..._onAllRoutesWrapper("/seasons/new", EditSeason),
   ..._onAllRoutesWrapper("/seasons/view", ViewSeason),
   ..._onAllRoutesWrapper("/seasons/edit", EditSeason),
@@ -30,6 +44,7 @@ const routes = {
   ..._onAllRoutesWrapper("/boats/new", EditBoat),
   ..._onAllRoutesWrapper("/boats/:id", EditBoat),
   ..._onAllRoutesWrapper("/boats/:id/edit", EditBoat),
+
   ..._onAllRoutesWrapper("/login", Login),
   ..._onAllRoutesWrapper("/afterLogin", Stats)
 };

@@ -24,31 +24,22 @@ const categories = user => [
         id: "Login",
         icon: <PeopleIcon />,
         hidden: !user || !user.uid,
-        active: true,
-        onClick: () => {
-          window.location.hash = "#/login";
-        }
+        url: "#/login"
       },
       {
         id: "Races",
         icon: <EmojiEventsOutlinedIcon />,
-        onClick: () => {
-          window.location.hash = "#/races/stats";
-        }
+        url: "#/races"
       },
       {
         id: "Seasons",
         icon: <WavesOutlinedIcon />,
-        onClick: () => {
-          window.location.hash = "#/seasons/stats";
-        }
+        url: "#/seasons"
       },
       {
         id: "Boats",
         icon: <DirectionsBoatOutlinedIcon />,
-        onClick: () => {
-          window.location.hash = "#/boats/stats";
-        }
+        url: "#/boats"
       }
     ]
   },
@@ -58,9 +49,7 @@ const categories = user => [
       {
         id: "Log Off",
         icon: <ExitToAppIcon />,
-        onClick: () => {
-          window.location.hash = "#/login";
-        }
+        url: "#/login"
       }
     ]
   }
@@ -145,40 +134,37 @@ const Navigator = connect(
                   {id}
                 </ListItemText>
               </ListItem>
-              {children.map(
-                ({ id: childId, icon, hidden, active, onClick }) => {
-                  if (hidden) {
-                    return null;
-                  }
-                  return (
-                    <ListItem
-                      key={childId}
-                      onClick={() => {
-                        if (onClick) {
-                          onClick();
-                          other.onClose();
-                        }
-                      }}
-                      button
-                      className={clsx(
-                        classes.item,
-                        active && classes.itemActiveItem
-                      )}
-                    >
-                      <ListItemIcon className={classes.itemIcon}>
-                        {icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        classes={{
-                          primary: classes.itemPrimary
-                        }}
-                      >
-                        {childId}
-                      </ListItemText>
-                    </ListItem>
-                  );
+              {children.map(({ id: childId, icon, hidden, url, onClick }) => {
+                if (hidden) {
+                  return null;
                 }
-              )}
+                return (
+                  <ListItem
+                    key={childId}
+                    onClick={() => {
+                      window.location.hash = url;
+                      other.onClose();
+                    }}
+                    button
+                    className={clsx(
+                      classes.item,
+                      window.location.hash.includes(url) &&
+                        classes.itemActiveItem
+                    )}
+                  >
+                    <ListItemIcon className={classes.itemIcon}>
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      classes={{
+                        primary: classes.itemPrimary
+                      }}
+                    >
+                      {childId}
+                    </ListItemText>
+                  </ListItem>
+                );
+              })}
 
               <Divider className={classes.divider} />
             </React.Fragment>

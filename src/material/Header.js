@@ -44,7 +44,7 @@ const styles = theme => ({
 
 const tabSets = [
   {
-    urlMatcher: "race",
+    urlMatcher: "races",
     tabs: [
       {
         url: "#/races/stats",
@@ -130,6 +130,10 @@ let TabBar = connect(
     useEffect(() => {
       let index = tabSets.findIndex(t => routeInfo.url.includes(t.urlMatcher));
 
+      if (index === -1) {
+        window.location.hash = "#/races/stats";
+        return;
+      }
       setTabSetIndex(index);
     }, [routeInfo, setTabSetIndex]);
 
@@ -145,7 +149,13 @@ let TabBar = connect(
       routeInfo.url.includes(t.url.replace("#", ""))
     );
 
+    console.log("tab index", selectedTabIndex, routeInfo);
+
     useEffect(() => {
+      if (selectedTabIndex === -1) {
+        setTab(0);
+        return;
+      }
       setTab(selectedTabIndex);
     }, [selectedTabIndex]);
 
