@@ -37,7 +37,7 @@ export default connect(
     }
 
     return (
-      <div className="manageRace">
+      <div className="page">
         <div className="manageRace-header">
           {race.startTime && !restarting ? (
             <input
