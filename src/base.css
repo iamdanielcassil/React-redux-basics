@@ -133,14 +133,3 @@
     flex: 2;
   }
 }
-
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 1000px;
-  align-self: center;
-}
-
-.form .field {
-  margin: 5px;
-}

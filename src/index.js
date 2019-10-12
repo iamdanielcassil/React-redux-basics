@@ -4,6 +4,7 @@ import { debug } from "./foundations/notifications";
 import { Provider } from "redux-bundler-react";
 import createStore from "./bundles/";
 import Base from "./Base";
+// import Base from "./material/Base";
 import "./styles.css";
 
 const store = createStore();
@@ -21,7 +22,8 @@ function App() {
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    {/* <App /> */}
+    <Base />
   </Provider>,
   rootElement
 );

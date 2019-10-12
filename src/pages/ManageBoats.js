@@ -24,7 +24,7 @@ export default connect(
               onClick={() => doGoToSelectBoat(boat.id)}
             >
               <span className="list-column">
-                <span>Boat: {boat.name}</span>
+                <span>{boat.name}</span>
                 <span className="secondary">Captain: {boat.captain}</span>
               </span>
               <span className="list-column">

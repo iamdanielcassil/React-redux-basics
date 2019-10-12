@@ -45,7 +45,7 @@ body {
 .main-menu-portal {
   z-index: 999;
   display: flex;
-  max-width: 300px;
+  max-width: 225px;
   background-color: #00000042;
 }
 
@@ -187,7 +187,30 @@ a:hover {
   padding: 15px;
 }
 
-/* form  */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.form-column {
+  max-width: 550px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  margin: 3px;
+  padding: 3px;
+}
+
+.form label input {
+  padding: 5px;
+  margin-top: 3px;
+}
 
 .flex-container {
   display: flex;

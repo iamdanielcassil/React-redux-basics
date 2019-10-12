@@ -36,13 +36,12 @@ export default connect(
     }
 
     return (
-      <div className="flex-row editRace-form">
-        <div className="flex-container">
+      <div className="form">
+        <div className="form-column">
           <label htmlFor="name">
             Title
             <input
               id="name"
-              className="field"
               type="text"
               onChange={e => setRace({ ...race, name: e.target.value })}
               value={race.name || ""}
@@ -51,7 +50,6 @@ export default connect(
           <label htmlFor="startDate">
             Start Date + Time
             <input
-              className="field"
               type="datetime-local"
               onChange={e => setRace({ ...race, startDate: e.target.value })}
               value={getDateTime(race.startDate)}
@@ -61,7 +59,6 @@ export default connect(
             Wind Speed
             <input
               id="windSpeed"
-              className="field"
               type="number"
               onChange={e => setRace({ ...race, windSpeed: e.target.value })}
               value={race.windSpeed || ""}
@@ -71,7 +68,6 @@ export default connect(
             Wind Direction - should be select list
             <select
               id="windDirection"
-              className="field"
               type="text"
               onChange={e =>
                 setRace({ ...race, windDirection: e.target.value })
@@ -102,7 +98,6 @@ export default connect(
             Temperature (f)
             <input
               placeholder="f"
-              className="field"
               min={0}
               max={110}
               type="number"
@@ -112,6 +107,7 @@ export default connect(
           </label>
           <input
             type="button"
+            className="form-save-button"
             onClick={() =>
               doSaveRace(currentRace.update(race)).then(() =>
                 doGoToManageRaces()
