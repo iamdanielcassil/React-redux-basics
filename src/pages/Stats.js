@@ -11,15 +11,9 @@ export default connect(
   "selectQueryObject",
   ({ queryObject }) => {
     return (
-      <div className="stats">
+      <div className="page">
         <div className="stats-header" />
-        <div className="stats-topRow">
-          <StatsLastRace />
-          <StatsSeason />
-        </div>
-        <div className="stats-bottomRow">
-          <StatsAllTime />
-        </div>
+        <StatsSeason />
       </div>
     );
   }
