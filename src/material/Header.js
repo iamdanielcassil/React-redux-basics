@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
@@ -16,6 +16,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "redux-bundler-react";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -41,9 +42,134 @@ const styles = theme => ({
   }
 });
 
+const tabSets = [
+  {
+    urlMatcher: "race",
+    tabs: [
+      {
+        url: "#/races/stats",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Stats"
+      },
+      {
+        url: "#/races/events",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Events"
+      },
+      {
+        url: "#/races/manage",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Manage"
+      }
+    ]
+  },
+  {
+    urlMatcher: "seasons",
+    tabs: [
+      {
+        url: "#/seasons/stats",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Stats"
+      },
+      {
+        url: "#/seasons/manage",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Manage"
+      }
+    ]
+  },
+  {
+    urlMatcher: "boats",
+    tabs: [
+      {
+        url: "#/boats/stats",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Stats"
+      },
+      {
+        url: "#/boats/manage",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Manage"
+      }
+    ]
+  },
+  {
+    urlMatcher: "/",
+    tabs: [
+      {
+        url: "#/",
+        action: function() {
+          return (window.location.hash = this.url);
+        },
+        label: "Manage"
+      }
+    ]
+  }
+];
+
+let TabBar = connect(
+  "selectRouteInfo",
+  ({ routeInfo }) => {
+    const [tab, setTab] = useState(0);
+    const [tabSetIndex, setTabSetIndex] = useState(0);
+
+    useEffect(() => {
+      let index = tabSets.findIndex(t => routeInfo.url.includes(t.urlMatcher));
+
+      setTabSetIndex(index);
+    }, [routeInfo, setTabSetIndex]);
+
+    let tabSet = tabSets[tabSetIndex];
+
+    console.log("route info", tabSetIndex, routeInfo, tabSet);
+
+    if (!tabSet) {
+      return;
+    }
+
+    let selectedTabIndex = tabSet.tabs.findIndex(t =>
+      routeInfo.url.includes(t.url.replace("#", ""))
+    );
+
+    useEffect(() => {
+      setTab(selectedTabIndex);
+    }, [selectedTabIndex]);
+
+    return (
+      <Tabs
+        value={tab}
+        textColor="primary"
+        onChange={(e, value) => {
+          setTab(value);
+          tabSet.tabs[value].action();
+        }}
+      >
+        {" "}
+        {tabSet.tabs.map(t => (
+          <Tab key={t.label} textColor="inherit" label={t.label} />
+        ))}
+      </Tabs>
+    );
+  }
+);
+
 function Header(props) {
   const { classes, onDrawerToggle } = props;
-  const [tab, setTab] = useState(0);
+
   return (
     <React.Fragment>
       <AppBar color="secondary" position="sticky" elevation={0}>
@@ -73,34 +199,7 @@ function Header(props) {
         position="static"
         elevation={0}
       >
-        <Tabs
-          value={tab}
-          textColor="primary"
-          onChange={(e, value) => {
-            setTab(value);
-            switch (value) {
-              case 0:
-                window.location.hash = "#/";
-                break;
-              case 1:
-                window.location.hash = "#/races/manage";
-                break;
-              case 2:
-                window.location.hash = "#/seasons/view";
-                break;
-              case 3:
-                window.location.hash = "#/boats";
-                break;
-              default:
-                break;
-            }
-          }}
-        >
-          <Tab textColor="inherit" label="Stats" />
-          <Tab textColor="inherit" label="Open Races" />
-          <Tab textColor="inherit" label="Manage Seasons" />
-          <Tab textColor="inherit" label="Manage Boats" />
-        </Tabs>
+        <TabBar />
       </AppBar>
     </React.Fragment>
   );

@@ -227,7 +227,10 @@ function Paperbase(props) {
             />
           </Hidden>
           <Hidden smDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            <Navigator
+              PaperProps={{ style: { width: drawerWidth } }}
+              onClose={handleDrawerToggle}
+            />
           </Hidden>
         </nav>
         <div className={classes.app}>
