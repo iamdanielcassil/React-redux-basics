@@ -39,6 +39,10 @@ let theme = createMuiTheme({
     alternateTextColor: "#3b5267",
     secondary: {
       main: "#fff"
+    },
+    bold: {
+      main: "red",
+      text: "#fff"
     }
   },
   typography: {
@@ -66,6 +70,11 @@ let theme = createMuiTheme({
 theme = {
   ...theme,
   overrides: {
+    shape: {
+      [theme.breakpoints.down("xs")]: {
+        borderRadius: 0
+      }
+    },
     MuiDrawer: {
       paper: {
         backgroundColor: "#18202c"
@@ -171,7 +180,7 @@ const styles = {
     flex: 1,
     padding: theme.spacing(6, 4),
     [theme.breakpoints.down("xs")]: {
-      padding: theme.spacing(1, 1)
+      padding: theme.spacing(0, 0)
     },
     background: "#5284af" /* Old browsers */,
     background: `-moz-linear-gradient(
@@ -201,7 +210,11 @@ let Main = connect(
   "selectUser",
   "selectRoute",
   ({ user, route }) => {
-    return <route.Component />;
+    return (
+      <Content>
+        <route.Component />
+      </Content>
+    );
   }
 );
 
