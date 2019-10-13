@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
-import "./raceEntries.css";
+import AutoSelectList from "../AutoSelectList";
 
-// test code
-// const boats = [{ id: 1, name: "test boat 1" }, { id: 2, name: "test boat 2" }];
-const testEntries = [
-  { id: 101, name: "the boat" },
-  { id: 102, name: "the other boat" }
-];
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import IconButton from "@material-ui/core/IconButton";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+import "./raceEntries.css";
 
 function updateEntrySearch(boats, currentEntries, value) {
   let matches = boats
@@ -35,14 +37,52 @@ export default connect(
     doRemoveRaceEntry,
     ...props
   }) => {
-    const [adding, setAdding] = useState(false);
-    const [entryValue, setEntryValue] = useState({ name: "" });
-    const [entryBoat, setEntryBoat] = useState([]);
+    // const [adding, setAdding] = useState(false);
+    // const [entryValue, setEntryValue] = useState({ name: "" });
+    // const [entryBoat, setEntryBoat] = useState([]);
+    const [selecedSuggestion, setSelectedSuggestion] = useState();
+
+    useEffect(() => {}, [selecedSuggestion]);
 
     window.DC.debug.log("props", props);
     return (
-      <div className="raceEntries">
-        <ul>
+      <React.Fragment>
+        <AutoSelectList
+          suggestions={boats.map(b => ({ label: b.name }))}
+          onSuggestionSelected={suggestion => {
+            console.log("set selected", suggestion);
+            setSelectedSuggestion(suggestion.suggestionValue);
+          }}
+        />
+        {selecedSuggestion ? (
+          <IconButton
+            aria-label="Add"
+            onClick={() => {
+              let boat = boats.find(b => b.name === selecedSuggestion);
+
+              if (boat) {
+                console.log("add boat", boats, boat, selecedSuggestion);
+                props.race.addEntry(boat);
+                setSelectedSuggestion(undefined);
+              }
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        ) : null}
+        <List>
+          {props.race.entries.map(entry => (
+            <ListItem>
+              <ListItemText primary={entry.name} />
+              <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+        {/* <ul>
           {props.race.entries.map(entry => (
             <li key={`${entry.id}-${entry.name}`} className="raceEntry">
               <span>{entry.name}</span>
@@ -111,8 +151,8 @@ export default connect(
               <span>Add</span>
             </li>
           )}
-        </ul>
-      </div>
+        </ul> */}
+      </React.Fragment>
     );
   }
 );
