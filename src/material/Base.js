@@ -248,6 +248,7 @@ function Paperbase(props) {
         </nav>
         <div className={classes.app}>
           <Header
+            showTabs={shouldShowTabs()}
             onDrawerToggle={handleDrawerToggle}
             onTabSelect={(e, value) => setTab(value)}
             tab={tab}
@@ -262,6 +263,10 @@ function Paperbase(props) {
       </div>
     </ThemeProvider>
   );
+}
+
+function shouldShowTabs() {
+  return !window.location.hash.includes("edit");
 }
 
 Paperbase.propTypes = {

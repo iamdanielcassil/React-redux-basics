@@ -20,8 +20,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%"
   },
   bold: {
-    backgroundColor: theme.palette.bold.main,
-    color: theme.palette.bold.text
+    color: theme.palette.bold.main
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -40,12 +39,18 @@ let RaceItem = race => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <a href={`#/races/${race.id}`}>
-          <Typography className={classes.heading}>{race.name}</Typography>
-          <Typography className={classes.heading}>{race.startDate}</Typography>
-        </a>
+        <Typography className={classes.heading}>{race.name}</Typography>
+        <Typography className={classes.heading}>{race.startDate}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelActions>
+        <Button
+          size="small"
+          variant="outlined"
+          color="primary"
+          onClick={() => (window.location.hash = `#/races/manage/${race.id}`)}
+        >
+          Start
+        </Button>
         <Button
           size="small"
           onClick={() => (window.location.hash = `#/races/${race.id}/edit`)}
@@ -56,8 +61,14 @@ let RaceItem = race => {
           size="small"
           className={classes.bold}
           onClick={() => {
-            new Race(race).delete();
-            window.location.hash = "#/races/manage";
+            if (
+              window.confirm(
+                `Are you sure you want to delete race: ${race.name}`
+              )
+            ) {
+              new Race(race).delete();
+              window.location.hash = "#/races/manage";
+            }
           }}
         >
           DELETE
@@ -91,7 +102,7 @@ export default connect(
         <div className="row" />
 
         {races.map(race => (
-          <RaceItem {...race} />
+          <RaceItem key={race.id} {...race} />
         ))}
       </div>
     );

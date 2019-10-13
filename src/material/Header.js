@@ -54,13 +54,6 @@ const tabSets = [
         label: "Stats"
       },
       {
-        url: "#/races/events",
-        action: function() {
-          return (window.location.hash = this.url);
-        },
-        label: "Events"
-      },
-      {
         url: "#/races/manage",
         action: function() {
           return (window.location.hash = this.url);
@@ -202,15 +195,17 @@ function Header(props) {
         </Toolbar>
       </AppBar>
 
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="secondary"
-        position="static"
-        elevation={0}
-      >
-        <TabBar />
-      </AppBar>
+      {props.showTabs ? (
+        <AppBar
+          component="div"
+          className={classes.secondaryBar}
+          color="secondary"
+          position="static"
+          elevation={0}
+        >
+          <TabBar />
+        </AppBar>
+      ) : null}
     </React.Fragment>
   );
 }
