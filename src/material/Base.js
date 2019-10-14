@@ -50,6 +50,10 @@ let theme = createMuiTheme({
       fontWeight: 500,
       fontSize: 26,
       letterSpacing: 0.5
+    },
+    body2: {
+      fontSize: "8pt",
+      fontWeight: 100
     }
   },
   shape: {

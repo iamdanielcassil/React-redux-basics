@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
@@ -140,6 +140,12 @@ export default function IntegrationAutosuggest(props) {
     renderSuggestion
   };
 
+  useEffect(() => {
+    if (props.value === undefined) {
+      setCurrent("");
+    }
+  }, [props.value]);
+
   return (
     <div className={classes.root}>
       <Autosuggest
@@ -147,10 +153,11 @@ export default function IntegrationAutosuggest(props) {
         inputProps={{
           classes,
           id: "react-autosuggest-simple",
-          label: "Country",
-          placeholder: "Search a country (start with a)",
+          label: "List",
+          placeholder: "Start typing to search",
           value: current,
-          onChange: handleChange("single")
+          onChange: handleChange("single"),
+          ...props.inputProps
         }}
         theme={{
           container: classes.container,
