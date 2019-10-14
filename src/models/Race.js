@@ -9,6 +9,7 @@ export default class Race {
     this.startDate = props.startDate || new Date().toISOString().split("T")[0];
     this.startTime = props.startTime ? new Date(props.startTime) : null;
     this.endDate = props.endDate || "";
+    this.endTime = props.endTime ? new Date(props.endTime) : null;
     this.temperature = props.temperature || "";
     this.windDirection = props.windDirection || "";
     this.windSpeed = props.windSpeed || "";
@@ -80,6 +81,7 @@ export default class Race {
       startDate: this.startDate,
       startTime: this.startTime ? this.startTime.getTime() : null,
       endDate: this.endDate || "",
+      endTime: this.endTime ? this.endTime.getTime() : null,
       seasonId: this.seasonId,
       temperature: this.temperature,
       windSpeed: this.windSpeed,
@@ -95,6 +97,7 @@ export default class Race {
 
   save = () => {
     window.DC.debug.log("savin this: ", this);
+    console.trace("save in race");
     if (!this.startDate || !this.name || !this.seasonId) {
       return Promise.reject();
     }

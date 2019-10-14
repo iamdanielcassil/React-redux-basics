@@ -12,13 +12,17 @@ export default {
       }
     });
 
-    if (timeOutVar[model.id]) {
-      window.clearTimeout(timeOutVar[model.id]);
-    }
+    // if (model.isNew) {
+    //   return;
+    // }
 
-    timeOutVar[model.id] = window.setTimeout(() => {
-      model.save();
-    }, 500);
+    // if (timeOutVar[model.id]) {
+    //   window.clearTimeout(timeOutVar[model.id]);
+    // }
+
+    // timeOutVar[model.id] = window.setTimeout(() => {
+    //   model.save();
+    // }, 500);
 
     return model;
   },
