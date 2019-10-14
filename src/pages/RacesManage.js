@@ -29,9 +29,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let RaceItem = race => {
+let RaceItem = _race => {
   const classes = useStyles();
+  let race = new Race(_race);
+  let isFinished = !race.hasOpenEntries();
 
+  console.log("race item", race, isFinished);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary
@@ -44,6 +47,7 @@ let RaceItem = race => {
       </ExpansionPanelSummary>
       <ExpansionPanelActions>
         <Button
+          disabled={isFinished}
           size="small"
           variant="outlined"
           color="primary"
@@ -53,7 +57,16 @@ let RaceItem = race => {
         </Button>
         <Button
           size="small"
-          onClick={() => (window.location.hash = `#/races/${race.id}/edit`)}
+          onClick={() => {
+            if (
+              !isFinished ||
+              window.confirm(
+                "This race is finished, are you sure you want to edit it?"
+              )
+            ) {
+              window.location.hash = `#/races/${race.id}/edit`;
+            }
+          }}
         >
           Edit
         </Button>
@@ -66,7 +79,7 @@ let RaceItem = race => {
                 `Are you sure you want to delete race: ${race.name}`
               )
             ) {
-              new Race(race).delete();
+              race.delete();
               window.location.hash = "#/races/manage";
             }
           }}

@@ -35,7 +35,7 @@ export default class Race {
   };
 
   hasOpenEntries = () => {
-    return this.entries.length > this.results.length;
+    return this.entries.length > 0 && this.entries.length > this.results.length;
   };
 
   start = time => {

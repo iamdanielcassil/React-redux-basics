@@ -15,12 +15,18 @@ import Container from "@material-ui/core/Container";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import TimerIcon from "@material-ui/icons/Timer";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Chip from "@material-ui/core/Chip";
 import "./editRace.css";
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
+  },
+  title: {
+    margin: "0 15px",
+    "justify-self": "flex-start",
+    flex: "1 1 auto"
   },
   container: {
     display: "flex",
@@ -29,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let Timmer = ({ live, label, time }) => {
+let Timmer = ({ live, color, label, time }) => {
   const [_time, setTime] = useState(time || new Date());
 
   useEffect(() => {
@@ -44,6 +50,7 @@ let Timmer = ({ live, label, time }) => {
 
   return (
     <TimeChip
+      color={color}
       label={label}
       time={`${_time.toLocaleTimeString()} : ${
         _time.getMilliseconds().toString()[0]
@@ -52,9 +59,14 @@ let Timmer = ({ live, label, time }) => {
   );
 };
 
-let TimeChip = ({ time, label }) => {
+let TimeChip = ({ time, color, label }) => {
   return (
-    <Chip icon={<TimerIcon />} label={`${label}: ${time}`} variant="outlined" />
+    <Chip
+      color={color}
+      icon={<TimerIcon />}
+      label={`${label}: ${time}`}
+      variant="outlined"
+    />
   );
 };
 
@@ -92,6 +104,10 @@ export default connect(
       <div className="page">
         <AppBar position="static">
           <Toolbar>
+            <EmojiEventsIcon />
+            <Typography variant="h6" className={classes.title}>
+              {race.name}
+            </Typography>
             {race.startTime ? (
               race.hasOpenEntries() ? (
                 <Button
@@ -123,12 +139,16 @@ export default connect(
               </Button>
             )}
             {race.startTime ? (
-              <Timmer label="start time" time={race.startTime} />
+              <Timmer
+                color="secondary"
+                label="start time"
+                time={race.startTime}
+              />
             ) : null}
             {race.hasOpenEntries() ? (
-              <Timmer live label="time" />
+              <Timmer color="secondary" live label="time" />
             ) : race.endTime ? (
-              <Timmer label="end time" time={race.endTime} />
+              <Timmer color="secondary" label="end time" time={race.endTime} />
             ) : (
               <Button
                 size="small"
@@ -192,7 +212,7 @@ function RaceCell({ classes, entry, setRace, race }) {
           <Button
             size="large"
             onClick={() => {
-              let endTime = new Date();
+              let endTime = new Date().getTime();
               setRace(race.finishEntry(entry.id, endTime));
             }}
           >

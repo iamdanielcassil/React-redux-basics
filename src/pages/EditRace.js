@@ -53,6 +53,15 @@ const useStyles = makeStyles(theme => ({
     minWidth: "300px",
     alignSelf: "center"
   },
+  fullField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: "100%",
+    maxWidth: "80%",
+    flex: "1 1 auto",
+    minWidth: "300px",
+    alignSelf: "center"
+  },
   selectEmpty: {
     marginTop: theme.spacing(2)
   }
@@ -99,6 +108,15 @@ export default connect(
             <Typography className={classes.heading}>Details</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.formGroup}>
+            <DateTime
+              className={classes.fullField}
+              dateField
+              id="date"
+              label="Date"
+              required
+              handleChange={date => setRace({ ...race, startDate: date })}
+              value={getDateTime(race.startDate)}
+            />
             <Text
               className={classes.field}
               id="name"
@@ -107,14 +125,7 @@ export default connect(
               handleChange={e => setRace({ ...race, name: e.target.value })}
               value={race.name || ""}
             />
-            <DateTime
-              className={classes.field}
-              id="name"
-              label="Name"
-              required
-              handleChange={date => setRace({ ...race, startDate: date })}
-              value={getDateTime(race.startDate)}
-            />
+
             <Text
               className={classes.field}
               id="windSpeed"
