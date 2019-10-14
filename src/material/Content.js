@@ -17,7 +17,10 @@ const styles = theme => ({
   paper: {
     maxWidth: 936,
     margin: "auto",
-    overflow: "hidden"
+    overflow: "hidden",
+    [theme.breakpoints.down("xs")]: {
+      borderRadius: 0
+    }
   },
   searchBar: {
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)"

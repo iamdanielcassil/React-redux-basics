@@ -79,6 +79,13 @@ theme = {
         borderRadius: 0
       }
     },
+    MuiContainer: {
+      root: {
+        [theme.breakpoints.down("xs")]: {
+          padding: 0
+        }
+      }
+    },
     MuiDrawer: {
       paper: {
         backgroundColor: "#18202c"

@@ -33,15 +33,27 @@ export default class Race {
     this.entries.splice(index, 1);
   };
 
+  hasOpenEntries = () => {
+    return this.entries.length > this.results.length;
+  };
+
   start = time => {
     this.startTime = time;
     this.save();
+    return this;
+  };
+
+  end = time => {
+    this.endTime = time;
+    this.save();
+    return this;
   };
 
   reset = () => {
     this.startTime = undefined;
     this.results = [];
     this.save();
+    return this;
   };
 
   finishEntry = (entryId, time) => {
@@ -58,6 +70,7 @@ export default class Race {
     });
 
     this.save();
+    return this;
   };
 
   get = () => {
