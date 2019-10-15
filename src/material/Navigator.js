@@ -34,12 +34,13 @@ const categories = user => [
       {
         id: "Seasons",
         icon: <WavesOutlinedIcon />,
-        url: "#/seasons"
+        url: "#/seasons",
+        disabled: true
       },
       {
         id: "Boats",
         icon: <DirectionsBoatOutlinedIcon />,
-        url: "#/boats"
+        url: "#/boats/manage"
       }
     ]
   },
@@ -134,37 +135,40 @@ const Navigator = connect(
                   {id}
                 </ListItemText>
               </ListItem>
-              {children.map(({ id: childId, icon, hidden, url, onClick }) => {
-                if (hidden) {
-                  return null;
-                }
-                return (
-                  <ListItem
-                    key={childId}
-                    onClick={() => {
-                      window.location.hash = url;
-                      other.onClose();
-                    }}
-                    button
-                    className={clsx(
-                      classes.item,
-                      window.location.hash.includes(url) &&
-                        classes.itemActiveItem
-                    )}
-                  >
-                    <ListItemIcon className={classes.itemIcon}>
-                      {icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{
-                        primary: classes.itemPrimary
+              {children.map(
+                ({ id: childId, icon, hidden, disabled, url, onClick }) => {
+                  if (hidden) {
+                    return null;
+                  }
+                  return (
+                    <ListItem
+                      disabled={disabled}
+                      key={childId}
+                      onClick={() => {
+                        window.location.hash = url;
+                        other.onClose();
                       }}
+                      button
+                      className={clsx(
+                        classes.item,
+                        window.location.hash.includes(url) &&
+                          classes.itemActiveItem
+                      )}
                     >
-                      {childId}
-                    </ListItemText>
-                  </ListItem>
-                );
-              })}
+                      <ListItemIcon className={classes.itemIcon}>
+                        {icon}
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{
+                          primary: classes.itemPrimary
+                        }}
+                      >
+                        {childId}
+                      </ListItemText>
+                    </ListItem>
+                  );
+                }
+              )}
 
               <Divider className={classes.divider} />
             </React.Fragment>

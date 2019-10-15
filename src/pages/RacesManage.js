@@ -12,6 +12,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Grid from "@material-ui/core/Grid";
+import NavigationIcon from "@material-ui/icons/Navigation";
 
 import { connect } from "redux-bundler-react";
 import Race from "../models/Race";
@@ -28,11 +30,24 @@ const useStyles = makeStyles(theme => ({
     padding: 0
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: theme.typography.pxToRem(12),
     fontWeight: theme.typography.fontWeightRegular,
     color: "black"
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(10),
+    color: theme.palette.text.secondary
   }
 }));
+
+let GridItem = ({ classes, label, value, icon }) => (
+  <Grid item xs={12} sm={6}>
+    <Typography className={classes.heading}>{label}</Typography>
+    <Typography className={classes.secondaryHeading}>
+      {value || "unknown"}
+    </Typography>
+  </Grid>
+);
 
 let RaceItem = _race => {
   const classes = useStyles();
@@ -52,9 +67,51 @@ let RaceItem = _race => {
             <ListItemText primary={race.name} secondary={race.startDate} />
           </ListItem>
         </List>
-        {/* <Typography className={classes.heading}>{race.name}</Typography>
-        <Typography className={classes.heading}>{race.startDate}</Typography> */}
       </ExpansionPanelSummary>
+
+      {/* endDate: ""
+endTime: 1571099483053
+entries: (2) [{…}, {…}]
+id: "1571099442703"
+name: "One Big Regatta"
+results: (2) [{…}, {…}]
+seasonId: "1569211483887"
+startDate: "2019-10-15"
+startTime: 1571099466344
+temperature: "78"
+windDirection: "NE"
+windSpeed: "14" */}
+
+      <ExpansionPanelDetails>
+        <Grid container spacing={1}>
+          <GridItem
+            classes={classes}
+            label="Start Time"
+            value={new Date(race.startTime).toLocaleTimeString()}
+          />
+          <GridItem
+            classes={classes}
+            label="End Time"
+            value={new Date(race.endTime).toLocaleTimeString()}
+          />
+          <GridItem
+            classes={classes}
+            label="Wind Speed"
+            value={`${race.windSpeed} mph`}
+          />
+          <GridItem
+            classes={classes}
+            label="Wind Direction"
+            value={race.windDirection}
+            icon={<NavigationIcon />}
+          />
+          <GridItem
+            classes={classes}
+            label="Temperature"
+            value={`${race.temperature} f`}
+          />
+        </Grid>
+      </ExpansionPanelDetails>
       <ExpansionPanelActions>
         <Button
           disabled={isFinished}

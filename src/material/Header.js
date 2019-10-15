@@ -84,13 +84,14 @@ const tabSets = [
   {
     urlMatcher: "boats",
     tabs: [
-      {
-        url: "#/boats/stats",
-        action: function() {
-          return (window.location.hash = this.url);
-        },
-        label: "Stats"
-      },
+      // {
+      //   // disabled: true,
+      //   url: "#/boats/stats",
+      //   action: function() {
+      //     return (window.location.hash = this.url);
+      //   },
+      //   label: "Stats"
+      // },
       {
         url: "#/boats/manage",
         action: function() {
