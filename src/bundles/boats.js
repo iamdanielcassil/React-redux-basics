@@ -9,7 +9,7 @@ const init = store => {
   });
 };
 
-const reducer = (state = { all: [], current: [] }, action) => {
+const reducer = (state = { all: [] }, action) => {
   if (action.type === "BOATS_CURRENT_SELECTED") {
     return { ...state, current: action.boat };
   }
@@ -34,6 +34,19 @@ const doGoToSelectBoat = boatId => ({ dispatch, store }) => {
   store.doUpdateUrl({ pathname: "/", hash: "/boats/" + boatId });
 };
 
+const doSetCurrentBoat = boatId => ({ store, dispatch }) => {
+  let state = store.getState();
+
+  if (!state.boats.current || state.boats.current.id !== boatId) {
+    let boat = state.boats.all.find(b => b.id === boatId);
+
+    dispatch({
+      type: "BOATS_CURRENT_SELECTED",
+      boat: new Boat(boat)
+    });
+  }
+};
+
 const doDeleteBoat = boat => ({ dispatch, store }) => {
   if (window.confirm(`Are you sure you want to delete boat: ${boat.name}`)) {
     window.DC.debug.log("need to delete boat");
@@ -42,18 +55,18 @@ const doDeleteBoat = boat => ({ dispatch, store }) => {
 
 const doSaveBoat = boat => ({ dispatch, store }) => {
   if (
+    boat.isNew ||
     window.confirm(
       `Are you sure you want to save changes to boat: ${boat.name}`
     )
   ) {
     store.dispatch({ type: "BOATS_SAVE_STARTED" });
-    new Boat(boat)
+    return boat
       .save()
       .then(savedBoat => {
         window.DC.debug.log("save boat", savedBoat);
         store.dispatch({ type: "BOATS_CURRENT_SELECTED", boat: savedBoat });
         store.dispatch({ type: "BOATS_SAVE_FINISHED" });
-        store.doUpdateUrl({ pathname: "/", hash: "/boats" });
       })
       .catch(error => {
         window.DC.debug.log("save boat failed", error);
@@ -76,5 +89,6 @@ export default {
   doGoToEditBoat,
   doGoToSelectBoat,
   doSaveBoat,
-  doDeleteBoat
+  doDeleteBoat,
+  doSetCurrentBoat
 };

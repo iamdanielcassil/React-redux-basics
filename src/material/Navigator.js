@@ -10,22 +10,18 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from "@material-ui/icons/People";
+import Chip from "@material-ui/core/Chip";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DirectionsBoatOutlinedIcon from "@material-ui/icons/DirectionsBoatOutlined";
 import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import WavesOutlinedIcon from "@material-ui/icons/WavesOutlined";
+import Avatar from "@material-ui/core/Avatar";
 import { connect } from "redux-bundler-react";
 
-const categories = user => [
+const categories = (user, isAuthed) => [
   {
     id: "Develop",
     children: [
-      {
-        id: "Login",
-        icon: <PeopleIcon />,
-        hidden: !user || !user.uid,
-        url: "#/login"
-      },
       {
         id: "Races",
         icon: <EmojiEventsOutlinedIcon />,
@@ -34,8 +30,8 @@ const categories = user => [
       {
         id: "Seasons",
         icon: <WavesOutlinedIcon />,
-        url: "#/seasons",
-        disabled: true
+        url: "#/seasons"
+        // disabled: true
       },
       {
         id: "Boats",
@@ -48,9 +44,16 @@ const categories = user => [
     id: "",
     children: [
       {
+        id: "Login",
+        icon: <PeopleIcon />,
+        hidden: isAuthed,
+        url: "#/login"
+      },
+      {
         id: "Log Off",
         icon: <ExitToAppIcon />,
-        url: "#/login"
+        url: "#/login",
+        hidden: !isAuthed
       }
     ]
   }
@@ -98,8 +101,9 @@ const styles = theme => ({
 });
 
 const Navigator = connect(
+  "selectIsAuthed",
   "selectUser",
-  ({ user, classes, ...other }) => {
+  ({ isAuthed, user, classes, ...other }) => {
     return (
       <Drawer variant="permanent" {...other}>
         <List disablePadding>
@@ -114,14 +118,18 @@ const Navigator = connect(
           </ListItem>
           <ListItem className={clsx(classes.item, classes.itemCategory)}>
             <ListItemIcon className={classes.itemIcon}>
-              <HomeIcon />
+              {isAuthed ? (
+                <Avatar alt="Natacha">{user.displayName[0]}</Avatar>
+              ) : (
+                <HomeIcon />
+              )}
             </ListItemIcon>
             <ListItemText
               classes={{
                 primary: classes.itemPrimary
               }}
             >
-              Regatta
+              {isAuthed ? user.displayName : "Regatta"}
             </ListItemText>
           </ListItem>
           {categories().map(({ id, children }) => (

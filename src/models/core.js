@@ -34,7 +34,7 @@ export default {
       // TODO - do simple id not this.
       modelData.id = new Date().getTime();
     }
-    return data.getCollectionQuery(model.apiRoute).then(collection => {
+    return data.getCollectionDoc(model.apiRoute).then(collection => {
       let doc = collection.doc(modelData.id.toString());
 
       doc.set(modelData);
@@ -50,7 +50,7 @@ export default {
       return;
     }
 
-    return data.getCollectionQuery(model.apiRoute).then(collection => {
+    return data.getCollectionDoc(model.apiRoute).then(collection => {
       let doc = collection.doc(modelData.id.toString());
 
       return doc.delete();

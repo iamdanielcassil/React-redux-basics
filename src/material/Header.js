@@ -42,7 +42,7 @@ const styles = theme => ({
   }
 });
 
-const tabSets = [
+const tabSets = isAuthed => [
   {
     urlMatcher: "races",
     tabs: [
@@ -58,7 +58,7 @@ const tabSets = [
         action: function() {
           return (window.location.hash = this.url);
         },
-        label: "Manage"
+        label: isAuthed ? "Manage" : "view"
       }
     ]
   },
@@ -97,7 +97,7 @@ const tabSets = [
         action: function() {
           return (window.location.hash = this.url);
         },
-        label: "Manage"
+        label: isAuthed ? "Manage" : "View"
       }
     ]
   },
@@ -117,21 +117,24 @@ const tabSets = [
 
 let TabBar = connect(
   "selectRouteInfo",
-  ({ routeInfo }) => {
+  "selectIsAuthed",
+  ({ isAuthed, routeInfo }) => {
     const [tab, setTab] = useState(0);
     const [tabSetIndex, setTabSetIndex] = useState(0);
 
     useEffect(() => {
-      let index = tabSets.findIndex(t => routeInfo.url.includes(t.urlMatcher));
+      let index = tabSets(isAuthed).findIndex(t =>
+        routeInfo.url.includes(t.urlMatcher)
+      );
 
       if (index === -1) {
         window.location.hash = "#/races/stats";
         return;
       }
       setTabSetIndex(index);
-    }, [routeInfo, setTabSetIndex]);
+    }, [routeInfo, setTabSetIndex, isAuthed]);
 
-    let tabSet = tabSets[tabSetIndex];
+    let tabSet = tabSets(isAuthed)[tabSetIndex];
 
     console.log("route info", tabSetIndex, routeInfo, tabSet);
 

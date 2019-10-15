@@ -69,6 +69,7 @@ const reactUser = () => store => {
 };
 
 const selectUser = state => state.user;
+const selectIsAuthed = state => state.user && state.user.uid;
 
 export default {
   name: "user",
@@ -77,5 +78,6 @@ export default {
   doSignIn,
   doSignOut,
   reactUser,
-  selectUser
+  selectUser,
+  selectIsAuthed
 };

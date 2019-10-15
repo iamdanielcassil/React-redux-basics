@@ -1,7 +1,7 @@
 import core from "./core";
 
 export default class Boat {
-  constructor(props) {
+  constructor(props = {}) {
     this.isNew = props.id === undefined;
     this.id = props.id;
     this.name = props.name;
@@ -23,8 +23,8 @@ export default class Boat {
   get() {
     return {
       id: this.id,
-      name: this.name,
-      captain: this.captain,
+      name: this.name || "",
+      captain: this.captain || "",
       maker: this.maker || "",
       model: this.model || "",
       type: this.type || "",
@@ -34,6 +34,10 @@ export default class Boat {
       phrf: this.phrf || ""
     };
   }
+
+  update = changes => {
+    return core.update(changes, this);
+  };
 
   save = () => {
     if (!this.name || !this.captain) {

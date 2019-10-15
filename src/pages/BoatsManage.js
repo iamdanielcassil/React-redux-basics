@@ -59,9 +59,9 @@ let GridItem = ({ classes, label, value }) => (
   </Grid>
 );
 
-let BoatItem = _boat => {
+let BoatItem = ({ isAuthed, ...props }) => {
   const classes = useStyles();
-  let boat = new Boat(_boat);
+  let boat = new Boat(props.boat);
 
   return (
     <ExpansionPanel>
@@ -86,58 +86,64 @@ let BoatItem = _boat => {
           <GridItem classes={classes} label="PHRF" value={boat.phrf} />
         </Grid>
       </ExpansionPanelDetails>
-      <ExpansionPanelActions>
-        <Button
-          size="small"
-          onClick={() => {
-            window.location.hash = `#/boats/${boat.id}/edit`;
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          size="small"
-          className={classes.bold}
-          onClick={() => {
-            if (
-              window.confirm(
-                `Are you sure you want to delete race: ${boat.name}`
-              )
-            ) {
-              boat.delete();
-              window.location.hash = "#/boats/manage";
-            }
-          }}
-        >
-          DELETE
-        </Button>
-      </ExpansionPanelActions>
+      {isAuthed ? (
+        <ExpansionPanelActions>
+          <Button
+            size="small"
+            onClick={() => {
+              window.location.hash = `#/boats/${boat.id}/edit`;
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            size="small"
+            className={classes.bold}
+            onClick={() => {
+              if (
+                window.confirm(
+                  `Are you sure you want to delete race: ${boat.name}`
+                )
+              ) {
+                boat.delete();
+                window.location.hash = "#/boats/manage";
+              }
+            }}
+          >
+            DELETE
+          </Button>
+        </ExpansionPanelActions>
+      ) : null}
     </ExpansionPanel>
   );
 };
 
 export default connect(
+  "selectIsAuthed",
   "selectBoats",
-  "doNewRace",
+  "doSetCurrentBoat",
   "selectQueryObject",
-  ({ boats, doNewRace, queryObject }) => {
+  ({ isAuthed, boats, doSetCurrentBoat, queryObject }) => {
     return (
       <div className="page">
         <AppBar position="static">
           <Toolbar>
-            <Button
-              size="small"
-              onClick={() => {
-                window.location.hash = "#/boats/new";
-              }}
-            >
-              New Boat
-            </Button>
+            {isAuthed ? (
+              <Button
+                size="small"
+                onClick={() => {
+                  doSetCurrentBoat();
+                  window.location.hash = "#/boats/new";
+                }}
+              >
+                New Boat
+              </Button>
+            ) : null}
           </Toolbar>
         </AppBar>
 
         {boats.map(boat => (
-          <BoatItem key={boat.id} {...boat} />
+          <BoatItem key={boat.id} boat={boat} isAuthed={isAuthed} />
         ))}
       </div>
     );

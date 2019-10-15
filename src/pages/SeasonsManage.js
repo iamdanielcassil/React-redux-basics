@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -17,7 +17,7 @@ import NavigationIcon from "@material-ui/icons/Navigation";
 import Select from "../components/form/inputs/Select";
 
 import { connect } from "redux-bundler-react";
-import Race from "../models/Race";
+import Season from "../models/Season";
 import "./page.css";
 
 const useStyles = makeStyles(theme => ({
@@ -38,20 +38,6 @@ const useStyles = makeStyles(theme => ({
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(10),
     color: theme.palette.text.secondary
-  },
-  field: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: "100%",
-    maxWidth: "400px",
-    minWidth: "300px",
-    alignSelf: "center",
-    height: "25px",
-    marginTop: "0px",
-    marginBottom: "0px",
-    "&:focused": {
-      backgroundColor: theme.palette.primary.main
-    }
   }
 }));
 
@@ -64,11 +50,9 @@ let GridItem = ({ classes, label, value, icon }) => (
   </Grid>
 );
 
-let RaceItem = ({ classes, isAuthed, ...props }) => {
-  let race = new Race(props.race);
-  let isFinished = !race.hasOpenEntries();
+let Item = ({ classes, isAuthed, ...props }) => {
+  let season = new Season(props.season);
 
-  console.log("race item", race, isFinished);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary
@@ -78,7 +62,7 @@ let RaceItem = ({ classes, isAuthed, ...props }) => {
       >
         <List>
           <ListItem className={classes.listItem}>
-            <ListItemText primary={race.name} secondary={race.startDate} />
+            <ListItemText primary={season.name} />
           </ListItem>
         </List>
       </ExpansionPanelSummary>
@@ -86,54 +70,22 @@ let RaceItem = ({ classes, isAuthed, ...props }) => {
         <Grid container spacing={1}>
           <GridItem
             classes={classes}
-            label="Start Time"
-            value={new Date(race.startTime).toLocaleTimeString()}
+            label="Start Date"
+            value={new Date(season.startDate).toLocaleTimeString()}
           />
           <GridItem
             classes={classes}
-            label="End Time"
-            value={new Date(race.endTime).toLocaleTimeString()}
-          />
-          <GridItem
-            classes={classes}
-            label="Wind Speed"
-            value={`${race.windSpeed} mph`}
-          />
-          <GridItem
-            classes={classes}
-            label="Wind Direction"
-            value={race.windDirection}
-            icon={<NavigationIcon />}
-          />
-          <GridItem
-            classes={classes}
-            label="Temperature"
-            value={`${race.temperature} f`}
+            label="End Date"
+            value={new Date(season.endDate).toLocaleTimeString()}
           />
         </Grid>
       </ExpansionPanelDetails>
       {isAuthed ? (
         <ExpansionPanelActions>
           <Button
-            disabled={isFinished}
-            size="small"
-            variant="outlined"
-            color="primary"
-            onClick={() => (window.location.hash = `#/races/manage/${race.id}`)}
-          >
-            Start
-          </Button>
-          <Button
             size="small"
             onClick={() => {
-              if (
-                !isFinished ||
-                window.confirm(
-                  "This race is finished, are you sure you want to edit it?"
-                )
-              ) {
-                window.location.hash = `#/races/${race.id}/edit`;
-              }
+              window.location.hash = `#/seasons/${season.id}/edit`;
             }}
           >
             Edit
@@ -144,11 +96,11 @@ let RaceItem = ({ classes, isAuthed, ...props }) => {
             onClick={() => {
               if (
                 window.confirm(
-                  `Are you sure you want to delete race: ${race.name}`
+                  `Are you sure you want to delete race: ${season.name}`
                 )
               ) {
-                race.delete();
-                window.location.hash = "#/races/manage";
+                season.delete();
+                window.location.hash = "#/seasons/manage";
               }
             }}
           >
@@ -162,29 +114,20 @@ let RaceItem = ({ classes, isAuthed, ...props }) => {
 
 export default connect(
   "selectIsAuthed",
-  "selectRaces",
   "selectSeasons",
-  "doNewRace",
-  "selectQueryObject",
   "selectCurrentSeason",
   "doGoToSelectSeason",
+  "doNewSeason",
+  "selectQueryObject",
   ({
     isAuthed,
-    races,
     seasons,
-    doNewRace,
-    queryObject,
     currentSeason,
-    doGoToSelectSeason
+    doGoToSelectSeason,
+    doNewSeason,
+    queryObject
   }) => {
     const classes = useStyles();
-
-    useEffect(() => {
-      if (currentSeason && currentSeason.id === queryObject.seasonId) {
-        return;
-      }
-      doGoToSelectSeason(queryObject.seasonId);
-    }, [currentSeason, doGoToSelectSeason, queryObject.seasonId]);
 
     return (
       <div className="page">
@@ -194,30 +137,22 @@ export default connect(
               <Button
                 size="small"
                 onClick={() => {
-                  doNewRace(queryObject.seasonId);
-                  window.location.hash = "#/races/new";
+                  doNewSeason();
+                  window.location.hash = "#/seasons/new";
                 }}
               >
-                New Race
+                New Season
               </Button>
             ) : null}
-            <Select
-              id="seasons"
-              color="secondary"
-              className={classes.field}
-              handleChange={e => doGoToSelectSeason(e.target.value)}
-              value={currentSeason ? currentSeason.id : ""}
-              options={seasons.map(s => ({ key: s.id, value: s.name }))}
-            />
           </Toolbar>
         </AppBar>
         <div className="row" />
 
-        {races.map(race => (
-          <RaceItem
+        {seasons.map(season => (
+          <Item
             classes={classes}
-            key={race.id}
-            race={race}
+            key={season.id}
+            season={season}
             isAuthed={isAuthed}
           />
         ))}

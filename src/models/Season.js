@@ -32,6 +32,10 @@ export default class Season {
     return core.save(this);
   };
 
+  delete = () => {
+    return core.delete(this);
+  };
+
   // addRacer(racer) {
 
   // }

@@ -1,11 +1,15 @@
 import { createRouteBundle } from "redux-bundler";
 
 import RacesManage from "../pages/RacesManage";
-
 import Stats from "../pages/Stats";
-import ViewSeason from "../pages/ViewSeason";
+import SeasonsManage from "../pages/SeasonsManage";
+
 import EditRace from "../pages/EditRace";
-import ManageBoats from "../pages/ManageBoats";
+
+import BoatsManage from "../pages/BoatsManage";
+
+import ViewSeason from "../pages/ViewSeason";
+
 import EditBoat from "../pages/EditBoat";
 import EditSeason from "../pages/EditSeason";
 import ViewRace from "../pages/ViewRace";
@@ -23,7 +27,7 @@ const routes = {
   ..._onAllRoutesWrapper("/", Stats),
 
   ..._onAllRoutesWrapper("/boats", Stats),
-  ..._onAllRoutesWrapper("/boats/manage", ManageBoats),
+  ..._onAllRoutesWrapper("/boats/manage", BoatsManage),
   ..._onAllRoutesWrapper("/boats/stats", Stats),
 
   ..._onAllRoutesWrapper("/races", Stats),
@@ -31,12 +35,12 @@ const routes = {
   ..._onAllRoutesWrapper("/races/stats", Stats),
 
   ..._onAllRoutesWrapper("/seasons", Stats),
-  ..._onAllRoutesWrapper("/seasons/manage", ViewSeason),
+  ..._onAllRoutesWrapper("/seasons/manage", SeasonsManage),
   ..._onAllRoutesWrapper("/seasons/stats", Stats),
 
   ..._onAllRoutesWrapper("/seasons/new", EditSeason),
   ..._onAllRoutesWrapper("/seasons/view", ViewSeason),
-  ..._onAllRoutesWrapper("/seasons/edit", EditSeason),
+  ..._onAllRoutesWrapper("/seasons/:id/edit", EditSeason),
 
   ..._onAllRoutesWrapper("/races/manage/:id", ManageRace),
   ..._onAllRoutesWrapper("/races/new", EditRace),

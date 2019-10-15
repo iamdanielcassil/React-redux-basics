@@ -7,7 +7,7 @@ const uiConfig = {
   // Popup signin flow rather than redirect flow.
   signInFlow: "popup",
   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: "#/afterLogin",
+  signInSuccessUrl: "#/races/stats",
   // We will display Google and Facebook as auth providers.
   signInOptions: [
     myFirebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -23,17 +23,7 @@ export default connect(
   ({ user, doSignOut, doSignIn }) => {
     window.DC.debug.log("user", user);
     if (user && user.uid) {
-      let shouldLogout = window.confirm(
-        `You are already signed in as user: ${
-          user.displayName
-        }.  Would you like to sign in as another user?`
-      );
-      if (shouldLogout) {
-        doSignOut();
-        doSignIn();
-      } else {
-        window.history.back();
-      }
+      doSignOut();
     }
     return (
       <div>

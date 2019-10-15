@@ -56,6 +56,7 @@ const doNewSeason = () => ({ dispatch }) => {
   // window.location.pathname = "/#/races/new";
 };
 
+let raceDetach;
 const doGoToSelectSeason = id => ({ dispatch, store }) => {
   let seasons = store.selectSeasons();
   let selectedSeason = seasons.find(s => s.id === id);
@@ -67,7 +68,10 @@ const doGoToSelectSeason = id => ({ dispatch, store }) => {
 
   dispatch({ type: "SEASON_SELECTED", payload: selectedSeason });
   dispatch({ type: "RACES_FETCH_STARTED" });
-  data.listen(`seasons/${id}/races`, races =>
+  if (raceDetach) {
+    raceDetach();
+  }
+  raceDetach = data.listen(`seasons/${id}/races`, races =>
     dispatch({ type: "RACES_FETCH_FINISHED", races })
   );
 
@@ -76,11 +80,11 @@ const doGoToSelectSeason = id => ({ dispatch, store }) => {
 
 const doSaveSeason = season => ({ getState, dispatch }) => {
   dispatch({ type: "RACE_SAVE_STARTED" });
-  season
+  return season
     .save()
     .then(savedSeason => {
       dispatch({ type: "SEASON_SAVE_FINISHED" });
-      window.location.hash = `/seasons/${savedSeason.id}`;
+      return savedSeason;
     })
     .catch(() => {
       dispatch({ type: "SEASON_SAVE_FAILED" });

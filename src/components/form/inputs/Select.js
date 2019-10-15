@@ -11,6 +11,16 @@ const useStyles = makeStyles(theme => ({
   label: {
     backgroundColor: "#fff",
     padding: "0 4px"
+  },
+  labelAlt: {
+    backgroundColor: "#5284af",
+    padding: "0 4px",
+    color: "white",
+    "Mui-focused": {
+      backgroundColor: "#5284af",
+      padding: "0 4px",
+      color: "white"
+    }
   }
 }));
 export default props => {
@@ -18,7 +28,10 @@ export default props => {
 
   return (
     <Base id={props.id} label={props.label} className={props.className}>
-      <InputLabel className={classes.label} htmlFor={props.id}>
+      <InputLabel
+        className={props.useAlt ? classes.labelAlt : classes.label}
+        htmlFor={props.id}
+      >
         {props.label}
       </InputLabel>
       <Select
@@ -28,14 +41,17 @@ export default props => {
         value={props.value}
         onChange={props.handleChange}
         className={props.className}
-        variant="outlined"
+        variant={props.useAlt ? "standard" : "outlined"}
         inputProps={{
           name: props.name,
           id: props.id
         }}
       >
         {props.options.map(item => (
-          <MenuItem key={item.value} value={item.value}>
+          <MenuItem
+            key={item.key ? item.key : item.value}
+            value={item.key ? item.key : item.value}
+          >
             {item.value}
           </MenuItem>
         ))}

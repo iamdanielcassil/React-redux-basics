@@ -40,8 +40,18 @@ export default connect(
   "doSelectStats",
   "selectHash",
   "selectRaces",
-  ({ doSelectStats, hash, races }) => {
-    const [stats, setStats] = useState();
+  "selectCurrentSeason",
+  "selectSeasons",
+  "doGoToSelectSeason",
+  ({
+    doSelectStats,
+    hash,
+    races,
+    currentSeason,
+    seasons,
+    doGoToSelectSeason
+  }) => {
+    const [stats, setStats] = useState([]);
     const [current, setCurrent] = useState();
     const classes = useStyles();
 
@@ -54,24 +64,31 @@ export default connect(
     }, [stats]);
 
     console.log("in stats", stats);
-    if (!current) {
-      return null;
-    }
+
     return (
       <div className="page">
         <AppBar position="static">
           <Toolbar>
-            {/* <EmojiEventsIcon /> */}
             <Select
+              id="seasons"
               color="secondary"
-              id="windDirection"
               className={classes.field}
-              handleChange={e =>
-                setCurrent(stats.find(r => r.name === e.target.value))
-              }
-              value={current.name || ""}
-              options={stats.map(result => ({ value: result.name }))}
+              handleChange={e => doGoToSelectSeason(e.target.value)}
+              value={currentSeason ? currentSeason.id : ""}
+              options={seasons.map(s => ({ key: s.id, value: s.name }))}
             />
+            {current ? (
+              <Select
+                color="secondary"
+                id="windDirection"
+                className={classes.field}
+                handleChange={e =>
+                  setCurrent(stats.find(r => r.name === e.target.value))
+                }
+                value={current.name || ""}
+                options={stats.map(result => ({ value: result.name }))}
+              />
+            ) : null}
           </Toolbar>
         </AppBar>
 
@@ -86,7 +103,8 @@ export default connect(
             </TableRow>
           </TableHead>
           <TableBody>
-            {current.results &&
+            {current &&
+              current.results &&
               current.results.map(row => (
                 <TableRow key={row.name}>
                   <TableCell component="th" scope="row">
