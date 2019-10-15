@@ -14,7 +14,7 @@ const init = store => {
         name: race.name,
         results: race.results
       }));
-      console.log("results up tp date", state.results.all.every(all.includes));
+
       if (state.results.type !== "race" && halt > 0) {
         halt--;
         store.dispatch({
@@ -35,8 +35,11 @@ const reducer = (state = { all: [] }, action) => {
   return state;
 };
 
+const selectResults = state => state.results.all;
+
 export default {
   name: "results",
   init,
-  reducer
+  reducer,
+  selectResults
 };

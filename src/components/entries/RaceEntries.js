@@ -31,19 +31,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default connect(
-  "selectRaceEntriesRace",
-  "selectCurrentRace",
   "selectBoats",
-  "doAddRaceEntry",
-  "doRemoveRaceEntry",
-  ({
-    raceEntriesRace,
-    currentRace,
-    boats,
-    doAddRaceEntry,
-    doRemoveRaceEntry,
-    ...props
-  }) => {
+  ({ boats, ...props }) => {
     const classes = useStyles();
     const [selecedSuggestion, setSelectedSuggestion] = useState();
     const [sugegstions, setSuggestions] = useState(
@@ -86,7 +75,7 @@ export default connect(
 
         <List>
           {props.race.entries.map(entry => (
-            <ListItem dense>
+            <ListItem key={entry.key} dense>
               <ListItemText secondary={entry.name} />
               <ListItemSecondaryAction>
                 <IconButton
