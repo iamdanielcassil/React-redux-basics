@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import StatsSeason from "../components/stats/StatsSeason";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import React, { useState, useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -35,18 +30,30 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: "100%",
     maxWidth: "400px",
-    flex: "1 0",
     minWidth: "300px",
-    alignSelf: "center"
+    alignSelf: "center",
+    height: "25px"
   }
 }));
 
 export default connect(
-  "selectResults",
-  ({ results }) => {
-    const [current, setCurrent] = useState(results && results[0]);
+  "doSelectStats",
+  "selectHash",
+  "selectRaces",
+  ({ doSelectStats, hash, races }) => {
+    const [stats, setStats] = useState();
+    const [current, setCurrent] = useState();
     const classes = useStyles();
-    console.log("in stats", results);
+
+    useEffect(() => {
+      setStats(doSelectStats(hash));
+    }, [hash, races, doSelectStats]);
+
+    useEffect(() => {
+      setCurrent(stats && stats[0]);
+    }, [stats]);
+
+    console.log("in stats", stats);
     if (!current) {
       return null;
     }
@@ -60,10 +67,10 @@ export default connect(
               id="windDirection"
               className={classes.field}
               handleChange={e =>
-                setCurrent(results.find(r => r.name === e.target.value))
+                setCurrent(stats.find(r => r.name === e.target.value))
               }
               value={current.name || ""}
-              options={results.map(result => ({ value: result.name }))}
+              options={stats.map(result => ({ value: result.name }))}
             />
           </Toolbar>
         </AppBar>

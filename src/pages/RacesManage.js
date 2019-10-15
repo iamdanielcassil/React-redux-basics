@@ -1,5 +1,4 @@
 import React from "react";
-
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -10,6 +9,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import { connect } from "redux-bundler-react";
 import Race from "../models/Race";
@@ -21,6 +23,9 @@ const useStyles = makeStyles(theme => ({
   },
   bold: {
     color: theme.palette.bold.main
+  },
+  listItem: {
+    padding: 0
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -42,8 +47,13 @@ let RaceItem = _race => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography className={classes.heading}>{race.name}</Typography>
-        <Typography className={classes.heading}>{race.startDate}</Typography>
+        <List>
+          <ListItem className={classes.listItem}>
+            <ListItemText primary={race.name} secondary={race.startDate} />
+          </ListItem>
+        </List>
+        {/* <Typography className={classes.heading}>{race.name}</Typography>
+        <Typography className={classes.heading}>{race.startDate}</Typography> */}
       </ExpansionPanelSummary>
       <ExpansionPanelActions>
         <Button
@@ -93,10 +103,9 @@ let RaceItem = _race => {
 
 export default connect(
   "selectRaces",
-  "doGoToManageRace",
   "doNewRace",
   "selectQueryObject",
-  ({ races, doGoToManageRace, doNewRace, queryObject }) => {
+  ({ races, doNewRace, queryObject }) => {
     return (
       <div className="page">
         <AppBar position="static">
