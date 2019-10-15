@@ -174,45 +174,51 @@ let TabBar = connect(
   }
 );
 
-function Header(props) {
-  const { classes, onDrawerToggle } = props;
-
-  return (
-    <React.Fragment>
-      <AppBar color="secondary" position="sticky" elevation={0}>
-        <Toolbar>
-          <Grid container spacing={1} alignItems="center">
-            <Hidden mdUp>
-              <Grid item>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={onDrawerToggle}
-                  className={classes.menuButton}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
-            </Hidden>
-            <Grid item xs />
-          </Grid>
-        </Toolbar>
-      </AppBar>
-
-      {props.showTabs ? (
-        <AppBar
-          component="div"
-          className={classes.secondaryBar}
-          color="secondary"
-          position="static"
-          elevation={0}
-        >
-          <TabBar />
+let Header = connect(
+  "selectUserGroup",
+  ({ userGroup, classes, onDrawerToggle, ...props }) => {
+    return (
+      <React.Fragment>
+        <AppBar color="secondary" position="sticky" elevation={0}>
+          <Toolbar>
+            <Grid container spacing={1} alignItems="center">
+              <Hidden mdUp>
+                <Grid item>
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={onDrawerToggle}
+                    className={classes.menuButton}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  {userGroup === "demo" ? (
+                    <Typography>DEMO MODE</Typography>
+                  ) : null}
+                </Grid>
+              </Hidden>
+              <Grid item xs />
+            </Grid>
+          </Toolbar>
         </AppBar>
-      ) : null}
-    </React.Fragment>
-  );
-}
+
+        {props.showTabs ? (
+          <AppBar
+            component="div"
+            className={classes.secondaryBar}
+            color="secondary"
+            position="static"
+            elevation={0}
+          >
+            <TabBar />
+          </AppBar>
+        ) : null}
+      </React.Fragment>
+    );
+  }
+);
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,

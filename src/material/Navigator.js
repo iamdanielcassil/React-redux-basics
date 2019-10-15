@@ -18,7 +18,7 @@ import WavesOutlinedIcon from "@material-ui/icons/WavesOutlined";
 import Avatar from "@material-ui/core/Avatar";
 import { connect } from "redux-bundler-react";
 
-const categories = (user, isAuthed) => [
+const categories = isAuthed => [
   {
     id: "Develop",
     children: [
@@ -132,7 +132,7 @@ const Navigator = connect(
               {isAuthed ? user.displayName : "Regatta"}
             </ListItemText>
           </ListItem>
-          {categories().map(({ id, children }) => (
+          {categories(isAuthed).map(({ id, children }) => (
             <React.Fragment key={id}>
               <ListItem className={classes.categoryHeader}>
                 <ListItemText

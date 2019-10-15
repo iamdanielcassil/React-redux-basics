@@ -1,5 +1,4 @@
 import Race from "../models/Race";
-import data from "../data";
 
 const init = store => {
   // doGetSeasonRaces();

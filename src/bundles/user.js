@@ -1,4 +1,5 @@
 import myFirebase from "../foundations/firebase";
+import data from "../data";
 let user = null;
 let pathBeforeLogin;
 
@@ -6,12 +7,15 @@ const init = store => {
   store.doSignIn();
 };
 
-const reducer = (state = user, action) => {
+const reducer = (state = { user, group: undefined }, action) => {
   if (action.type === "USER_AUTH_FINISHED") {
-    return action.payload;
+    return { ...state, user: action.payload };
   }
   if (action.type === "USER_AUTH_STARTED") {
-    return action.payload;
+    return { ...state, user: action.payload };
+  }
+  if (action.type === "USER_GROUP_FETCHED") {
+    return { ...state, group: action.payload };
   }
   return state;
 };
@@ -28,6 +32,12 @@ const doSignIn = () => ({ dispatch }) => {
     dispatch({
       type: "USER_AUTH_FINISHED",
       payload: _user
+    });
+    data.getUserGroup().then(groupId => {
+      dispatch({
+        type: "USER_GROUP_FETCHED",
+        payload: groupId
+      });
     });
   });
 };
@@ -56,7 +66,7 @@ const reactUser = () => store => {
 
   let state = store.getState();
 
-  if (state.notAuthorized && !state.user && !state.states.working) {
+  if (state.notAuthorized && !state.user.user && !state.states.working) {
     if (window.location.hash !== "#/login") {
       pathBeforeLogin = window.location.hash;
       window.location.hash = "#/login";
@@ -68,8 +78,10 @@ const reactUser = () => store => {
   return state;
 };
 
-const selectUser = state => state.user;
-const selectIsAuthed = state => state.user && state.user.uid;
+const selectUser = state => state.user.user;
+const selectIsAuthed = state =>
+  state.user.user !== null && state.user.user.uid !== undefined;
+const selectUserGroup = state => state.user.group;
 
 export default {
   name: "user",
@@ -79,5 +91,6 @@ export default {
   doSignOut,
   reactUser,
   selectUser,
-  selectIsAuthed
+  selectIsAuthed,
+  selectUserGroup
 };

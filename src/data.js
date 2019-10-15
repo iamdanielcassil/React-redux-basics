@@ -30,10 +30,6 @@ class Data {
   getUserGroup() {
     let groupId;
 
-    if (_groupId) {
-      groupId = _groupId;
-    }
-
     if (window.localStorage) {
       groupId = window.localStorage.getItem("ocbc_group");
     }
@@ -41,6 +37,10 @@ class Data {
     if (groupId) {
       console.log("using gorup id", groupId);
       return Promise.resolve(groupId);
+    }
+
+    if (!this.user || !this.user.id) {
+      return Promise.resolve(_groupId);
     }
 
     let doc = db.collection("user").doc(this.user.uid);
@@ -55,6 +55,8 @@ class Data {
         }
         return groupId;
       });
+    } else {
+      return Promise.resolve(_groupId);
     }
   }
 

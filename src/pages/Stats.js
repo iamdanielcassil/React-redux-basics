@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: "100%",
     maxWidth: "400px",
-    minWidth: "300px",
+    minWidth: "100px",
     alignSelf: "center",
     height: "25px"
   }

@@ -44,11 +44,12 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: "100%",
     maxWidth: "400px",
-    minWidth: "300px",
+    minWidth: "100px",
     alignSelf: "center",
     height: "25px",
     marginTop: "0px",
     marginBottom: "0px",
+    flex: "1 1",
     "&:focused": {
       backgroundColor: theme.palette.primary.main
     }
