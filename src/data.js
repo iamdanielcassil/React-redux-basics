@@ -18,13 +18,23 @@ class Data {
       this.user = user;
       this.inited = true;
       this.getUserGroup().then(groupId => {
-        console.log("if this is hit multiple times then wtf");
+        console.log("if this is hit multiple times then wtf", groupId);
         _groupId = groupId;
         initResolve();
       });
     }
 
     lastInitedUser = user;
+  }
+
+  clearUserGroup() {
+    if (window.localStorage) {
+      window.localStorage.removeItem("ocbc_group");
+      console.log(
+        "clear local storage",
+        window.localStorage.getItem("ocbc_group")
+      );
+    }
   }
 
   getUserGroup() {
@@ -35,35 +45,45 @@ class Data {
     }
 
     if (groupId) {
-      console.log("using gorup id", groupId);
+      console.log("using group id from local storage", groupId);
       return Promise.resolve(groupId);
     }
 
-    if (!this.user || !this.user.id) {
+    console.log("user in get group", this.user);
+    if (!this.user || !this.user.uid) {
       return Promise.resolve(_groupId);
     }
 
+    console.log("user group pre doc", this.user.uid);
     let doc = db.collection("user").doc(this.user.uid);
-
-    if (doc.exists) {
-      return doc.get().then(_doc => {
-        let data = _doc.data();
-        let groupId = data.groupId;
-
-        if (window.localStorage) {
-          window.localStorage.setItem("ocbc_group", groupId);
+    console.log("doc in get group", doc, doc.exists);
+    return doc
+      .get()
+      .then(_doc => {
+        if (_doc.exists) {
+          let data = _doc.data();
+          let groupId = data.groupId;
+          console.log("in promise for user doc", groupId);
+          if (window.localStorage) {
+            window.localStorage.setItem("ocbc_group", groupId);
+          }
+          return groupId;
+        } else {
+          console.log("fallback to demo group", _groupId);
+          return "demo";
         }
-        return groupId;
+      })
+      .catch(() => {
+        console.log("in catch group", _groupId);
+        return "demo";
       });
-    } else {
-      return Promise.resolve(_groupId);
-    }
   }
 
   _getGroupQuery() {
     if (!_groupId) {
       console.warn("no group set");
-      return this.getCollectionDoc("group");
+      throw new Error("no group");
+      // _groupId = "demo";
     }
     console.log("query with collection group and doc ", _groupId);
     return db.collection("group").doc(_groupId);

@@ -25,14 +25,18 @@ const doSignIn = () => ({ dispatch }) => {
     type: "USER_AUTH_STARTED",
     payload: null
   });
+  console.log("hit doSignin");
+  data.clearUserGroup();
+  let auth = myFirebase.auth();
 
-  myFirebase.auth().onAuthStateChanged(function(_user) {
+  auth.onAuthStateChanged(function(_user) {
     // window.DC.debug.log("auth hit", user);
     user = _user;
     dispatch({
       type: "USER_AUTH_FINISHED",
       payload: _user
     });
+    data.init(_user);
     data.getUserGroup().then(groupId => {
       dispatch({
         type: "USER_GROUP_FETCHED",
@@ -40,6 +44,8 @@ const doSignIn = () => ({ dispatch }) => {
       });
     });
   });
+
+  return auth;
 };
 
 const doSignOut = () => ({ dispatch }) => {

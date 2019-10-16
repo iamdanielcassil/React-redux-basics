@@ -10,8 +10,6 @@ export default connect(
   "selectUser",
   "selectRoute",
   ({ user, route }) => {
-    data.init(user);
-
     // return (
     //   <WithLoading>
     //     <div className="base">

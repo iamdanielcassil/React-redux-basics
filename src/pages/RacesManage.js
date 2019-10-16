@@ -195,8 +195,14 @@ export default connect(
               <Button
                 size="small"
                 onClick={() => {
-                  doNewRace(queryObject.seasonId);
-                  window.location.hash = "#/races/new";
+                  if (
+                    window.confirm(
+                      `Create a new race in season: ${currentSeason.name}`
+                    )
+                  ) {
+                    doNewRace(queryObject.seasonId);
+                    window.location.hash = "#/races/new";
+                  }
                 }}
               >
                 New Race

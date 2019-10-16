@@ -22,15 +22,13 @@ export default connect(
   "doSignIn",
   ({ user, doSignOut, doSignIn }) => {
     window.DC.debug.log("user", user);
+
     if (user && user.uid) {
       doSignOut();
     }
     return (
       <div>
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={myFirebase.auth()}
-        />
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={doSignIn()} />
       </div>
     );
   }

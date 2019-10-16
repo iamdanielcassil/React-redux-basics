@@ -65,13 +65,13 @@ const tabSets = isAuthed => [
   {
     urlMatcher: "seasons",
     tabs: [
-      {
-        url: "#/seasons/stats",
-        action: function() {
-          return (window.location.hash = this.url);
-        },
-        label: "Stats"
-      },
+      // {
+      //   url: "#/seasons/stats",
+      //   action: function() {
+      //     return (window.location.hash = this.url);
+      //   },
+      //   label: "Stats"
+      // },
       {
         url: "#/seasons/manage",
         action: function() {
@@ -193,12 +193,12 @@ let Header = connect(
                     <MenuIcon />
                   </IconButton>
                 </Grid>
-                <Grid item>
-                  {userGroup === "demo" ? (
-                    <Typography>DEMO MODE</Typography>
-                  ) : null}
-                </Grid>
               </Hidden>
+              <Grid item>
+                {userGroup === "demo" ? (
+                  <Typography>DEMO MODE</Typography>
+                ) : null}
+              </Grid>
               <Grid item xs />
             </Grid>
           </Toolbar>

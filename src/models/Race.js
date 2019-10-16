@@ -38,6 +38,18 @@ export default class Race {
     return this.entries.length > 0 && this.entries.length > this.results.length;
   };
 
+  isRunning = () => {
+    return this.hasStarted() && !this.hasEnded();
+  };
+
+  hasStarted = () => {
+    return this.startTime !== undefined;
+  };
+
+  hasEnded = () => {
+    return this.endTime !== undefined;
+  };
+
   start = time => {
     this.startTime = time;
     this.save();
@@ -52,12 +64,14 @@ export default class Race {
 
   reset = () => {
     this.startTime = undefined;
+    this.endTime = undefined;
     this.results = [];
     this.save();
     return this;
   };
 
   finishEntry = (entryId, time) => {
+    console.log("start save", new Date());
     let entry = this.entries.find(e => e.id === entryId);
 
     if (!entry) {
@@ -71,6 +85,7 @@ export default class Race {
     });
 
     this.save();
+    console.log("end save", new Date());
     return this;
   };
 

@@ -17,6 +17,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import TimerIcon from "@material-ui/icons/Timer";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Chip from "@material-ui/core/Chip";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import Grid from "@material-ui/core/Grid";
 import "./editRace.css";
 
 const useStyles = makeStyles(theme => ({
@@ -32,6 +34,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     padding: 0,
     marginTop: "15px"
+  },
+  summaryIcon: {
+    marginLeft: "25px"
   }
 }));
 
@@ -39,14 +44,13 @@ let Timmer = ({ live, color, label, time }) => {
   const [_time, setTime] = useState(time || new Date());
 
   useEffect(() => {
-    setTime(time || new Date());
-  }, [time]);
-
-  if (live) {
-    window.setInterval(() => {
-      setTime(new Date());
-    }, 90);
-  }
+    if (live) {
+      const timer = window.setInterval(() => {
+        setTime(new Date());
+      }, 90);
+      return () => clearTimeout(timer);
+    }
+  }, [live]);
 
   return (
     <TimeChip
@@ -108,24 +112,22 @@ export default connect(
             <Typography variant="h6" className={classes.title}>
               {race.name}
             </Typography>
-            {race.startTime ? (
-              race.hasOpenEntries() ? (
-                <Button
-                  size="small"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "Are you sure you want to clear the start time and all race results?"
-                      )
-                    ) {
-                      window.DC.debug.log("after reset", race);
-                      setRace(race.reset());
-                    }
-                  }}
-                >
-                  Rest Race
-                </Button>
-              ) : null
+            {race.hasStarted() ? (
+              <Button
+                size="small"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you want to clear the start time and all race results?"
+                    )
+                  ) {
+                    window.DC.debug.log("after reset", race);
+                    setRace(race.reset());
+                  }
+                }}
+              >
+                Rest Race
+              </Button>
             ) : (
               <Button
                 size="small"
@@ -138,30 +140,44 @@ export default connect(
                 Start Race
               </Button>
             )}
-            {race.startTime ? (
-              <Timmer
-                color="secondary"
-                label="start time"
-                time={race.startTime}
-              />
-            ) : null}
-            {race.hasOpenEntries() ? (
-              <Timmer color="secondary" live label="time" />
-            ) : race.endTime ? (
-              <Timmer color="secondary" label="end time" time={race.endTime} />
-            ) : (
-              <Button
-                size="small"
-                onClick={() => {
-                  let endTime = new Date();
-
-                  setRace(race.end(endTime));
-                }}
-              >
-                End Race
-              </Button>
+            {race.hasEnded() ? null : (
+              <Timmer color="secondary" live label="" />
             )}
           </Toolbar>
+
+          {race.hasStarted() ? (
+            <Toolbar>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6}>
+                  <Timmer
+                    color="secondary"
+                    label="start"
+                    time={race.startTime}
+                  />
+                </Grid>
+
+                {race.hasEnded() ? (
+                  <Grid item xs={12} sm={6}>
+                    <Timmer color="secondary" label="end" time={race.endTime} />
+                  </Grid>
+                ) : null}
+              </Grid>
+              {race.isRunning() ? (
+                <Grid item xs={12} sm={6}>
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      let endTime = new Date();
+
+                      setRace(race.end(endTime));
+                    }}
+                  >
+                    End Race
+                  </Button>
+                </Grid>
+              ) : null}
+            </Toolbar>
+          ) : null}
         </AppBar>
         {race.entries &&
           race.entries.map(entry => {
@@ -240,10 +256,17 @@ function RaceFinishedCell({ classes, result }) {
         id="panel1a-header"
       >
         <Typography className={classes.heading}>{result.name}</Typography>
+        <CheckCircleOutlineIcon className={classes.summaryIcon} />
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.formGroup}>
-        <Timmer label="start time" time={startTime} />
-        <Timmer label="end time" time={endTime} />
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6}>
+            <Timmer label="start time" time={startTime} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Timmer label="end time" time={endTime} />
+          </Grid>
+        </Grid>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );

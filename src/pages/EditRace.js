@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
 import { makeStyles } from "@material-ui/core/styles";
 import RaceEntries from "../components/entries/RaceEntries";
+import EntriesTransferList from "../components/entries/EntriesTransferList";
 import Button from "@material-ui/core/Button";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -174,7 +175,7 @@ export default connect(
             <Typography className={classes.heading}>Race Entries</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <RaceEntries race={currentRace} />
+            <EntriesTransferList race={currentRace} />
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <Container className={classes.container}>

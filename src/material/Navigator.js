@@ -25,12 +25,12 @@ const categories = isAuthed => [
       {
         id: "Races",
         icon: <EmojiEventsOutlinedIcon />,
-        url: "#/races"
+        url: "#/races/stats"
       },
       {
         id: "Seasons",
         icon: <WavesOutlinedIcon />,
-        url: "#/seasons"
+        url: "#/seasons/manage"
         // disabled: true
       },
       {
