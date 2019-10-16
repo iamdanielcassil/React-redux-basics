@@ -17,6 +17,12 @@ const reducer = (state = { user, group: undefined }, action) => {
   if (action.type === "USER_GROUP_FETCHED") {
     return { ...state, group: action.payload };
   }
+  if (action.type === "USER_IS_ADMIN") {
+    return { ...state, isAdmin: true };
+  }
+  if (action.type === "USER_IS_VIEWER") {
+    return { ...state, isAdmin: false };
+  }
   return state;
 };
 
@@ -41,6 +47,18 @@ const doSignIn = () => ({ dispatch }) => {
         type: "USER_GROUP_FETCHED",
         payload: groupId
       });
+      data
+        .getLogIsAdmin()
+        .then(() => {
+          dispatch({
+            type: "USER_IS_ADMIN"
+          });
+        })
+        .catch(() => {
+          dispatch({
+            type: "USER_IS_VIEWER"
+          });
+        });
     });
   });
   return auth;
@@ -51,7 +69,8 @@ const doSignOut = () => ({ dispatch }) => {
     type: "USER_SIGN_OUT_STARTED",
     payload: null
   });
-  firebase.auth()
+  firebase
+    .auth()
     .signOut()
     .then(() => {
       dispatch({

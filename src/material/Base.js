@@ -32,7 +32,7 @@ let theme = createMuiTheme({
     primary: {
       light: "#ffffff",
       main: "#5284af",
-      dark: "#283741"
+      dark: "#232f3e"
     },
     alternate: {
       text: "#3b5267"
@@ -40,8 +40,8 @@ let theme = createMuiTheme({
     alternateTextColor: "#3b5267",
     secondary: {
       light: "#ffffff",
-      main: "#232f3e",
-      dark: "#283741"
+      main: "#fff",
+      dark: "#232f3e"
     },
     bold: {
       main: "red",
@@ -116,6 +116,11 @@ theme = {
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         backgroundColor: theme.palette.primary.main
+      }
+    },
+    MuiAppBar: {
+      root: {
+        backgroundColor: theme.palette.primary.dark
       }
     },
     MuiTab: {

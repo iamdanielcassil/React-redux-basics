@@ -1,4 +1,4 @@
-import {firestore} from "./foundations/firebase";
+import { firestore } from "./foundations/firebase";
 
 const db = firestore();
 
@@ -30,6 +30,15 @@ class Data {
     if (window.localStorage) {
       window.localStorage.removeItem("ocbc_group");
     }
+  }
+
+  getLogIsAdmin() {
+    return Promise.resolve();
+    return data
+      .getCollectionDoc()
+      .collection("logs")
+      .doc("admin-login")
+      .add({ user: this.user.uid });
   }
 
   getUserGroup() {
@@ -77,18 +86,22 @@ class Data {
   }
 
   _getCollectionQuery(collectionKey) {
-    return this._getGroupQuery().collection(collectionKey);
+    if (collectionKey) {
+      return this._getGroupQuery().collection(collectionKey);
+    } else {
+      return this._getGroupQuery();
+    }
   }
 
   getCollectionDoc(collectionKey, docKey) {
     let __get = () => {
       if (docKey) {
         let doc = this._getCollectionQuery(collectionKey).doc(docKey);
-        if (doc.exists) {
-          return doc.get().then(doc => {
+        return doc.get().then(doc => {
+          if (doc.exists) {
             return doc.data();
-          });
-        }
+          }
+        });
       } else {
         return this._getCollectionQuery(collectionKey);
       }

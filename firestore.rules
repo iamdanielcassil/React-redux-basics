@@ -1,0 +1,25 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	// match /{document=**} {
+  	// 	allow read, update, delete, create: if request.auth.uid == "WDnKHYhfrmPSbtnGjfKwi5Hr60O2";
+  	// }
+    match /group/demo {
+    	match /{document=**} {
+      	allow read, update, delete, create: if true;
+      }
+    }
+     match /group/{groupId} {
+     function isGroupAdmin(admins) {
+        return groupId == 'demo' || admins && admins.indexOf(request.auth.uid) != -1;
+      }
+    	match /{document=**} {
+      	allow read: if true;
+      	allow update, delete, create: if isGroupAdmin(get(/databases/$(database)/documents/group/{groupId}).data.admins)
+      }
+    }
+    match /user/{userId} {
+    	allow read: if true;
+      	allow update, delete, create: if request.auth.uid == userId;
+    }
+  }
+}
