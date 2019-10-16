@@ -116,7 +116,6 @@ export default function IntegrationAutosuggest(props) {
   );
 
   const handleSuggestionsFetchRequested = ({ value }) => {
-    console.log("handle sugestions req", value);
     setSuggestions(getSuggestions(value, props.suggestions));
   };
 

@@ -136,8 +136,6 @@ let TabBar = connect(
 
     let tabSet = tabSets(isAuthed)[tabSetIndex];
 
-    console.log("route info", tabSetIndex, routeInfo, tabSet);
-
     if (!tabSet) {
       return;
     }
@@ -145,8 +143,6 @@ let TabBar = connect(
     let selectedTabIndex = tabSet.tabs.findIndex(t =>
       routeInfo.url.includes(t.url.replace("#", ""))
     );
-
-    console.log("tab index", selectedTabIndex, routeInfo);
 
     useEffect(() => {
       if (selectedTabIndex === -1) {
@@ -199,22 +195,23 @@ let Header = connect(
                   <Typography>DEMO MODE</Typography>
                 ) : null}
               </Grid>
-              <Grid item xs />
+              {props.showTabs ? (
+          <Grid item><AppBar
+          component="div"
+          className={classes.secondaryBar}
+          color="secondary"
+          position="static"
+          elevation={0}
+        >
+          <TabBar />
+        </AppBar></Grid>
+        ) : null}
+              
             </Grid>
           </Toolbar>
         </AppBar>
 
-        {props.showTabs ? (
-          <AppBar
-            component="div"
-            className={classes.secondaryBar}
-            color="secondary"
-            position="static"
-            elevation={0}
-          >
-            <TabBar />
-          </AppBar>
-        ) : null}
+       
       </React.Fragment>
     );
   }

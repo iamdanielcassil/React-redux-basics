@@ -30,16 +30,18 @@ function Copyright() {
 let theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#63ccff",
+      light: "#ffffff",
       main: "#5284af",
-      dark: "#006db3"
+      dark: "#283741"
     },
     alternate: {
       text: "#3b5267"
     },
     alternateTextColor: "#3b5267",
     secondary: {
-      main: "#fff"
+      light: "#ffffff",
+      main: "#fff",
+      dark: "#283741"
     },
     bold: {
       main: "red",
@@ -221,10 +223,10 @@ const styles = {
 let Main = connect(
   "selectUser",
   "selectRoute",
-  ({ user, route }) => {
+  ({ user, route, classes }) => {
     return (
       <Content>
-        <route.Component />
+        <route.Component classes={classes} />
       </Content>
     );
   }
@@ -267,7 +269,7 @@ function Paperbase(props) {
             tab={tab}
           />
           <main className={classes.main}>
-            <Main />
+            <Main classes={classes} />
           </main>
           <footer className={classes.footer}>
             <Copyright />

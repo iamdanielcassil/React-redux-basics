@@ -71,7 +71,6 @@ export default class Race {
   };
 
   finishEntry = (entryId, time) => {
-    console.log("start save", new Date());
     let entry = this.entries.find(e => e.id === entryId);
 
     if (!entry) {
@@ -85,7 +84,6 @@ export default class Race {
     });
 
     this.save();
-    console.log("end save", new Date());
     return this;
   };
 

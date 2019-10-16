@@ -47,7 +47,6 @@ export default connect(
             value={selecedSuggestion}
             suggestions={sugegstions}
             onSuggestionSelected={suggestion => {
-              console.log("set selected", suggestion);
               setSelectedSuggestion(suggestion.suggestionValue);
             }}
           />
@@ -59,7 +58,6 @@ export default connect(
                 let boat = boats.find(b => b.name === selecedSuggestion);
 
                 if (boat) {
-                  console.log("add boat", boats, boat, selecedSuggestion);
                   props.race.addEntry(boat);
                   setSelectedSuggestion(undefined);
                   setSuggestions(getFilteredBoats(boats, props.race));

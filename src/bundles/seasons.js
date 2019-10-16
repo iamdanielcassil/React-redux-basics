@@ -43,7 +43,7 @@ const reducer = (state = { all: [], current: null }, action) => {
     };
   }
   if (action.type === "SEASON_SELECTED_NOT_FOUND") {
-    console.log(`Season id: ${action.payload} not found`);
+    console.warn(`Season id: ${action.payload} not found`);
   }
   if (action.type === "SEASON_EDITED") {
     return { ...state, isEditing: true };

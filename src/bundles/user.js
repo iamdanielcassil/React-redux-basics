@@ -25,7 +25,6 @@ const doSignIn = () => ({ dispatch }) => {
     type: "USER_AUTH_STARTED",
     payload: null
   });
-  console.log("hit doSignin");
   data.clearUserGroup();
 
   let auth = firebase.auth();

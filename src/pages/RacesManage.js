@@ -68,7 +68,6 @@ let RaceItem = ({ classes, isAuthed, ...props }) => {
   let race = new Race(props.race);
   let isFinished = !race.hasOpenEntries();
 
-  console.log("race item", race, isFinished);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary

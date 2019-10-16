@@ -8,11 +8,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "../components/form/inputs/Select";
+import Paper from "@material-ui/core/Paper";
 import { connect } from "redux-bundler-react";
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
+  },
+  paper: {
+    borderRadius: "0 0 8px 8px",
+    minHeight: "200px",
+    paddingBottom: "50px"
   },
   bold: {
     color: theme.palette.bold.main
@@ -60,8 +66,6 @@ export default connect(
       setCurrent(stats && stats[0]);
     }, [stats]);
 
-    console.log("in stats", stats);
-
     return (
       <div className="page">
         <AppBar position="static">
@@ -89,36 +93,38 @@ export default connect(
           </Toolbar>
         </AppBar>
 
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Boat Name</TableCell>
-              <TableCell align="right">Captain</TableCell>
-              <TableCell align="right">End Time</TableCell>
-              <TableCell align="right">Total Time</TableCell>
-              <TableCell align="right">PHRF</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {current &&
-              current.results &&
-              current.results.map(row => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.captain}</TableCell>
-                  <TableCell align="right">
-                    {new Date(row.endTime).toLocaleTimeString()}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.endTime - row.startTime}
-                  </TableCell>
-                  <TableCell align="right">{row.phrf}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+        <Paper className={classes.paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Boat Name</TableCell>
+                <TableCell align="right">Captain</TableCell>
+                <TableCell align="right">End Time</TableCell>
+                <TableCell align="right">Total Time</TableCell>
+                <TableCell align="right">PHRF</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {current &&
+                current.results &&
+                current.results.map(row => (
+                  <TableRow key={row.name}>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.captain}</TableCell>
+                    <TableCell align="right">
+                      {new Date(row.endTime).toLocaleTimeString()}
+                    </TableCell>
+                    <TableCell align="right">
+                      {row.endTime - row.startTime}
+                    </TableCell>
+                    <TableCell align="right">{row.phrf}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </Paper>
       </div>
     );
   }
