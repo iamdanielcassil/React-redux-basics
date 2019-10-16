@@ -40,7 +40,7 @@ let theme = createMuiTheme({
     alternateTextColor: "#3b5267",
     secondary: {
       light: "#ffffff",
-      main: "#fff",
+      main: "#232f3e",
       dark: "#283741"
     },
     bold: {
@@ -242,41 +242,41 @@ function Paperbase(props) {
 
   return (
     <WithLoading>
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden mdUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden mdUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden smDown implementation="css">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <Header
+              showTabs={shouldShowTabs()}
+              onDrawerToggle={handleDrawerToggle}
+              onTabSelect={(e, value) => setTab(value)}
+              tab={tab}
             />
-          </Hidden>
-          <Hidden smDown implementation="css">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header
-            showTabs={shouldShowTabs()}
-            onDrawerToggle={handleDrawerToggle}
-            onTabSelect={(e, value) => setTab(value)}
-            tab={tab}
-          />
-          <main className={classes.main}>
-            <Main classes={classes} />
-          </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
+            <main className={classes.main}>
+              <Main classes={classes} />
+            </main>
+            <footer className={classes.footer}>
+              <Copyright />
+            </footer>
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
     </WithLoading>
   );
 }
