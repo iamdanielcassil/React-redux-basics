@@ -12,8 +12,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import { makeStyles } from "@material-ui/core/styles";
 
-import "./raceEntries.css";
-
 const useStyles = makeStyles(theme => ({
   action: {
     position: "absolute",

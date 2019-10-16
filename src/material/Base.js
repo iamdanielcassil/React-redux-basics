@@ -12,6 +12,7 @@ import Content from "./Content";
 import { connect } from "redux-bundler-react";
 import Header from "./Header";
 import Box from "@material-ui/core/Box";
+import WithLoading from "../components/Loading";
 
 function Copyright() {
   return (
@@ -238,6 +239,7 @@ function Paperbase(props) {
   };
 
   return (
+    <WithLoading>
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
@@ -273,6 +275,7 @@ function Paperbase(props) {
         </div>
       </div>
     </ThemeProvider>
+    </WithLoading>
   );
 }
 

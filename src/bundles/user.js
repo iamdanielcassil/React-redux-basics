@@ -1,4 +1,4 @@
-import {auth} from "../foundations/firebase";
+import firebase from "../foundations/firebase";
 import data from "../data";
 let user = null;
 let pathBeforeLogin;
@@ -28,7 +28,8 @@ const doSignIn = () => ({ dispatch }) => {
   console.log("hit doSignin");
   data.clearUserGroup();
 
-  return auth().onAuthStateChanged(function(_user) {
+  let auth = firebase.auth();
+  auth.onAuthStateChanged(function(_user) {
     // window.DC.debug.log("auth hit", user);
     user = _user;
     dispatch({
@@ -43,6 +44,7 @@ const doSignIn = () => ({ dispatch }) => {
       });
     });
   });
+  return auth;
 };
 
 const doSignOut = () => ({ dispatch }) => {
@@ -50,7 +52,7 @@ const doSignOut = () => ({ dispatch }) => {
     type: "USER_SIGN_OUT_STARTED",
     payload: null
   });
-    auth()
+  firebase.auth()
     .signOut()
     .then(() => {
       dispatch({

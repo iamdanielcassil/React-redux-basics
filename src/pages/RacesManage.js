@@ -18,7 +18,6 @@ import Select from "../components/form/inputs/Select";
 
 import { connect } from "redux-bundler-react";
 import Race from "../models/Race";
-import "./page.css";
 
 const useStyles = makeStyles(theme => ({
   root: {

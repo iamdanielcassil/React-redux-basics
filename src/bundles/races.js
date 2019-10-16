@@ -1,12 +1,5 @@
 import Race from "../models/Race";
 
-const init = store => {
-  // doGetSeasonRaces();
-  // data.listen(`seasons/123/races`, races => {
-  //   window.DC.debug.log("races fetched", races);
-  //   store.dispatch({ type: "RACES_FETCHED", races });
-  // });
-};
 const reducer = (state = { all: [], current: null, event: {} }, action) => {
   if (action.type === "NEW_RACE_CREATED") {
     return { ...state, current: action.current };
@@ -45,16 +38,6 @@ const reducer = (state = { all: [], current: null, event: {} }, action) => {
 
   return state;
 };
-
-// const doGetSeasonRaces = () => ({ store }) => {
-//   let state = store.getState();
-
-//   if (state.seasons && state.seasons.current) {
-//     data.listen(`seasons/${state.seasons.current.id}/races`, races =>
-//       store.dispatch({ type: "RACES_FETCHED", races })
-//     );
-//   }
-// };
 
 const doNewRace = seasonId => ({ dispatch }) => {
   dispatch({ type: "NEW_RACE_CREATED", current: new Race({ seasonId }) });
@@ -153,7 +136,6 @@ const selectRaceEvent = state => state.races.event;
 
 export default {
   name: "races",
-  init,
   reducer,
   doNewRace,
   doSaveRace,

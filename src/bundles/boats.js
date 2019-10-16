@@ -19,14 +19,6 @@ const reducer = (state = { all: [] }, action) => {
   return state;
 };
 
-const doGotToAddNewBoat = () => ({ dispatch, store }) => {
-  store.doUpdateUrl({ pathname: "/", hash: "/boats/new" });
-};
-
-const doGoToEditBoat = boatId => ({ dispatch, store }) => {
-  store.doUpdateUrl({ pathname: "/", hash: `/boats/${boatId}/edit` });
-};
-
 const doGoToSelectBoat = boatId => ({ dispatch, store }) => {
   let boat = store.getState().boats.all.find(b => b.id === boatId);
 
@@ -44,12 +36,6 @@ const doSetCurrentBoat = boatId => ({ store, dispatch }) => {
       type: "BOATS_CURRENT_SELECTED",
       boat: new Boat(boat)
     });
-  }
-};
-
-const doDeleteBoat = boat => ({ dispatch, store }) => {
-  if (window.confirm(`Are you sure you want to delete boat: ${boat.name}`)) {
-    window.DC.debug.log("need to delete boat");
   }
 };
 
@@ -85,10 +71,7 @@ export default {
   reducer,
   selectCurrentBoat,
   selectBoats,
-  doGotToAddNewBoat,
-  doGoToEditBoat,
   doGoToSelectBoat,
   doSaveBoat,
-  doDeleteBoat,
   doSetCurrentBoat
 };

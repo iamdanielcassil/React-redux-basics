@@ -10,9 +10,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Select from "../components/form/inputs/Select";
 import { connect } from "redux-bundler-react";
 
-import "./stats.css";
-import "../components/stats/stats.css";
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"

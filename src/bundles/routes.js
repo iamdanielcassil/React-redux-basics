@@ -1,20 +1,17 @@
 import { createRouteBundle } from "redux-bundler";
 
 import RacesManage from "../pages/RacesManage";
-import Stats from "../pages/Stats";
-import SeasonsManage from "../pages/SeasonsManage";
+import RaceEvent from "../pages/RaceEvent";
+import RaceEdit from "../pages/RaceEdit";
 
-import EditRace from "../pages/EditRace";
+import SeasonsManage from "../pages/SeasonsManage";
+import SeasonEdit from "../pages/SeasonEdit";
 
 import BoatsManage from "../pages/BoatsManage";
+import BoatEdit from "../pages/BoatEdit";
 
-import ViewSeason from "../pages/ViewSeason";
+import Stats from "../pages/Stats";
 
-import EditBoat from "../pages/EditBoat";
-import EditSeason from "../pages/EditSeason";
-import ViewRace from "../pages/ViewRace";
-
-import ManageRace from "../pages/ManageRace";
 import Login from "../pages/Login";
 
 let _onAllRoutesWrapper = (route, Component) => {
@@ -26,31 +23,22 @@ const routes = {
   ..._onAllRoutesWrapper("", Stats),
   ..._onAllRoutesWrapper("/", Stats),
 
-  ..._onAllRoutesWrapper("/boats", Stats),
   ..._onAllRoutesWrapper("/boats/manage", BoatsManage),
   ..._onAllRoutesWrapper("/boats/stats", Stats),
+  ..._onAllRoutesWrapper("/boats/new", BoatEdit),
+  ..._onAllRoutesWrapper("/boats/:id/edit", BoatEdit),
 
-  ..._onAllRoutesWrapper("/races", Stats),
   ..._onAllRoutesWrapper("/races/manage", RacesManage),
   ..._onAllRoutesWrapper("/races/stats", Stats),
+  ..._onAllRoutesWrapper("/races/new", RaceEdit),
+  ..._onAllRoutesWrapper("/races/manage/:id", RaceEvent),
+  ..._onAllRoutesWrapper("/races/:id/edit", RaceEdit),
 
-  ..._onAllRoutesWrapper("/seasons", Stats),
   ..._onAllRoutesWrapper("/seasons/manage", SeasonsManage),
   ..._onAllRoutesWrapper("/seasons/stats", Stats),
-
-  ..._onAllRoutesWrapper("/seasons/new", EditSeason),
-  ..._onAllRoutesWrapper("/seasons/view", ViewSeason),
-  ..._onAllRoutesWrapper("/seasons/:id/edit", EditSeason),
-
-  ..._onAllRoutesWrapper("/races/manage/:id", ManageRace),
-  ..._onAllRoutesWrapper("/races/new", EditRace),
-  ..._onAllRoutesWrapper("/races/:id", ViewRace),
-  ..._onAllRoutesWrapper("/races/:id/edit", EditRace),
-
-  ..._onAllRoutesWrapper("/boats/new", EditBoat),
-  ..._onAllRoutesWrapper("/boats/:id", EditBoat),
-  ..._onAllRoutesWrapper("/boats/:id/edit", EditBoat),
-
+  ..._onAllRoutesWrapper("/seasons/:id/edit", SeasonEdit),
+  ..._onAllRoutesWrapper("/seasons/new", SeasonEdit),
+ 
   ..._onAllRoutesWrapper("/login", Login),
   ..._onAllRoutesWrapper("/afterLogin", Stats)
 };

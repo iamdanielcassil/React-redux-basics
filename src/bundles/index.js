@@ -2,9 +2,7 @@ import {
   composeBundlesRaw,
   createUrlBundle,
   createDebugBundle,
-  applyMiddleware
 } from "redux-bundler";
-import logger from "../middleware/test";
 import user from "./user";
 import states from "./states";
 import routes from "./routes";

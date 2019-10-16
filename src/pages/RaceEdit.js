@@ -13,7 +13,6 @@ import Text from "../components/form/inputs/Text";
 import DateTime from "../components/form/inputs/DateTime";
 import Select from "../components/form/inputs/Select";
 import Container from "@material-ui/core/Container";
-import "./editRace.css";
 
 const useStyles = makeStyles(theme => ({
   root: {
