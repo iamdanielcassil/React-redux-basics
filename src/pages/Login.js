@@ -1,5 +1,5 @@
 import React from "react";
-import myFirebase from "../foundations/firebase";
+import {auth} from "../foundations/firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { connect } from "redux-bundler-react";
 
@@ -10,9 +10,9 @@ const uiConfig = {
   signInSuccessUrl: "#/races/stats",
   // We will display Google and Facebook as auth providers.
   signInOptions: [
-    myFirebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    myFirebase.auth.EmailAuthProvider.PROVIDER_ID,
-    myFirebase.auth.PhoneAuthProvider.PROVIDER_ID
+    auth.GoogleAuthProvider.PROVIDER_ID,
+    auth.EmailAuthProvider.PROVIDER_ID,
+    auth.PhoneAuthProvider.PROVIDER_ID
   ]
 };
 

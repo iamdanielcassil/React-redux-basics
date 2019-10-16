@@ -1,4 +1,4 @@
-import { firestore } from "./foundations/firebase";
+import {firestore} from "./foundations/firebase";
 
 const db = firestore();
 

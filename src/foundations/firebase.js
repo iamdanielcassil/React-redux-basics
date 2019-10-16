@@ -1,4 +1,4 @@
-import firebase, { firestore } from "firebase";
+import firebase from "firebase";
 // Required for side-effects
 
 firebase.initializeApp({
@@ -10,9 +10,8 @@ firebase.initializeApp({
   messagingSenderId: "263471316363"
 });
 
-module.exports = {
-  auth: firebase.auth,
-  storage: firebase.storage,
-  database: firebase.database,
-  firestore: firebase.firestore
-};
+export default firebase;
+export const auth = firebase.auth;
+export const storage = firebase.storage;
+export const database = firebase.database;
+export const firestore = firebase.firestore;
