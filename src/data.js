@@ -32,13 +32,40 @@ class Data {
     }
   }
 
+  getFromLocalStore(key) {
+    if (window.localStorage) {
+      return JSON.parse(window.localStorage.getItem(key))
+    }
+  }
+
+  setToLocalStore(key, value) {
+    if (window.localStorage) {
+      return window.localStorage.setItem(key, JSON.stringify(value))
+    }
+  }
+
+  isUserCacheExpired(cachedUser) {
+    let now = new Date().getTime();
+    let cacheDate = new Date(cachedUser.time).getTime();
+
+    return now - cacheDate > 360000 // 1 hour
+  }
+
   getLogIsAdmin() {
-    return Promise.resolve();
+    let cachedUser = this.getFromLocalStore('ocbc_user')
+
+    if (cachedUser && !this.isUserCacheExpired(cachedUser) && cachedUser.uid === this.user.uid) {
+      return Promise.resolve(cachedUser.isAdmin);
+    }
+
     return data
-      .getCollectionDoc()
-      .collection("logs")
-      .doc("admin-login")
-      .add({ user: this.user.uid });
+      .getCollectionDoc("logs").then(collection => {
+        let data = { uid: this.user.uid, userEmail: this.user.email, userName: this.user.displayName, time: new Date().toLocaleString() }
+        return collection.add(data).then(() => {
+          data.isAdmin = true;
+          this.setToLocalStore('ocbc_user', data)
+        }); 
+      })
   }
 
   getUserGroup() {
