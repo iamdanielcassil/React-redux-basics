@@ -1,7 +1,5 @@
 import data from "../data";
 
-let timeOutVar = [];
-
 export default {
   update: (changes, model) => {
     Object.keys(changes).forEach(key => {

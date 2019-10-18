@@ -99,18 +99,6 @@ const doUpdateCurrent = seasonData => ({ getState, dispatch }) => {
   dispatch({ type: "CURRENT_SEASON_UPDATED" });
 };
 
-const doSelectCurrentSeason = () => ({ store }) => {
-  let seasonId = store.selectQueryObject().seasonId;
-
-  if (!seasonId) {
-    return;
-  }
-
-  return store
-    .selectSeasons()
-    .find(s => s.id === store.selectQueryObject().seasonId);
-};
-
 const selectCurrentSeason = state => state.seasons.current;
 const selectSeasons = state => state.seasons.all;
 
@@ -122,7 +110,6 @@ export default {
   doSaveSeason,
   doUpdateCurrent,
   doGoToSelectSeason,
-  doSelectCurrentSeason,
   selectCurrentSeason,
   selectSeasons
 };

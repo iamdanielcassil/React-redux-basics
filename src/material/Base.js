@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { createMuiTheme, withStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Hidden from "@material-ui/core/Hidden";
@@ -11,7 +10,6 @@ import Navigator from "./Navigator";
 import Content from "./Content";
 import { connect } from "redux-bundler-react";
 import Header from "./Header";
-import Box from "@material-ui/core/Box";
 import WithLoading from "../components/Loading";
 
 function Copyright() {

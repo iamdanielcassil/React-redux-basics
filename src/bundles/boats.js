@@ -19,13 +19,6 @@ const reducer = (state = { all: [] }, action) => {
   return state;
 };
 
-const doGoToSelectBoat = boatId => ({ dispatch, store }) => {
-  let boat = store.getState().boats.all.find(b => b.id === boatId);
-
-  dispatch({ type: "BOATS_CURRENT_SELECTED", boat });
-  store.doUpdateUrl({ pathname: "/", hash: "/boats/" + boatId });
-};
-
 const doSetCurrentBoat = boatId => ({ store, dispatch }) => {
   let state = store.getState();
 
@@ -71,7 +64,6 @@ export default {
   reducer,
   selectCurrentBoat,
   selectBoats,
-  doGoToSelectBoat,
   doSaveBoat,
   doSetCurrentBoat
 };

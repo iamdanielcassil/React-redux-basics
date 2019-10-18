@@ -23,25 +23,10 @@ const reducer = (state = { working: false }, action) => {
   return state;
 };
 
-const doDebugWork = start => ({ dispatch }) => {
-  if (start) {
-    dispatch({
-      type: "FAKE_WORK_STARTED"
-    });
-  } else {
-    dispatch({
-      type: "FAKE_WORK_FINISHED"
-    });
-  }
-};
-
-const selectStates = state => state.states;
 const selectWorking = state => state.states.working;
 
 export default {
   name: "states",
   reducer,
-  doDebugWork,
-  selectStates,
   selectWorking
 };

@@ -85,43 +85,6 @@ const doUpdateCurrent = raceData => ({ getState, dispatch }) => {
   dispatch({ type: "CURRENT_RACE_UPDATED" });
 };
 
-const doAddRaceEntry = (race, entry) => ({ getState, store }) => {
-  // let race = new Race(_race);
-
-  race.addEntry(entry);
-  store.doUpdateCurrent(race.get());
-};
-
-const doRemoveRaceEntry = (race, entry) => ({ getState, store }) => {
-  // let race = new Race(_race);
-
-  race.removeEntry(entry.id);
-  store.doUpdateCurrent(race.get());
-};
-
-const doStartRace = (raceId, startTime) => ({ store, dispatch }) => {
-  dispatch({
-    type: "RACE_START",
-    payload: { raceId, startTime: startTime.getTime() }
-  });
-};
-
-const doEndRace = (race, entry, endTime) => ({ store, dispatch }) => {
-  let event = store.selectRaceEvent();
-
-  race.results = race.results || [];
-  race.results.push({
-    ...entry,
-    endTime: endTime.getTime(),
-    startTime: event.startTime
-  });
-  store.doSaveRace(new Race(race));
-};
-
-const doGoToManageRace = race => ({ store, dispatch }) => {
-  store.doUpdateUrl({ pathname: "/", hash: `/races/manage/${race.id}` });
-};
-
 const doGoToManageRaces = () => ({ store, dispatch }) => {
   store.doUpdateUrl({ pathname: "/", hash: `/races/manage` });
 };
@@ -131,8 +94,6 @@ const selectCurrentRace = state => {
 };
 
 const selectRaces = state => state.races.all;
-const selectIsEditing = state => state.races.isEditing;
-const selectRaceEvent = state => state.races.event;
 
 export default {
   name: "races",
@@ -140,15 +101,8 @@ export default {
   doNewRace,
   doSaveRace,
   doSetCurrent,
-  doAddRaceEntry,
-  doRemoveRaceEntry,
   doUpdateCurrent,
-  doStartRace,
-  doEndRace,
-  doGoToManageRace,
   doGoToManageRaces,
   selectCurrentRace,
-  selectIsEditing,
   selectRaces,
-  selectRaceEvent
 };

@@ -12,7 +12,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 
 import { connect } from "redux-bundler-react";
@@ -39,16 +38,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// captain: "David Cheek"
-// crew: "DanielCassil"
-// id: "1570243371510"
-// length: "22"
-// maker: "J Boats"
-// model: "J22"
-// name: "Grate Expectations 99"
-// phrf: "100"
-// type: "Fin Keel"
-// year: ""
 let GridItem = ({ classes, label, value }) => (
   <Grid item xs={12} sm={6}>
     <Typography className={classes.heading}>{label}</Typography>
@@ -121,8 +110,7 @@ export default connect(
   "selectIsAuthed",
   "selectBoats",
   "doSetCurrentBoat",
-  "selectQueryObject",
-  ({ isAuthed, boats, doSetCurrentBoat, queryObject }) => {
+  ({ isAuthed, boats, doSetCurrentBoat }) => {
     return (
       <div className="page">
         <AppBar position="static">

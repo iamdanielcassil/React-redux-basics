@@ -13,8 +13,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
-import NavigationIcon from "@material-ui/icons/Navigation";
-import Select from "../components/form/inputs/Select";
 
 import { connect } from "redux-bundler-react";
 import Season from "../models/Season";
@@ -114,17 +112,11 @@ let Item = ({ classes, isAuthed, ...props }) => {
 export default connect(
   "selectIsAuthed",
   "selectSeasons",
-  "selectCurrentSeason",
-  "doGoToSelectSeason",
   "doNewSeason",
-  "selectQueryObject",
   ({
     isAuthed,
     seasons,
-    currentSeason,
-    doGoToSelectSeason,
     doNewSeason,
-    queryObject
   }) => {
     const classes = useStyles();
 

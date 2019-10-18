@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
 import { makeStyles } from "@material-ui/core/styles";
-import RaceEntries from "../components/entries/RaceEntries";
 import Button from "@material-ui/core/Button";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Text from "../components/form/inputs/Text";
-import DateTime from "../components/form/inputs/DateTime";
-import Select from "../components/form/inputs/Select";
-import Container from "@material-ui/core/Container";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import TimerIcon from "@material-ui/icons/Timer";
@@ -76,17 +71,13 @@ let TimeChip = ({ time, color, label }) => {
 export default connect(
   "selectRouteParams",
   "selectCurrentRace",
-  "doSaveRace",
   "doSetCurrent",
   "selectRaces",
-  "doGoToManageRaces",
   ({
     routeParams,
     currentRace,
-    doSaveRace,
     doSetCurrent,
     races,
-    doGoToManageRaces
   }) => {
     const classes = useStyles();
     let [race, setRace] = useState();
@@ -269,18 +260,4 @@ function RaceFinishedCell({ classes, result }) {
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
-}
-
-function getDateTime(d) {
-  let date;
-
-  if (d) {
-    date = new Date(d);
-  } else {
-    date = new Date();
-  }
-
-  let dateString = date.toISOString();
-  let returnString = dateString.substring(0, 19);
-  return returnString;
 }

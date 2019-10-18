@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
@@ -8,15 +8,20 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import Text from "../components/form/inputs/Text";
+
+import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from "@material-ui/icons/People";
-import Chip from "@material-ui/core/Chip";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DirectionsBoatOutlinedIcon from "@material-ui/icons/DirectionsBoatOutlined";
 import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import WavesOutlinedIcon from "@material-ui/icons/WavesOutlined";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Avatar from "@material-ui/core/Avatar";
 import { connect } from "redux-bundler-react";
+
+const drawerWidth = 256;
 
 const categories = isAuthed => [
   {
@@ -104,6 +109,8 @@ const Navigator = connect(
   "selectIsAuthed",
   "selectUser",
   ({ isAuthed, user, classes, ...other }) => {
+    const [userSettingsToggle, setUserSettingsToggle] = useState();
+
     return (
       <Drawer variant="permanent" {...other}>
         <List disablePadding>
@@ -118,11 +125,44 @@ const Navigator = connect(
           </ListItem>
           <ListItem className={clsx(classes.item, classes.itemCategory)}>
             <ListItemIcon className={classes.itemIcon}>
-              {isAuthed ? (
-                <Avatar alt="Natacha">{user.displayName[0]}</Avatar>
-              ) : (
-                <HomeIcon />
-              )}
+              <IconButton>
+{isAuthed ? (
+  <Avatar onClick={setUserSettingsToggle} alt="Natacha">{user.displayName[0]}</Avatar>
+) : (
+  <HomeIcon onClick={setUserSettingsToggle}/>
+)}
+              </IconButton>
+              
+              <Drawer
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={userSettingsToggle}
+                onClose={() => setUserSettingsToggle(false)}
+              > <List disablePadding> 
+              <ListItem
+            className={clsx(
+              classes.firebase,
+              classes.item,
+              classes.itemCategory
+            )}
+            onClick={() => setUserSettingsToggle(false)}
+          ><IconButton color="primary"><ArrowBackIosIcon/>Back</IconButton>
+          </ListItem>
+          <ListItem
+            className={clsx(
+              classes.firebase,
+              classes.item,
+              classes.itemCategory
+            )}
+          >
+            User Settings
+          </ListItem>
+          <ListItem>
+            
+<Text color="secondary" id="name"
+              label="Name"/>
+          </ListItem>
+         </List></Drawer>
             </ListItemIcon>
             <ListItemText
               classes={{
