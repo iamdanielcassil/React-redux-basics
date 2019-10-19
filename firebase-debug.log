@@ -1,0 +1,74 @@
+[debug] [2019-10-16T20:07:57.846Z] ----------------------------------------------------------------------
+[debug] [2019-10-16T20:07:57.848Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:exec --only firestore src/tests/firebase/rules.test.sh
+[debug] [2019-10-16T20:07:57.849Z] CLI Version:   7.6.0
+[debug] [2019-10-16T20:07:57.849Z] Platform:      darwin
+[debug] [2019-10-16T20:07:57.849Z] Node Version:  v10.16.3
+[debug] [2019-10-16T20:07:57.850Z] Time:          Wed Oct 16 2019 15:07:57 GMT-0500 (Central Daylight Time)
+[debug] [2019-10-16T20:07:57.850Z] ----------------------------------------------------------------------
+[debug] 
+[info] i  Starting emulators: ["firestore"]
+[info] i  firestore: Serving ALL traffic (including WebChannel) on http://localhost:8080
+[warn] ⚠  firestore: Support for WebChannel on a separate port (8081) is DEPRECATED and will go away soon. Please use port above instead.
+[debug] [2019-10-16T20:07:57.890Z] Ignoring unsupported arg: projectId
+[debug] [2019-10-16T20:07:57.890Z] Ignoring unsupported arg: auto_download
+[debug] [2019-10-16T20:07:57.890Z] Starting emulator firestore with command {"binary":"java","args":["-Duser.language=en","-jar","/Users/danielcassil/.cache/firebase/emulators/cloud-firestore-emulator-v1.9.0.jar","--host","localhost","--port",8080,"--rules","/Users/danielcassil/Code/ocbc/firestore.rules","--webchannel_port",8081],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator"]}
+[info] i  firestore: Emulator logging to firestore-debug.log
+[debug] [2019-10-16T20:07:59.058Z] API endpoint: http://
+[debug] [2019-10-16T20:07:59.058Z] localhost:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+
+[info] ✔  firestore: Emulator started at http://localhost:8080
+[info] i  firestore: For testing set FIRESTORE_EMULATOR_HOST=localhost:8080
+[info] i  Running script: src/tests/firebase/rules.test.sh
+[debug] [2019-10-16T20:07:59.182Z] Running src/tests/firebase/rules.test.sh with environment {"TERM_PROGRAM":"vscode","TERM":"xterm-256color","SHELL":"/bin/bash","TMPDIR":"/var/folders/s7/_w_3wkn94csbctf0xty85w7h0000gn/T/","Apple_PubSub_Socket_Render":"/private/tmp/com.apple.launchd.8fu89rxRBC/Render","TERM_PROGRAM_VERSION":"1.39.2","USER":"danielcassil","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.FH7bvTaeP9/Listeners","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","PATH":"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin","PWD":"/Users/danielcassil/Code/ocbc","LANG":"en_US.UTF-8","XPC_FLAGS":"0x0","XPC_SERVICE_NAME":"0","SHLVL":"2","HOME":"/Users/danielcassil","LOGNAME":"danielcassil","COLORTERM":"truecolor","_":"/usr/local/bin/firebase","FIRESTORE_EMULATOR_HOST":"localhost:8080","FIREBASE_FIRESTORE_EMULATOR_ADDRESS":"localhost:8080"}
+[warn] ⚠  Script exited unsuccessfully (code 126)
+[info] i  Shutting down emulators.
+[info] i  Stopping firestore emulator
+[debug] [2019-10-16T20:07:59.700Z] *** shutting down gRPC server since JVM is shutting down
+
+[debug] [2019-10-16T20:07:59.705Z] *** server shut down
+
+[error] 
+[error] Error: Script "src/tests/firebase/rules.test.sh" exited with code 126
+[debug] [2019-10-16T20:08:32.576Z] ----------------------------------------------------------------------
+[debug] [2019-10-16T20:08:32.578Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:exec --only firestore src/tests/firebase/rules.test.sh
+[debug] [2019-10-16T20:08:32.578Z] CLI Version:   7.6.0
+[debug] [2019-10-16T20:08:32.578Z] Platform:      darwin
+[debug] [2019-10-16T20:08:32.578Z] Node Version:  v10.16.3
+[debug] [2019-10-16T20:08:32.579Z] Time:          Wed Oct 16 2019 15:08:32 GMT-0500 (Central Daylight Time)
+[debug] [2019-10-16T20:08:32.579Z] ----------------------------------------------------------------------
+[debug] 
+[info] i  Starting emulators: ["firestore"]
+[info] i  firestore: Serving ALL traffic (including WebChannel) on http://localhost:8080
+[warn] ⚠  firestore: Support for WebChannel on a separate port (8081) is DEPRECATED and will go away soon. Please use port above instead.
+[debug] [2019-10-16T20:08:32.622Z] Ignoring unsupported arg: projectId
+[debug] [2019-10-16T20:08:32.622Z] Ignoring unsupported arg: auto_download
+[debug] [2019-10-16T20:08:32.622Z] Starting emulator firestore with command {"binary":"java","args":["-Duser.language=en","-jar","/Users/danielcassil/.cache/firebase/emulators/cloud-firestore-emulator-v1.9.0.jar","--host","localhost","--port",8080,"--rules","/Users/danielcassil/Code/ocbc/firestore.rules","--webchannel_port",8081],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator"]}
+[info] i  firestore: Emulator logging to firestore-debug.log
+[debug] [2019-10-16T20:08:33.750Z] API endpoint: http://
+[debug] [2019-10-16T20:08:33.750Z] localhost:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+
+[info] ✔  firestore: Emulator started at http://localhost:8080
+[info] i  firestore: For testing set FIRESTORE_EMULATOR_HOST=localhost:8080
+[info] i  Running script: src/tests/firebase/rules.test.sh
+[debug] [2019-10-16T20:08:33.926Z] Running src/tests/firebase/rules.test.sh with environment {"TERM":"xterm-256color","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.FH7bvTaeP9/Listeners","__CF_USER_TEXT_ENCODING":"0x0:0:0","PATH":"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin","LANG":"en_US.UTF-8","HOME":"/Users/danielcassil","COLORTERM":"truecolor","MAIL":"/var/mail/root","LOGNAME":"root","USER":"root","USERNAME":"root","SHELL":"/bin/sh","SUDO_COMMAND":"/usr/local/bin/firebase emulators:exec --only firestore src/tests/firebase/rules.test.sh","SUDO_USER":"danielcassil","SUDO_UID":"501","SUDO_GID":"20","FIRESTORE_EMULATOR_HOST":"localhost:8080","FIREBASE_FIRESTORE_EMULATOR_ADDRESS":"localhost:8080"}
+[warn] ⚠  Script exited unsuccessfully (code 126)
+[info] i  Shutting down emulators.
+[info] i  Stopping firestore emulator
+[debug] [2019-10-16T20:08:34.447Z] *** shutting down gRPC server since JVM is shutting down
+
+[debug] [2019-10-16T20:08:34.452Z] *** server shut down
+
+[error] 
+[error] Error: Script "src/tests/firebase/rules.test.sh" exited with code 126

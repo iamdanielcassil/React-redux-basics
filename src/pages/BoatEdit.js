@@ -69,13 +69,7 @@ export default connect(
   "doSetCurrentBoat",
   "doSaveBoat",
   "selectBoats",
-  ({
-    routeParams,
-    currentBoat,
-    doSetCurrentBoat,
-    doSaveBoat,
-    boats,
-  }) => {
+  ({ routeParams, currentBoat, doSetCurrentBoat, doSaveBoat, boats }) => {
     const classes = useStyles();
     const [boat, setBoat] = useState();
 
@@ -107,7 +101,7 @@ export default connect(
               id="name"
               label="Name"
               required
-              handleChange={e => setBoat({ ...boat, name: e.target.value })}
+              onChange={e => setBoat({ ...boat, name: e.target.value })}
               value={boat.name}
             />
             <Text
@@ -115,49 +109,49 @@ export default connect(
               id="captain"
               label="Captain"
               required
-              handleChange={e => setBoat({ ...boat, captain: e.target.value })}
+              onChange={e => setBoat({ ...boat, captain: e.target.value })}
               value={boat.captain}
             />
             <Text
               className={classes.field}
               id="crew"
               label="Crew"
-              handleChange={e => setBoat({ ...boat, crew: e.target.value })}
+              onChange={e => setBoat({ ...boat, crew: e.target.value })}
               value={boat.crew}
             />
             <Text
               className={classes.field}
               id="maker"
               label="Maker"
-              handleChange={e => setBoat({ ...boat, maker: e.target.value })}
+              onChange={e => setBoat({ ...boat, maker: e.target.value })}
               value={boat.maker}
             />
             <Text
               className={classes.field}
               id="length"
               label="Length"
-              handleChange={e => setBoat({ ...boat, length: e.target.value })}
+              onChange={e => setBoat({ ...boat, length: e.target.value })}
               value={boat.length}
             />
             <Text
               className={classes.field}
               id="model"
               label="Model"
-              handleChange={e => setBoat({ ...boat, model: e.target.value })}
+              onChange={e => setBoat({ ...boat, model: e.target.value })}
               value={boat.model}
             />
             <Text
               className={classes.field}
               id="type"
               label="Keel Type"
-              handleChange={e => setBoat({ ...boat, type: e.target.value })}
+              onChange={e => setBoat({ ...boat, type: e.target.value })}
               value={boat.type}
             />
             <Text
               className={classes.field}
               id="phrf"
               label="PHRF"
-              handleChange={e => setBoat({ ...boat, phrf: e.target.value })}
+              onChange={e => setBoat({ ...boat, phrf: e.target.value })}
               value={boat.phrf}
             />
           </ExpansionPanelDetails>

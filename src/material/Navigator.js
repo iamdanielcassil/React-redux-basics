@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
@@ -10,14 +10,16 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Text from "../components/form/inputs/Text";
 
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from "@material-ui/core/IconButton";
+import GroupIcon from "@material-ui/icons/Group";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from "@material-ui/icons/People";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DirectionsBoatOutlinedIcon from "@material-ui/icons/DirectionsBoatOutlined";
 import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import WavesOutlinedIcon from "@material-ui/icons/WavesOutlined";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import Avatar from "@material-ui/core/Avatar";
 import { connect } from "redux-bundler-react";
 
@@ -102,13 +104,45 @@ const styles = theme => ({
   },
   divider: {
     marginTop: theme.spacing(2)
-  }
+  },
+  inputLabel: {
+    color: "white",
+    borderColor: "white"
+  },
+  inputFieldset: {}
 });
+
+const CssTextField = withStyles({
+  root: {
+    "& label.Mui-focused": {
+      color: "white"
+    },
+    "& label": {
+      color: "white"
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "white"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white"
+      },
+      "&:hover fieldset": {
+        borderColor: "white"
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white"
+      },
+      color: "white"
+    }
+  }
+})(Text);
 
 const Navigator = connect(
   "selectIsAuthed",
   "selectUser",
-  ({ isAuthed, user, classes, ...other }) => {
+  "selectUserGroup",
+  ({ isAuthed, user, userGroup, classes, ...other }) => {
     const [userSettingsToggle, setUserSettingsToggle] = useState();
 
     return (
@@ -125,44 +159,76 @@ const Navigator = connect(
           </ListItem>
           <ListItem className={clsx(classes.item, classes.itemCategory)}>
             <ListItemIcon className={classes.itemIcon}>
-              <IconButton>
-{isAuthed ? (
-  <Avatar onClick={setUserSettingsToggle} alt="Natacha">{user.displayName[0]}</Avatar>
-) : (
-  <HomeIcon onClick={setUserSettingsToggle}/>
-)}
+              <IconButton onClick={setUserSettingsToggle}>
+                {isAuthed ? (
+                  <Avatar alt="Natacha">{user.displayName[0]}</Avatar>
+                ) : (
+                  <HomeIcon />
+                )}
               </IconButton>
-              
+
               <Drawer
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
                 open={userSettingsToggle}
                 onClose={() => setUserSettingsToggle(false)}
-              > <List disablePadding> 
-              <ListItem
-            className={clsx(
-              classes.firebase,
-              classes.item,
-              classes.itemCategory
-            )}
-            onClick={() => setUserSettingsToggle(false)}
-          ><IconButton color="primary"><ArrowBackIosIcon/>Back</IconButton>
-          </ListItem>
-          <ListItem
-            className={clsx(
-              classes.firebase,
-              classes.item,
-              classes.itemCategory
-            )}
-          >
-            User Settings
-          </ListItem>
-          <ListItem>
-            
-<Text color="secondary" id="name"
-              label="Name"/>
-          </ListItem>
-         </List></Drawer>
+              >
+                {" "}
+                <List disablePadding>
+                  <ListItem
+                    className={clsx(
+                      classes.firebase,
+                      classes.item,
+                      classes.itemCategory
+                    )}
+                    onClick={() => setUserSettingsToggle(false)}
+                  >
+                    <IconButton color="primary">
+                      <ArrowBackIosIcon />
+                      Back
+                    </IconButton>
+                  </ListItem>
+                  <ListItem
+                    className={clsx(
+                      classes.firebase,
+                      classes.item,
+                      classes.itemCategory
+                    )}
+                  >
+                    User Settings
+                  </ListItem>
+                  <ListItem className={classes.categoryHeader}>
+                    <ListItemText
+                      classes={{
+                        primary: classes.categoryHeaderPrimary
+                      }}
+                    >
+                      Club Key
+                    </ListItemText>
+                  </ListItem>
+                  {!userGroup ? (
+                    <ListItem>
+                      <ListItemIcon className={classes.itemIcon}>
+                        <GroupAddIcon color="secondary" />
+                      </ListItemIcon>
+                      <CssTextField id="name" label="Club Key" />
+                    </ListItem>
+                  ) : (
+                    <ListItem className={classes.item}>
+                      <ListItemIcon className={classes.itemIcon}>
+                        <GroupIcon color="secondary" />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{
+                          primary: classes.itemPrimary
+                        }}
+                      >
+                        {userGroup}
+                      </ListItemText>
+                    </ListItem>
+                  )}
+                </List>
+              </Drawer>
             </ListItemIcon>
             <ListItemText
               classes={{
