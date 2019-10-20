@@ -38,8 +38,9 @@ const routes = {
   ..._onAllRoutesWrapper("/seasons/stats", Stats),
   ..._onAllRoutesWrapper("/seasons/:id/edit", SeasonEdit),
   ..._onAllRoutesWrapper("/seasons/new", SeasonEdit),
- 
+
   ..._onAllRoutesWrapper("/login", Login),
+  ..._onAllRoutesWrapper("/logoff", Login),
   ..._onAllRoutesWrapper("/afterLogin", Stats)
 };
 

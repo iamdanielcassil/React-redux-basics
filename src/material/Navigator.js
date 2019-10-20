@@ -60,7 +60,7 @@ const categories = isAuthed => [
       {
         id: "Log Off",
         icon: <ExitToAppIcon />,
-        url: "#/login",
+        url: "#/logoff",
         hidden: !isAuthed
       }
     ]

@@ -1,5 +1,5 @@
 import React from "react";
-import {auth} from "../foundations/firebase";
+import { auth } from "../foundations/firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { connect } from "redux-bundler-react";
 
@@ -26,9 +26,15 @@ export default connect(
     if (user && user.uid) {
       doSignOut();
     }
+
+    if (window.location.hash === "#/logoff") {
+      window.history.back();
+      return null;
+    }
+
     return (
       <div>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={doSignIn()} />
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={doSignIn(true)} />
       </div>
     );
   }

@@ -12,19 +12,20 @@ let initUserPromise = new Promise(resolve => {
 });
 
 let lastInitedUser = -1;
-let _groupId = "demo";
 
 class Data {
-  constructor() {}
+  constructor() {
+    this.groupId = "demo";
+  }
   init(user) {
     if (lastInitedUser !== user) {
       this.db = db;
       window.DC.debug.log("data inited with user: ", user);
       this.user = user;
-      initUserResolve();
+      initUserResolve(user);
       this.inited = true;
       this.getUserClub().then(groupId => {
-        _groupId = groupId;
+        this.groupId = groupId;
         initResolve();
       });
     }
@@ -34,7 +35,9 @@ class Data {
 
   clearUserGroup() {
     if (window.localStorage) {
+      console.log("remove group called");
       window.localStorage.removeItem("ocbc_group");
+      console.log("cached group is", this.getFromLocalStore("ocbc_group"));
     }
   }
 
@@ -95,9 +98,12 @@ class Data {
   updateUserClub(key) {
     return this._userQuery()
       .then(doc => {
-        doc.set({ groupId: key }).then(() => {
-          this.setToLocalStore("ocbc_group", key);
-        });
+        this.setToLocalStore("ocbc_group", key);
+        if (this.user) {
+          doc.set({ groupId: key }).then(() => {});
+        } else {
+          throw new Error("Can not update User Club, no User signed in");
+        }
       })
       .catch(() => console.log("catch hit in data.updateUserClub"));
   }
@@ -113,7 +119,7 @@ class Data {
   }
 
   setUserClub(clubId) {
-    _groupId = clubId;
+    this.groupId = clubId;
     this.setToLocalStore("ocbc_group", clubId);
   }
 
@@ -134,15 +140,14 @@ class Data {
             let data = _doc.data();
             let groupId = data.groupId;
 
-            if (window.localStorage) {
-              window.localStorage.setItem("ocbc_group", groupId);
-            }
             return groupId;
           } else {
+            console.log("no doc found in getUserClub");
             return "demo";
           }
         })
         .catch(() => {
+          console.log("catch hit in getUserClub");
           return "demo";
         })
     );
@@ -150,15 +155,15 @@ class Data {
 
   _userQuery() {
     return initUserPromise.then(() => {
-      return db.collection("user").doc(this.user.uid);
+      return db.collection("user").doc(this.user ? this.user.uid : "demo");
     });
   }
 
   _getGroupQuery() {
-    if (!_groupId) {
+    if (!this.groupId) {
       throw new Error("no group");
     }
-    return db.collection("group").doc(_groupId);
+    return db.collection("group").doc(this.groupId);
   }
 
   _getCollectionQuery(collectionKey) {

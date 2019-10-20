@@ -6,8 +6,10 @@ let pathBeforeLogin;
 const init = store => {
   store.doSignIn();
   data.listenToUserClub(snapshot => {
-    data.setUserClub(snapshot.groupId);
-    store.doUpdateSeasons();
+    if (snapshot.groupId !== "demo") {
+      data.setUserClub(snapshot.groupId);
+      store.doUpdateSeasons();
+    }
   });
 };
 
@@ -36,16 +38,29 @@ const reducer = (state = { user, group: undefined }, action) => {
   return state;
 };
 
-const doSignIn = () => ({ dispatch }) => {
+const doSignIn = clearClubId => ({ dispatch }) => {
   dispatch({
     type: "USER_AUTH_STARTED",
     payload: null
   });
-  data.clearUserGroup();
 
   let auth = firebase.auth();
   auth.onAuthStateChanged(function(_user) {
     // window.DC.debug.log("auth hit", user);
+    if (!_user) {
+      if (!data.getFromLocalStore("ocbc_group")) {
+        console.log(
+          "hit setUser club with demo in signin because no user found"
+        );
+        data.setUserClub("demo");
+      }
+    } else {
+      if (clearClubId) {
+        console.log("clearClubId was true");
+        data.clearUserGroup();
+      }
+    }
+
     user = _user;
     dispatch({
       type: "USER_AUTH_FINISHED",
@@ -63,6 +78,7 @@ const doSignIn = () => ({ dispatch }) => {
         type: "USER_GROUP_FETCHED",
         payload: groupId
       });
+      data.setUserClub(groupId || "demo");
       data
         .getLogIsAdmin()
         .then(() => {
@@ -105,6 +121,14 @@ const doUpdateClub = key => ({ dispatch }) => {
   });
 };
 
+const doClearClubId = () => ({ dispatch }) => {
+  data.clearUserGroup();
+  dispatch({
+    type: "USER_GROUP_UPDATED",
+    payload: null
+  });
+};
+
 const reactUser = () => store => {
   if (!store) {
     return {};
@@ -137,6 +161,7 @@ export default {
   doSignIn,
   doSignOut,
   doUpdateClub,
+  doClearClubId,
   reactUser,
   selectUser,
   selectIsAuthed,
