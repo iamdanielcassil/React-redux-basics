@@ -156,6 +156,7 @@ export default function IntegrationAutosuggest(props) {
           placeholder: "Start typing to search",
           value: current,
           onChange: handleChange("single"),
+          color: "white",
           ...props.inputProps
         }}
         theme={{

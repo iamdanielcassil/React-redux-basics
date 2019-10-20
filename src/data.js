@@ -6,18 +6,24 @@ let initResolve;
 let initPromise = new Promise(resolve => {
   initResolve = resolve;
 });
+let initUserResolve;
+let initUserPromise = new Promise(resolve => {
+  initUserResolve = resolve;
+});
 
 let lastInitedUser = -1;
 let _groupId = "demo";
 
 class Data {
+  constructor() {}
   init(user) {
     if (lastInitedUser !== user) {
       this.db = db;
       window.DC.debug.log("data inited with user: ", user);
       this.user = user;
+      initUserResolve();
       this.inited = true;
-      this.getUserGroup().then(groupId => {
+      this.getUserClub().then(groupId => {
         _groupId = groupId;
         initResolve();
       });
@@ -34,13 +40,13 @@ class Data {
 
   getFromLocalStore(key) {
     if (window.localStorage) {
-      return JSON.parse(window.localStorage.getItem(key))
+      return JSON.parse(window.localStorage.getItem(key));
     }
   }
 
   setToLocalStore(key, value) {
     if (window.localStorage) {
-      return window.localStorage.setItem(key, JSON.stringify(value))
+      return window.localStorage.setItem(key, JSON.stringify(value));
     }
   }
 
@@ -48,61 +54,104 @@ class Data {
     let now = new Date().getTime();
     let cacheDate = new Date(cachedUser.time).getTime();
 
-    return now - cacheDate > 360000 // 1 hour
+    return now - cacheDate > 360000; // 1 hour
   }
 
   getLogIsAdmin() {
-    let cachedUser = this.getFromLocalStore('ocbc_user')
+    let cachedUser = this.getFromLocalStore("ocbc_user");
 
-    if (cachedUser && !this.isUserCacheExpired(cachedUser) && cachedUser.uid === this.user.uid) {
+    if (
+      cachedUser &&
+      this.user &&
+      !this.isUserCacheExpired(cachedUser) &&
+      cachedUser.uid === this.user.uid
+    ) {
       return Promise.resolve(cachedUser.isAdmin);
     }
 
-    return data
-      .getCollectionDoc("logs").then(collection => {
-        let data = { uid: this.user.uid, userEmail: this.user.email, userName: this.user.displayName, time: new Date().toLocaleString() }
-        return collection.add(data).then(() => {
-          data.isAdmin = true;
-          this.setToLocalStore('ocbc_user', data)
-        }); 
-      })
+    return data.getCollectionDoc("logs").then(collection => {
+      let data = {
+        uid: this.user.uid,
+        userEmail: this.user.email,
+        userName: this.user.displayName,
+        time: new Date().toLocaleString()
+      };
+      return collection.add(data).then(() => {
+        data.isAdmin = true;
+        this.setToLocalStore("ocbc_user", data);
+      });
+    });
   }
 
-  getUserGroup() {
-    let groupId;
+  getClubs() {
+    return db
+      .collection("public_groups")
+      .get()
+      .then(collection => {
+        return collection.docs.map(doc => doc.exists && doc.data());
+      });
+  }
 
-    if (window.localStorage) {
-      groupId = window.localStorage.getItem("ocbc_group");
-    }
+  updateUserClub(key) {
+    return this._userQuery()
+      .then(doc => {
+        doc.set({ groupId: key }).then(() => {
+          this.setToLocalStore("ocbc_group", key);
+        });
+      })
+      .catch(() => console.log("catch hit in data.updateUserClub"));
+  }
+
+  listenToUserClub(cb) {
+    let queryPromise = this._userQuery();
+
+    queryPromise.then(query => {
+      query.onSnapshot(s => {
+        cb(s.data());
+      });
+    });
+  }
+
+  setUserClub(clubId) {
+    _groupId = clubId;
+    this.setToLocalStore("ocbc_group", clubId);
+  }
+
+  getUserClub() {
+    let groupId = this.getFromLocalStore("ocbc_group");
 
     if (groupId) {
       return Promise.resolve(groupId);
     }
 
-    if (!this.user || !this.user.uid) {
-      return Promise.resolve(_groupId);
-    }
+    let query = this._userQuery();
 
-    let doc = db.collection("user").doc(this.user.uid);
+    return query.then(doc =>
+      doc
+        .get()
+        .then(_doc => {
+          if (_doc.exists) {
+            let data = _doc.data();
+            let groupId = data.groupId;
 
-    return doc
-      .get()
-      .then(_doc => {
-        if (_doc.exists) {
-          let data = _doc.data();
-          let groupId = data.groupId;
-
-          if (window.localStorage) {
-            window.localStorage.setItem("ocbc_group", groupId);
+            if (window.localStorage) {
+              window.localStorage.setItem("ocbc_group", groupId);
+            }
+            return groupId;
+          } else {
+            return "demo";
           }
-          return groupId;
-        } else {
+        })
+        .catch(() => {
           return "demo";
-        }
-      })
-      .catch(() => {
-        return "demo";
-      });
+        })
+    );
+  }
+
+  _userQuery() {
+    return initUserPromise.then(() => {
+      return db.collection("user").doc(this.user.uid);
+    });
   }
 
   _getGroupQuery() {
@@ -153,22 +202,34 @@ class Data {
       }
 
       window.DC.debug.log("setup snapshot");
-      query.onSnapshot(snapshot => {
-        let data = [];
-
-        window.DC.debug.log("listen", snapshot.docs);
-        snapshot.docs.forEach(doc => {
-          if (doc && typeof doc.data === "function") {
-            let result = doc.data();
-
-            result.id = doc.id;
-            data.push(result);
-          }
-        });
-
-        callback(data);
-      });
+      this.onSnapshot(query, callback);
     });
+  }
+
+  onSnapshot(query, callback) {
+    query.onSnapshot(snapshot => {
+      let data = this.getCollectionData(snapshot);
+
+      callback(data);
+    });
+  }
+
+  getCollectionData(collection) {
+    let data = [];
+
+    if (!collection.docs && typeof collection.data === "function") {
+      return collection.data();
+    }
+
+    collection.docs.forEach(doc => {
+      if (doc && typeof doc.data === "function") {
+        let result = doc.data();
+        result.id = doc.id;
+        data.push(result);
+      }
+    });
+
+    return data;
   }
 }
 

@@ -1,6 +1,6 @@
 export const debug = {
   log: (...args) => {
-    if (window.DC.debug) {
+    if (window.DC.debug.on) {
       console.log(...args);
     }
   }

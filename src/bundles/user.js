@@ -5,6 +5,10 @@ let pathBeforeLogin;
 
 const init = store => {
   store.doSignIn();
+  data.listenToUserClub(snapshot => {
+    data.setUserClub(snapshot.groupId);
+    store.doUpdateSeasons();
+  });
 };
 
 const reducer = (state = { user, group: undefined }, action) => {
@@ -14,8 +18,14 @@ const reducer = (state = { user, group: undefined }, action) => {
   if (action.type === "USER_AUTH_STARTED") {
     return { ...state, user: action.payload };
   }
-  if (action.type === "USER_GROUP_FETCHED") {
+  if (
+    action.type === "USER_GROUP_FETCHED" ||
+    action.type === "USER_GROUP_UPDATED"
+  ) {
     return { ...state, group: action.payload };
+  }
+  if (action.type === "USER_CLUBS_FETCHED") {
+    return { ...state, clubs: action.payload };
   }
   if (action.type === "USER_IS_ADMIN") {
     return { ...state, isAdmin: true };
@@ -42,7 +52,13 @@ const doSignIn = () => ({ dispatch }) => {
       payload: _user
     });
     data.init(_user);
-    data.getUserGroup().then(groupId => {
+    data.getClubs().then(clubs => {
+      dispatch({
+        type: "USER_CLUBS_FETCHED",
+        payload: clubs.map(club => ({ ...club, label: club.name }))
+      });
+    });
+    data.getUserClub().then(groupId => {
       dispatch({
         type: "USER_GROUP_FETCHED",
         payload: groupId
@@ -80,6 +96,15 @@ const doSignOut = () => ({ dispatch }) => {
     });
 };
 
+const doUpdateClub = key => ({ dispatch }) => {
+  return data.updateUserClub(key).then(() => {
+    dispatch({
+      type: "USER_GROUP_UPDATED",
+      payload: key
+    });
+  });
+};
+
 const reactUser = () => store => {
   if (!store) {
     return {};
@@ -102,7 +127,8 @@ const reactUser = () => store => {
 const selectUser = state => state.user.user;
 const selectIsAuthed = state =>
   state.user.user !== null && state.user.user.uid !== undefined;
-const selectUserGroup = state => state.user.group;
+const selectUserClub = state => state.user.group;
+const selectClubs = state => state.user.clubs;
 
 export default {
   name: "user",
@@ -110,8 +136,10 @@ export default {
   reducer,
   doSignIn,
   doSignOut,
+  doUpdateClub,
   reactUser,
   selectUser,
   selectIsAuthed,
-  selectUserGroup
+  selectUserClub,
+  selectClubs
 };

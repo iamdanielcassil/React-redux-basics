@@ -165,8 +165,8 @@ let TabBar = connect(
 );
 
 let Header = connect(
-  "selectUserGroup",
-  ({ userGroup, classes, onDrawerToggle, ...props }) => {
+  "selectUserClub",
+  ({ userClub, classes, onDrawerToggle, ...props }) => {
     return (
       <React.Fragment>
         <AppBar color="secondary" position="sticky" elevation={0}>
@@ -185,27 +185,26 @@ let Header = connect(
                 </Grid>
               </Hidden>
               <Grid item>
-                {userGroup === "demo" ? (
+                {userClub === "demo" ? (
                   <Typography>DEMO MODE</Typography>
                 ) : null}
               </Grid>
               {props.showTabs ? (
-          <Grid item><AppBar
-          component="div"
-          className={classes.secondaryBar}
-          color="secondary"
-          position="static"
-          elevation={0}
-        >
-          <TabBar />
-        </AppBar></Grid>
-        ) : null}
-              
+                <Grid item>
+                  <AppBar
+                    component="div"
+                    className={classes.secondaryBar}
+                    color="secondary"
+                    position="static"
+                    elevation={0}
+                  >
+                    <TabBar />
+                  </AppBar>
+                </Grid>
+              ) : null}
             </Grid>
           </Toolbar>
         </AppBar>
-
-       
       </React.Fragment>
     );
   }

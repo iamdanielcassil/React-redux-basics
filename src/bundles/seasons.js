@@ -5,18 +5,25 @@ const init = store => {
   let state = store.getState();
 
   data.listen(`seasons`, seasons => {
-    let sortseasons = seasons.sort((a, b) => {
-      return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
-    });
-    window.DC.debug.log("seasons fetched", seasons, sortseasons);
-    store.dispatch({ type: "SEASONS_FETCHED", seasons });
-    if (!state.seasons.current) {
-      if (store.selectQueryObject().seasonId) {
-        store.doGoToSelectSeason(store.selectQueryObject().seasonId);
-      } else {
-        store.doGoToSelectSeason(sortseasons[0].id);
+    handleSeasonUpdate(seasons, store, state);
+  });
+};
+
+const doUpdateSeasons = () => ({ store }) => {
+  let state = store.getState();
+
+  data.getCollectionDoc("seasons").then(collection => {
+    collection.get().then(querySnapshot => {
+      let seasons = data.getCollectionData(querySnapshot);
+      let urlQuery = store.selectQueryObject();
+      if (!seasons.some(season => season.id === urlQuery.seasonId)) {
+        delete urlQuery.seasonId;
+        store.doUpdateUrl({
+          query: { ...urlQuery }
+        });
       }
-    }
+      handleSeasonUpdate(seasons, store, state);
+    });
   });
 };
 const reducer = (state = { all: [], current: null }, action) => {
@@ -37,7 +44,7 @@ const reducer = (state = { all: [], current: null }, action) => {
   if (action.type === "SEASON_SELECTED") {
     window.DC.debug.log("SEASON selected", action.current);
     return {
-      current: new Season(action.payload),
+      current: action.payload ? new Season(action.payload) : undefined,
       all: state.all,
       isEditing: false
     };
@@ -63,6 +70,7 @@ const doGoToSelectSeason = id => ({ dispatch, store }) => {
 
   if (!selectedSeason) {
     dispatch({ type: "SEASON_SELECTED_NOT_FOUND", payload: id });
+    dispatch({ type: "SEASON_SELECTED", payload: null });
     return;
   }
 
@@ -110,6 +118,26 @@ export default {
   doSaveSeason,
   doUpdateCurrent,
   doGoToSelectSeason,
+  doUpdateSeasons,
   selectCurrentSeason,
   selectSeasons
 };
+function handleSeasonUpdate(seasons, store, state) {
+  let sortseasons = sortSeasons(seasons);
+  window.DC.debug.log("seasons fetched", seasons, sortseasons);
+  store.dispatch({ type: "SEASONS_FETCHED", seasons });
+  if (!state.seasons.current) {
+    if (store.selectQueryObject().seasonId) {
+      store.doGoToSelectSeason(store.selectQueryObject().seasonId);
+    } else {
+      store.doGoToSelectSeason(
+        sortseasons.length > 0 ? sortseasons[0].id : undefined
+      );
+    }
+  }
+}
+function sortSeasons(seasons) {
+  return seasons.sort((a, b) => {
+    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+  });
+}
