@@ -45,6 +45,7 @@ const doSignIn = clearClubId => ({ dispatch }) => {
   });
 
   let auth = firebase.auth();
+
   auth.onAuthStateChanged(function(_user) {
     // window.DC.debug.log("auth hit", user);
     if (!_user) {
